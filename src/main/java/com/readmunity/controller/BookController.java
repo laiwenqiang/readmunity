@@ -33,4 +33,9 @@ public class BookController {
         return "booklist";
     }
 
+    @RequestMapping(value = "detail", method = RequestMethod.GET)
+    public String getDetail(ModelMap map) {
+        return "bookdetail";
+    }
+
 }
