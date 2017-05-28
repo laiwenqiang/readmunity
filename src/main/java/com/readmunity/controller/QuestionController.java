@@ -17,8 +17,14 @@ import java.util.List;
 public class QuestionController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String getQuestionListById(ModelMap map) {
-        map.addAttribute("questionlist", new QuestionServiceImpl().getQuestionListById("01"));
+    public String getQuestionListByBookId(ModelMap map) {
+        map.addAttribute("questionlist", new QuestionServiceImpl().getQuestionListByBookId("01"));
         return "questionlist";
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String getQuestionById(ModelMap map) {
+        map.addAttribute("question", new QuestionServiceImpl().getQuestionById("01"));
+        return "question";
     }
 }

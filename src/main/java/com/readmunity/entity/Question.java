@@ -5,12 +5,22 @@ package com.readmunity.entity;
  */
 public class Question {
 
+    private String id;
     private String title;
     private String content;
 
-    public Question(String title, String content) {
+    public Question(String id, String title, String content) {
+        this.id = id;
         this.title = title;
         this.content = content;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
