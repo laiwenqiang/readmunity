@@ -114,7 +114,7 @@
                     <div class="col-md-1">&nbsp;</div>
                     <div class="col-md-11">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <p class="text-left">
                                     <small>
                                         <a href="#">
@@ -122,27 +122,60 @@
                                         </a>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
                                         <a href="#">
-                                            <span>评论</span>
+                                            <span data-toggle="modal" data-target="#myModal">评论</span>
                                         </a>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <span class="glyphicon glyphicon-time text-muted" aria-hidden="true">最近更新&nbsp;2017年05月27日</span>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
+
+                                        <!--弹出评论框-->
+                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="myModalLabel">注意</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <span class="text-muted">
+                                                            <p>添加有效的评论</p>
+                                                            <p>请：简短意赅，富于创造力。</p>
+                                                            <p>不要：无效，无聊，搞笑，毫无头绪，一筹莫展，于事无补，抢人头...</p>
+                                                        </span>
+
+
+                                                        <form role="form">
+                                                            <div class="form-group">
+                                                                <textarea class="form-control" rows="3"></textarea>
+                                                            </div>
+                                                        </form>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                        <button type="button" class="btn btn-primary">保存</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </small>
                                 </p>
                             </div>
-                            <div class="col-md-6 text-muted">
+                            <div class="col-md-8 text-muted">
                                 <small>
                                     <div class="col-md-6">
-                                        <div style="background-color:skyblue; width: 40px; height: 40px; float: left;"></div>
-                                        修改人
+                                        2017年05月29日04:24:23&nbsp;修改
                                         <br/>
-                                        2017年05月29日04:24:23
+                                        <div style="background-color:skyblue; width: 40px; height: 40px; float: left;"></div>
+                                        &nbsp;<a href="#">赖文强</a>
+                                        <br/>
+                                        &nbsp;团长
                                     </div>
                                     <div class="col-md-6">
-                                        <div style="background-color:lightseagreen; width: 40px; height: 40px; float: left;"></div>
-                                        回答人
+                                        2017年05月29日04:24:23&nbsp;回答
                                         <br/>
-                                        2017年05月29日04:24:23
+                                        <div style="background-color:lightseagreen; width: 40px; height: 40px; float: left;"></div>
+                                        &nbsp;<a href="#">赵亮</a>
+                                        <br/>
+                                        &nbsp;团长
                                     </div>
                                 </small>
                             </div>
@@ -150,18 +183,61 @@
 
                         <div class="col-md-12">
                             <hr/>
-                            <span class="small">评论001 – <a href="#">天龙八部</a> 2017-05-29 04:02:07 </span>
-                            <span class="glyphicon glyphicon-pencil text-muted" aria-hidden="true"/>
-                            <hr/>
-                            <span class="small">评论002 – <a href="#">六小龄童</a> 2017-05-29 05:02:07 </span>
-                            <span class="glyphicon glyphicon-pencil text-muted" aria-hidden="true"/>
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <span class="badge pull-left">14</span>
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    Cras justo odio Cras justo odio Cras justo odioCras justo odioCras justo odio Cras justo odio
+                                    Cras justo odio Cras justo odio Cras justo odioCras justo odioCras justo odio Cras justo odio
+                                    <span class="small">&nbsp;&nbsp;– <a href="#">六小龄童</a> 2017-05-29 05:02:07 </span>
+                                    <span class="glyphicon glyphicon-pencil text-muted" aria-hidden="true"/>
+                                </div>
+                            </div>
+
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <span class="badge pull-left">14</span>
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    Cras justo odio Cras justo odio Cras justo odioCras justo odioCras justo odio Cras justo odio
+                                    Cras justo odio Cras justo odio Cras justo odioCras justo odioCras justo odio Cras justo odio
+                                </div>
+                            </div>
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <span class="badge pull-left">14</span>
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    Cras justo odio Cras justo odio Cras justo odioCras justo odioCras justo odio Cras justo odio
+                                    Cras justo odio Cras justo odio Cras justo odioCras justo odioCras justo odio Cras justo odio
+                                </div>
+                            </div>
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <span class="badge pull-left">14</span>
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    写得啥玩意儿。牛逼了，怎么写得怎么乱七八糟，海枯石烂的。
+                                    <span class="small">&nbsp;&nbsp;– <a href="#">六小龄童</a> 2017-05-29 05:02:07 </span>
+                                    <span class="glyphicon glyphicon-pencil text-muted" aria-hidden="true"/>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <hr/>
             </div>
 
-            <div class="col-md-8 well">
+            <div class="col-md-8 well well-sm">
                 <h3 class="lead">你的想法？</h3>
                 <form>
                     <textarea rows="10" id="answer">输入信息...</textarea>
@@ -169,7 +245,6 @@
                 </form>
             </div>
         </div>
-
         <hr/>
         <footer>
             <p>&copy; 2016 Company, Inc.</p>
