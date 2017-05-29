@@ -6,6 +6,7 @@ package com.readmunity.entity;
 public class Reply {
     private String id;
     private String questionId;
+    private String questionName;
     /**
      * 提问者的ID
      */
@@ -21,9 +22,10 @@ public class Reply {
      */
     private int agreementNum;
 
-    public Reply(String id, String questionId, String questionerId, String content, String responderId, String responderName, int agreementNum) {
+    public Reply(String id, String questionId, String questionName, String questionerId, String content, String responderId, String responderName, int agreementNum) {
         this.id = id;
         this.questionId = questionId;
+        this.questionName = questionName;
         this.questionerId = questionerId;
         this.content = content;
         this.responderId = responderId;
@@ -45,6 +47,14 @@ public class Reply {
 
     public void setQuestionId(String questionId) {
         this.questionId = questionId;
+    }
+
+    public String getQuestionName() {
+        return questionName;
+    }
+
+    public void setQuestionName(String questionName) {
+        this.questionName = questionName;
     }
 
     public String getQuestionerId() {

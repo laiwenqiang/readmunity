@@ -39,11 +39,28 @@ public class QuestionServiceImpl implements QuestionService {
                         "	- 指代 HTTP 响应的类(HttpResponse)和它的辅助类。\n" +
                         "	- Facade 类(HttpRequestFacade 和 HttpResponseFacade)\n" +
                         "	- Constant 类。 \n" +
-                        "3. core模块，由``` ServletProcessor ```和``` StaticResourceProcessor ```组成。\n"
-        +"# 输入信息...\n" +
+                        "3. core模块，由``` ServletProcessor ```和``` StaticResourceProcessor ```组成。\n" +
+                        "# 输入信息...\n" +
                         "\n" +
                         "``` java\n" +
                         "hello world\n" +
                         "```");
+    }
+
+    public List<Question> getQuestionListByUserId(String userId) {
+        List<Question> questionList = new ArrayList<>();
+        questionList.add(new Question("001","问题标题01", "问题内容01问题内容01问题内容01问题内容01问题内容01问题内容01" +
+                "问题内容01问题内容01问题内容01问题内容01" +
+                "问题内容01问题内容01问题内容01问题内容01"));
+        questionList.add(new Question("002","问题标题02", "问题内容02问题内容02问题内容02问题内容02问题内容02问题内容02问题内容02" +
+                "问题内容02问题内容02问题内容02问题内容02问题内容02" +
+                "问题内容02问题内容02问题内容02问题内容02"));
+        questionList.add(new Question("003","问题标题03", "问题内容03问题内容03问题内容03问题内容03问题内容03问题内容03问题内容03" +
+                "问题内容03问题内容03问题内容03问题内容03问题内容03" +
+                "问题内容03问题内容03问题内容03问题内容03"));
+        questionList.add(new Question("004","问题列表04", "问题内容04问题内容04问题内容04问题内容04问题内容04问题内容04" +
+                "问题内容04问题内容04问题内容04问题内容04" +
+                "问题内容04问题内容04问题内容04问题内容041"));
+        return questionList;
     }
 }

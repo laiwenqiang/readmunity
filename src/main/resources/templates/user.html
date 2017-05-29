@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>个人主页</title>
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet"/>
+    <link href="/bootstrap/css/offcanvas.css" rel="stylesheet"/>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/bootstrap/js/offcanvas.js"></script>
+
+
+</head>
+<body>
+    <nav class="navbar navbar-fixed-top navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Project name</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div><!-- /.nav-collapse -->
+        </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+
+    <div class="container">
+
+        <div class="page-header">
+
+            <div class="row">
+                <div class="col-xs-6 col-md-2">
+                    <a href="#" class="thumbnail">
+                        <img src="http://oqgq7175e.bkt.clouddn.com/Unknown.svg" alt="..."/>
+                    </a>
+                </div>
+                <div class="col-md-5">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="lead"><strong>乔布斯</strong></p>
+                        </div>
+                        <div class="col-md-12">
+                            <p class="text-muted">
+                                人生是个圆，有的人走了一辈子也没有走出命运画出的圆圈。
+                                <br/>
+                                其实，圆上的每一个点都有一条腾飞的切线。
+                            </p>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div>
+                        <p>
+                            <span class="badge alert-danger" data-toggle="reading">2</span>&nbsp;&nbsp;
+                            <span class="badge alert-info" data-toggle="readed">27</span>&nbsp;&nbsp;
+                            <span class="badge alert-danger" data-toggle="tooltip" title="提问数">54</span>&nbsp;&nbsp;
+                            <span class="badge alert-success" data-toggle="tooltip" title="回答数">12</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-5 text-muted">
+                    <small>
+                        <span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;上海</span>
+                        <br/>
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true">&nbsp;1260091093@qq.com</span>
+                        <br/>
+                        <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true">&nbsp;QQ:1260091093</span>
+                        <br/>
+                        <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true">&nbsp;weibo....</span>
+                        <br/>
+                        <span class="glyphicon glyphicon-open" aria-hidden="true">&nbsp;github</span>
+                        <br/>
+                        <span class="glyphicon glyphicon-send" aria-hidden="true">&nbsp;1260091093</span>
+                        <br/>
+                        <span class="glyphicon glyphicon-time" aria-hidden="true">&nbsp;最近登录 2017年05月29日22:18:13</span>
+                    </small>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7">
+                <ul class="nav nav-tabs">
+                    <li class="nav"><a href="#question" data-toggle="tab">提问</a></li>
+                    <li class="nav"><a href="#answer" data-toggle="tab">回答</a></li>
+                    <li class="nav"><a href="#comment" data-toggle="tab">评论</a></li>
+                    <li class="nav active"><a href="#starbook" data-toggle="tab">收藏</a></li>
+                    <li class="nav"><a href="#starbook" data-toggle="tab">读完</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content row">
+                    <div class="tab-pane fade in active" id="question">
+                        <br/>
+                        <div th:each="question: ${user.questionList}">
+                            <div class="col-md-12">
+                                <div class="col-md-1"><span class="badge">27</span></div>
+                                <div class="col-md-8"><a href="/reply/list"><span th:text="${question.title}"></span></a></div>
+                                <hr/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="answer">
+                        <br/>
+                        <div th:each="reply: ${user.replyList}">
+                            <div class="col-md-12">
+                                <div class="col-md-1"><span class="badge">27</span></div>
+                                <div class="col-md-8"><a href="/reply/list"><span th:text="${reply.questionName}"></span></a></div>
+                                <hr/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="comment">
+                        <br/>
+                        <div th:each="reply: ${user.replyList}">
+                            <div class="col-md-12">
+                                <div class="col-md-1"><span class="badge">27</span></div>
+                                <div class="col-md-8"><a href="/reply/list"><span th:text="${reply.questionName}"></span></a></div>
+                                <hr/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="starbook">
+                        <br/>
+                        <div th:each="starBook: ${user.starBookList}">
+                            <div class="col-md-12">
+                                <div class="col-md-1"><span class="badge">27</span></div>
+                                <div class="col-md-8"><a href="/reply/list"><span th:text="${starBook.name}"></span></a></div>
+                                <hr/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div th:each="question: ${questionlist}" class="col-md-8">
+                <div class="row">
+                    <div class="col-md-1">
+                        <div style="background-color:skyblue; width: 40px; height: 40px; float: left;"></div>
+                    </div>
+                    <div class="col-md-11">
+                        <a href="/reply/list"><span th:text="${question.title}" class="lead"></span></a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-1">&nbsp;</div>
+                    <div class="col-md-11">
+                        <p th:text="${question.content}"></p>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-1">&nbsp;</div>
+                    <div class="col-md-11">
+                        <p class="text-left">
+                            <small>
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-star text-muted" aria-hidden="true">52</span>
+                                </a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-pencil text-muted" aria-hidden="true">38</span>
+                                </a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <span class="glyphicon glyphicon-time text-muted" aria-hidden="true">最近更新&nbsp;2017年05月27日</span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            </small>
+                        </p>
+                    </div>
+                </div>
+                <hr/>
+            </div>
+        </div>
+
+        <hr/>
+
+        <footer>
+            <p>&copy; 2016 Company, Inc.</p>
+        </footer>
+
+    </div><!--/.container-->
+
+
+    <script type="text/html" id="reading-content">
+        <p class="text-muted">
+            <small>
+                <a href="/question/list">Java 编程思想</a><br/>
+                <a href="/question/list">设计模式</a><br/>
+            </small>
+        </p>
+    </script>
+    <script type="text/html" id="readed-content">
+        <p class="text-muted">
+            <small>
+                <a href="/question/list">Effective Java</a><br/>
+                <a href="/question/list">发条橙</a><br/>
+                <a href="/question/list">献给阿尔金欧诺的花束</a><br/>
+                <a href="/question/list">白鹿原</a><br/>
+                <a href="/question/list">自制编程语言</a><br/>
+                <a href="/question/list">君主论</a><br/>
+                <a href="/question/list">......</a><br/>
+            </small>
+        </p>
+    </script>
+    <script>
+        $("[data-toggle=reading]").popover({
+            html: true,
+            title: '在读(-ิ_-ิ;)',
+            placement: 'top',
+            trigger: 'hover',
+            delay: {'show': 0, 'hide': 1000},
+            content: $('#reading-content').html()
+        });
+        $("[data-toggle=readed]").popover({
+            html: true,
+            title: '读完(?﹏?)',
+            placement: 'bottom',
+            trigger: 'hover',
+            delay: {'show': 0, 'hide': 1000},
+            content: $('#readed-content').html()
+        });
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+
+</body>
+</html>

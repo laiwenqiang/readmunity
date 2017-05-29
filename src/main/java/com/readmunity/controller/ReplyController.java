@@ -21,9 +21,9 @@ public class ReplyController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String getReplyByQuestion(ModelMap map) {
         Question question = new QuestionServiceImpl().getQuestionById("001");
-        List<Reply> replyList = new ReplyServiceImpl().getReplayListByQuestionId("001");
+        List<Reply> replyList = new ReplyServiceImpl().getReplyListByQuestionId("001");
         map.addAttribute("question", question);
         map.addAttribute("replylist", replyList);
-        return "replaylist";
+        return "replylist";
     }
 }

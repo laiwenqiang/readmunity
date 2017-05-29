@@ -6,26 +6,26 @@ package com.readmunity.entity;
  */
 public class Book {
 
-    private String title;
+    private String name;
     private String overview;
     private String book_url;
 
-    public Book(String title, String overview) {
-        this.title = title;
+    public Book(String name, String overview) {
+        this.name = name;
         this.overview = overview;
     }
 
-    public Book(String title, String overview, String book_url) {
-        this(title, overview);
+    public Book(String name, String overview, String book_url) {
+        this(name, overview);
         this.book_url = book_url;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getOverview() {

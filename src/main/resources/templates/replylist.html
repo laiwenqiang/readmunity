@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>详细问题</title>
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet"/>
+    <link href="/bootstrap/css/offcanvas.css" rel="stylesheet"/>
+    <link href="/markdown/css/bootstrap-markdown.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"/>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/bootstrap/js/offcanvas.js"></script>
+
+    <script src="/markdown/js/bootstrap-markdown.js"></script>
+    <script src="/markdown/js/to-markdown.js"></script>
+    <script src="/markdown/js/markdown.js"></script>
+    <script src="/markdown/js/marked.js"></script>
+
+</head>
+<body>
+
+    <nav class="navbar navbar-fixed-top navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Project name</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div><!-- /.nav-collapse -->
+        </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+
+    <div class="container">
+
+        <div class="page-header">
+            <h2 th:text="${question.title}"></h2>
+            <hr/>
+            <div class="row">
+                <div class="col-md-1">
+                    <div class="btn-group-vertical" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default" aria-label="Left Align">
+                            <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-info" aria-label="Left Align">
+                            <!--<span th:text="${reply.agreementNum}"></span>-->
+                            100
+                        </button>
+                        <button type="button" class="btn btn-default" aria-label="Left Align">
+                            <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                        </button>
+                    </div>
+
+                    <hr/>
+                    <div class="btn-group-vertical" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default" aria-label="Left Align">
+                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-success" aria-label="Left Align">
+                            <!--<span th:text="${reply.agreementNum}"></span>-->
+                            320
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-11">
+                    <span th:text="${question.content}" class="question"></span>
+                    <br/>
+                    <small>
+                        <span class="glyphicon glyphicon-time text-muted" aria-hidden="true">2017年05月27日</span>
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <h2>回答</h2>
+                <hr/>
+            </div>
+
+            <div th:each="reply: ${replylist}" class="col-md-8">
+                <div class="row">
+                    <div class="col-md-1">
+                        <div class="btn-group-vertical" role="group" aria-label="...">
+                            <button type="button" class="btn btn-default" aria-label="Left Align">
+                                <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-info" aria-label="Left Align">
+                                <span th:text="${reply.agreementNum}"></span>
+                            </button>
+                            <button type="button" class="btn btn-default" aria-label="Left Align">
+                                <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-11">
+                        <p th:text="${reply.content}" class="content"></p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-1">&nbsp;</div>
+                    <div class="col-md-11">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p class="text-left">
+                                    <small>
+                                        <a href="#">
+                                            <span>修改</span>
+                                        </a>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="#">
+                                            <span data-toggle="modal" data-target="#myModal">评论</span>
+                                        </a>
+
+                                        <!--弹出评论框-->
+                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="myModalLabel">添加有效评论</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <span class="text-muted">
+                                                            <p><strong>请您注意</strong></p>
+                                                            <p>好：简短意赅，富于创造力，独辟行径，破釜沉舟，猥琐发育...</p>
+                                                            <p>坏：无效，无聊，搞笑，毫无头绪，一筹莫展，于事无补，抢人头...</p>
+                                                        </span>
+
+
+                                                        <form role="form">
+                                                            <div class="form-group">
+                                                                <textarea class="form-control" style="resize:vertical" rows="3"></textarea>
+                                                            </div>
+                                                        </form>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                        <button type="button" class="btn btn-primary">保存</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </small>
+                                </p>
+                            </div>
+                            <div class="col-md-8 text-muted">
+                                <small>
+                                    <div class="col-md-6">
+                                        2017年05月29日04:24:23&nbsp;修改
+                                        <br/>
+                                        <div style="background-color:skyblue; width: 40px; height: 40px; float: left;"></div>
+                                        &nbsp;<a href="/user">赖文强</a>
+                                        <br/>
+                                        &nbsp;团长
+                                    </div>
+                                    <div class="col-md-6">
+                                        2017年05月29日04:24:23&nbsp;回答
+                                        <br/>
+                                        <div style="background-color:lightseagreen; width: 40px; height: 40px; float: left;"></div>
+                                        &nbsp;<a href="/user">赵亮</a>
+                                        <br/>
+                                        &nbsp;团长
+                                    </div>
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <hr/>
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <span class="badge pull-left">14</span>
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    Cras justo odio Cras justo odio Cras justo odioCras justo odioCras justo odio Cras justo odio
+                                    Cras justo odio Cras justo odio Cras justo odioCras justo odioCras justo odio Cras justo odio
+                                    <span class="small">&nbsp;&nbsp;– <a href="#">六小龄童</a> 2017-05-29 05:02:07 </span>
+                                    <span class="glyphicon glyphicon-pencil text-muted" aria-hidden="true"/>
+                                </div>
+                            </div>
+
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <span class="badge pull-left">14</span>
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    Cras justo odio Cras justo odio Cras justo odioCras justo odioCras justo odio Cras justo odio
+                                    Cras justo odio Cras justo odio Cras justo odioCras justo odioCras justo odio Cras justo odio
+                                </div>
+                            </div>
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <span class="badge pull-left">14</span>
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    Cras justo odio Cras justo odio Cras justo odioCras justo odioCras justo odio Cras justo odio
+                                    Cras justo odio Cras justo odio Cras justo odioCras justo odioCras justo odio Cras justo odio
+                                </div>
+                            </div>
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <span class="badge pull-left">14</span>
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    写得啥玩意儿。牛逼了，怎么写得怎么乱七八糟，海枯石烂的。
+                                    <span class="small">&nbsp;&nbsp;– <a href="#">六小龄童</a> 2017-05-29 05:02:07 </span>
+                                    <span class="glyphicon glyphicon-pencil text-muted" aria-hidden="true"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+            </div>
+
+            <div class="col-md-8 well well-sm">
+                <h3 class="lead">你的想法？</h3>
+                <form>
+                    <textarea rows="10" id="answer">输入信息...</textarea>
+                    <br/>
+                </form>
+            </div>
+        </div>
+        <hr/>
+        <footer>
+            <p>&copy; 2016 Company, Inc.</p>
+        </footer>
+
+    </div><!--/.container-->
+
+</body>
+
+
+<script>
+    $(".question").markdown({
+        onShow: function(e){
+            e.showPreview();
+            $(".btn-toolbar").remove();
+        }
+    });
+    $(".content").each(function(i, e){
+        $(this).markdown({
+            onShow: function(e) {
+                e.showPreview();
+                $(".btn-toolbar").remove();
+            }
+        })
+    })
+</script>
+
+<script type="text/javascript">
+    (function ($) {
+        $.fn.markdown.messages.zh = {
+            'Bold': "粗体",
+            'Italic': "斜体",
+            'Heading': "标题",
+            'URL/Link': "链接",
+            'Image': "图片",
+            'List': "列表",
+            'Unordered List': "无序列表",
+            'Ordered List': "有序列表",
+            'Code': "代码",
+            'Quote': "引用",
+            'Preview': "预览",
+            'strong text': "粗体",
+            'emphasized text': "强调",
+            'heading text': "标题",
+            'enter link description here': "输入链接说明",
+            'Insert Hyperlink': "URL地址",
+            'enter image description here': "输入图片说明",
+            'Insert Image Hyperlink': "图片URL地址",
+            'enter image title here': "在这里输入图片标题",
+            'list text here': "这里是列表文本",
+            'code text here': "这里输入代码",
+            'quote here': "这里输入引用文本",
+            'Save': '保存'
+        };
+
+    }(jQuery));
+
+    $("#answer").markdown({language:'zh', savable: true});
+</script>
+
+</html>

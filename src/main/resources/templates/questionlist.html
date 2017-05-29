@@ -19,7 +19,14 @@
 <div class="container">
 
     <div class="page-header">
-        <h1>Java 编程思想</h1>
+        <div id="alert_content"/>
+        <h1>Java 编程思想
+            <span class="badge alert-danger" data-toggle="tooltip" title="提问数量">490</span>
+            <span class="badge alert-success" data-toggle="tooltip" title="回答数量">1,980</span>
+            <span class="badge alert-danger" data-toggle="tooltip" title="当前在读人数">285</span>
+            <span class="badge alert-info" data-toggle="tooltip" title="已经读完人数">29,087</span>
+            <button id="addSchedule" type="button" class="badge alert-warning">加入阅读</button>
+        </h1>
         <h4>
             <small>[美] Bruce Eckel</small>
         </h4>
@@ -41,7 +48,7 @@
                     <span class="glyphicon glyphicon-pencil text-muted" aria-hidden="true">438</span>
                 </a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <span class="glyphicon glyphicon-time text-muted" aria-hidden="true">最近更新&nbsp;2017年05月27日</span>
+                <span class="glyphicon glyphicon-time text-muted" aria-hidden="true">创建时间&nbsp;2017年05月27日</span>
                 &nbsp;&nbsp;&nbsp;&nbsp;
             </small>
         </p>
@@ -117,5 +124,29 @@
     <div th:replace="fragments/footer :: footer">&copy; 2016 The Static Templates</div>
 
 </div><!--/.container-->
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    function showAlert(message, alerttype) {
+        alert("hello");
+        $('#alert_placeholder').append('<div id="alertdiv" class="alert ' +  alerttype + '">' +
+            '<a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')
+        setTimeout(function() {
+            $("#alertdiv").remove();
+        }, 5000);
+    };
+
+    $("#addSchedule").click(function () {
+        var message = "(✿╹◡╹)......已经加入阅读计划!";
+        var alertType = "alert-success";
+        $('#alert_content').append('<div id="alertdiv" class="alert ' +  alertType + '">' +
+            '<a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')
+        setTimeout(function() {
+            $("#alertdiv").remove();
+        }, 2500);
+    });
+</script>
 </body>
 </html>
