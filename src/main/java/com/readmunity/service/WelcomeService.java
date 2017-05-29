@@ -1,6 +1,7 @@
 package com.readmunity.service;
 
 import com.readmunity.entity.Book;
+import com.readmunity.entity.SortHotBooks;
 
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,6 @@ import java.util.Map;
  */
 public interface WelcomeService {
     public List<Book> gethotBooks();
-    public Map<String,List<Book>> getGoodBooksFromClassification();
+    public List<SortHotBooks> getGoodBooksFromClassification();
     public List<Book> getRankingBook();
 }

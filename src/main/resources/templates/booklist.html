@@ -14,200 +14,179 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-fixed-top navbar-inverse">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Project name</a>
+<div th:replace="fragments/header :: header">...</div>
+
+<div class="container">
+
+    <div class="row row-offcanvas row-offcanvas-right">
+
+        <div class="col-xs-12 col-sm-9">
+            <p class="pull-right visible-xs">
+                <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+            </p>
+            <div class="jumbotron">
+                <p>This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some
+                    responsive-range viewport sizes to see it in action.</p>
             </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div><!-- /.nav-collapse -->
-        </div><!-- /.container -->
-    </nav><!-- /.navbar -->
 
-    <div class="container">
+            <div>
+                <h3><span class="label label-info">最受关注图书榜</span></h3>
+                <hr/>
+            </div>
 
-        <div class="row row-offcanvas row-offcanvas-right">
+            <div class="row">
 
-            <div class="col-xs-12 col-sm-9">
-                <p class="pull-right visible-xs">
-                    <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
-                </p>
-                <div class="jumbotron">
-                    <p>This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.</p>
+                <div th:each="book: ${books}" class="col-md-6">
+                    <h5 th:text="${book.title}"></h5>
+                    <a href="#" class="btn btn-primary btn-sm disabled" role="button">人数9K+</a>
+                    <a href="#" class="btn btn-primary btn-sm disabled" role="button">问题1K+</a>
+                    <button type="button" class="btn btn-success btn-sm">
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span> 关注
+                    </button>
+                    <br/>
+                    <small>
+                        <span th:text="${book.overview}" class="text-muted"></span>
+                        <a class="label label-default" href="#" role="label">更多 &raquo;</a>
+                    </small>
                 </div>
+            </div><!--/row-->
 
-                <div>
-                    <h3><span class="label label-info">最受关注图书榜</span></h3>
-                    <hr/>
-                </div>
+            <div>
+                <h3><span class="label label-info">最受关注图书榜</span></h3>
+                <hr/>
+            </div>
 
-                <div class="row">
+            <div class="row">
 
-                    <div th:each="book: ${books}" class="col-md-6">
-                        <h5 th:text="${book.title}"></h5>
-                        <a href="#" class="btn btn-primary btn-sm disabled" role="button">人数9K+</a>
-                        <a href="#" class="btn btn-primary btn-sm disabled" role="button">问题1K+</a>
-                        <button type="button" class="btn btn-success btn-sm">
+                <div th:each="book: ${books}">
+                    <div class="col-md-11">
+                        <a href="#"><h4 th:text="${book.title}" style="color: #0a4dcc;"></h4></a>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-default btn-sm text-right">
                             <span class="glyphicon glyphicon-star" aria-hidden="true"></span> 关注
                         </button>
+                    </div>
+
+                    <div class="col-md-11">
+                        <p>
+                            <span th:text="${book.overview}" class="text-muted"></span>
+                        </p>
+                    </div>
+
+                    <div class="col-md-1">&nbsp;</div>
+
+                    <div class="col-md-3">
+                        <small>
+                            <p class="text-left">
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-th-large text-muted" aria-hidden="true">计算机</span>
+                                </a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-star text-muted" aria-hidden="true">1,520</span>
+                                </a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-pencil text-muted" aria-hidden="true">438</span>
+                                </a>
+                            </p>
+
+                        </small>
+                    </div>
+
+                    <div class="col-md-7">
+                        <a href="#">
+                            <div style="background-color:skyblue; width: 15px; height: 15px; float: left; margin-left: 2px"></div>
+                        </a>
+                        <a href="#">
+                            <div style="background-color:orangered; width: 15px; height: 15px; float: left; margin-left: 2px"></div>
+                        </a>
+                        <a href="#">
+                            <div style="background-color:beige; width: 15px; height: 15px; float: left; margin-left: 2px"></div>
+                        </a>
+                        <a href="#">
+                            <div style="background-color:limegreen; width: 15px; height: 15px; float: left;"></div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-2">
+                        <small>
+                            <p class="text-right">
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-star text-muted" aria-hidden="true">103</span>
+                                </a>
+                                今天
+                            </p>
+                        </small>
+
+                    </div>
+
+                    <div class="col-md-12">
+                        <hr/>
+                    </div>
+
+
+                </div>
+                <hr/>
+            </div><!--/row-->
+
+            <div>
+                <h3><span class="label label-info">最受关注图书榜</span></h3>
+                <hr/>
+            </div>
+
+            <div class="row">
+                <div th:each="book: ${books}" class="media col-md-6">
+                    <div class="media-left media-middle">
+                        <a href="#">
+                            <div class="media-object"
+                                 style="background-color:#FFD382; width: 80px; height: 120px;"></div>
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 th:text="${book.title}"></h4>
+                        <span class="label label-default">人数9K+</span>
+                        <span class="label label-default">问题9K+</span>
+                        <span class="label label-primary">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span> 关注
+                            </span>
+
                         <br/>
                         <small>
                             <span th:text="${book.overview}" class="text-muted"></span>
                             <a class="label label-default" href="#" role="label">更多 &raquo;</a>
                         </small>
                     </div>
-                </div><!--/row-->
-
-                <div>
-                    <h3><span class="label label-info">最受关注图书榜</span></h3>
-                    <hr/>
                 </div>
-
-                <div class="row">
-
-                    <div th:each="book: ${books}">
-                        <div class="col-md-11">
-                            <a href="#"><h4 th:text="${book.title}" style="color: #0a4dcc;"></h4></a>
-                        </div>
-                        <div class="col-md-1">
-                            <button type="button" class="btn btn-default btn-sm text-right">
-                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span> 关注
-                            </button>
-                        </div>
-
-                        <div class="col-md-11">
-                            <p>
-                                <span th:text="${book.overview}" class="text-muted"></span>
-                            </p>
-                        </div>
-
-                        <div class="col-md-1">&nbsp;</div>
-
-                        <div class="col-md-3">
-                            <small>
-                                <p class="text-left">
-                                    <a href="#">
-                                        <span class="glyphicon glyphicon-th-large text-muted" aria-hidden="true">计算机</span>
-                                    </a>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="#">
-                                        <span class="glyphicon glyphicon-star text-muted" aria-hidden="true">1,520</span>
-                                    </a>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="#">
-                                        <span class="glyphicon glyphicon-pencil text-muted" aria-hidden="true">438</span>
-                                    </a>
-                                </p>
-
-                            </small>
-                        </div>
-
-                        <div class="col-md-7">
-                            <a href="#">
-                                <div style="background-color:skyblue; width: 15px; height: 15px; float: left; margin-left: 2px"></div>
-                            </a>
-                            <a href="#">
-                                <div style="background-color:orangered; width: 15px; height: 15px; float: left; margin-left: 2px"></div>
-                            </a>
-                            <a href="#">
-                                <div style="background-color:beige; width: 15px; height: 15px; float: left; margin-left: 2px"></div>
-                            </a>
-                            <a href="#">
-                                <div style="background-color:limegreen; width: 15px; height: 15px; float: left;"></div>
-                            </a>
-                        </div>
-
-                        <div class="col-md-2">
-                            <small>
-                                <p class="text-right">
-                                    <a href="#">
-                                        <span class="glyphicon glyphicon-star text-muted" aria-hidden="true">103</span>
-                                    </a>
-                                    今天
-                                </p>
-                            </small>
-
-                        </div>
-
-                        <div class="col-md-12">
-                            <hr/>
-                        </div>
+            </div>
 
 
-                    </div>
-                    <hr/>
-                </div><!--/row-->
+            <div>
+                <h3><span class="label label-info">最受关注问题</span></h3>
+                <hr/>
+            </div>
 
-                <div>
-                    <h3><span class="label label-info">最受关注图书榜</span></h3>
-                    <hr/>
+            <div class="row">
+
+                <div th:each="book: ${books}" class="col-xs-6 col-lg-4">
+                    <h4 th:text="${book.title}"></h4>
+                    <a href="#" class="btn btn-primary btn-sm disabled" role="button">活跃人数9K+</a>
+                    <a href="#" class="btn btn-primary btn-sm disabled" role="button">问题数1K+</a>
+                    <button type="button" class="btn btn-success btn-sm">
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span> 关注
+                    </button>
+                    <small><P th:text="${book.overview}" class="text-muted"></P></small>
+                    <p><a class="btn btn-default btn-sm" href="#" role="button">View details &raquo;</a></p>
                 </div>
+            </div><!--/row-->
 
-                <div class="row">
-                    <div th:each="book: ${books}" class="media col-md-6">
-                        <div class="media-left media-middle">
-                            <a href="#">
-                                <div class="media-object" style="background-color:#FFD382; width: 80px; height: 120px;"></div>
-                            </a>
-                        </div>
-                        <div class="media-body">
-                            <h4 th:text="${book.title}"></h4>
-                            <span class="label label-default">人数9K+</span>
-                            <span class="label label-default">问题9K+</span>
-                            <span class="label label-primary">
-                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span> 关注
-                            </span>
+        </div><!--/.col-xs-12.col-sm-9-->
 
-                            <br/>
-                            <small>
-                                <span th:text="${book.overview}" class="text-muted"></span>
-                                <a class="label label-default" href="#" role="label">更多 &raquo;</a>
-                            </small>
-                        </div>
-                    </div>
-                </div>
+    </div><!--/row-->
 
+    <div th:replace="fragments/footer :: footer">&copy; 2016 The Static Templates</div>
 
-                <div>
-                    <h3><span class="label label-info">最受关注问题</span></h3>
-                    <hr/>
-                </div>
-
-                <div class="row">
-
-                    <div th:each="book: ${books}" class="col-xs-6 col-lg-4">
-                        <h4 th:text="${book.title}"></h4>
-                        <a href="#" class="btn btn-primary btn-sm disabled" role="button">活跃人数9K+</a>
-                        <a href="#" class="btn btn-primary btn-sm disabled" role="button">问题数1K+</a>
-                        <button type="button" class="btn btn-success btn-sm">
-                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span> 关注
-                        </button>
-                        <small><P th:text="${book.overview}" class="text-muted"></P></small>
-                        <p><a class="btn btn-default btn-sm" href="#" role="button">View details &raquo;</a></p>
-                    </div>
-                </div><!--/row-->
-
-            </div><!--/.col-xs-12.col-sm-9-->
-
-        </div><!--/row-->
-
-        <hr/>
-
-        <footer>
-            <p>&copy; 2016 Company, Inc.</p>
-        </footer>
-
-    </div><!--/.container-->
+</div><!--/.container-->
 </body>
 </html>

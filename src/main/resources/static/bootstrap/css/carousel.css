@@ -1,0 +1,18 @@
+/* Carousel base class */
+.carousel {
+  height: 300px;
+}
+/* Declare heights because of positioning of img element */
+.carousel .item {
+  height: 300px;
+}
+.carousel-inner > .item > .media > img {
+  width: 300px;
+  height: 300px;
+}
+.carousel-indicators>li{
+  background-color: #5bc0de;
+}
+.carousel-indicators .active{
+  background-color: #7f8c8d;
+}

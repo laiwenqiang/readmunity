@@ -1,7 +1,10 @@
 package com.readmunity.service.impl;
 
 import com.readmunity.entity.Book;
+import com.readmunity.entity.Classification;
+import com.readmunity.entity.SortHotBooks;
 import com.readmunity.service.WelcomeService;
+import com.readmunity.util.Config;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,25 +19,15 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class WelcomeServiceImpl implements WelcomeService{
     public List<Book> gethotBooks(){
-        List<Book> arrayList=new ArrayList<Book>(10);
-        for(int i=0;i<3;i++) {
-            Book book1 = new Book("代码整洁之道"+i, "代码整洁之道说明代码整洁的重要性。");
-            arrayList.add(book1);
-        }
-        return arrayList;
+        return Config.getInstance().getBookListTest();
     }
-    public Map<String,List<Book>> getGoodBooksFromClassification(){
-        Map<String,List<Book>> map=new ConcurrentHashMap<String,List<Book>>(8);
+    public List<SortHotBooks> getGoodBooksFromClassification(){
+        List<SortHotBooks> sortHotBooklist=new ArrayList<SortHotBooks>(8);
         for(int i=0;i<8;i++) {
-            List<Book> arrayList = new ArrayList<Book>(6);
-            for (int j = 0; j < 6; j++) {
-                Book book1 = new Book("代码整洁之道" + i, "代码整洁之道说明代码整洁的重要性。");
-                arrayList.add(book1);
-            }
             String classification="文学"+i;
-            map.put(classification,arrayList);
+            sortHotBooklist.add(new SortHotBooks(new Classification(classification),Config.getInstance().getBookListTest()));
         }
-        return map;
+        return sortHotBooklist;
     }
 
     public List<Book> getRankingBook(){

@@ -14,128 +14,108 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-fixed-top navbar-inverse">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Project name</a>
-            </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div><!-- /.nav-collapse -->
-        </div><!-- /.container -->
-    </nav><!-- /.navbar -->
+<div th:replace="fragments/header :: header">...</div>
 
-    <div class="container">
+<div class="container">
 
-        <div class="page-header">
-            <h1>Java 编程思想</h1>
-            <h4><small>[美] Bruce Eckel </small></h4>
-            <p>
-                本书赢得了全球程序员的广泛赞誉，即使是最晦涩的概念，在Bruce Eckel的文字亲和力和小而直接的编程示例面前也会化解于无形。
-                从Java的基础语法到最高级特性（深入的面向对象概念、多线程、自动项目构建、单元测试和调试等），本书都能逐步指导你轻松掌握。
-            </p>
-            <p class="text-left">
-                <small>
-                    <a href="#">
-                        <span class="glyphicon glyphicon-th-large text-muted" aria-hidden="true">计算机</span>
-                    </a>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="#">
-                        <span class="glyphicon glyphicon-star text-muted" aria-hidden="true">1,520</span>
-                    </a>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="#">
-                        <span class="glyphicon glyphicon-pencil text-muted" aria-hidden="true">438</span>
-                    </a>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <span class="glyphicon glyphicon-time text-muted" aria-hidden="true">最近更新&nbsp;2017年05月27日</span>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                </small>
-            </p>
-        </div>
+    <div class="page-header">
+        <h1>Java 编程思想</h1>
+        <h4>
+            <small>[美] Bruce Eckel</small>
+        </h4>
+        <p>
+            本书赢得了全球程序员的广泛赞誉，即使是最晦涩的概念，在Bruce Eckel的文字亲和力和小而直接的编程示例面前也会化解于无形。
+            从Java的基础语法到最高级特性（深入的面向对象概念、多线程、自动项目构建、单元测试和调试等），本书都能逐步指导你轻松掌握。
+        </p>
+        <p class="text-left">
+            <small>
+                <a href="#">
+                    <span class="glyphicon glyphicon-th-large text-muted" aria-hidden="true">计算机</span>
+                </a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="#">
+                    <span class="glyphicon glyphicon-star text-muted" aria-hidden="true">1,520</span>
+                </a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="#">
+                    <span class="glyphicon glyphicon-pencil text-muted" aria-hidden="true">438</span>
+                </a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="glyphicon glyphicon-time text-muted" aria-hidden="true">最近更新&nbsp;2017年05月27日</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            </small>
+        </p>
+    </div>
 
-        <div class="row">
+    <div class="row">
 
-            <!--筛选栏-->
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="btn-group" role="group" aria-label="...">
-                            <button type="button" class="btn btn-primary">TOP</button>
-                            <button type="button" class="btn btn-success">最近热门</button>
-                            <button type="button" class="btn btn-danger">渴望解决</button>
-                            <button type="button" class="btn btn-warning">尚未解决</button>
-                        </div>
+        <!--筛选栏-->
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-primary">TOP</button>
+                        <button type="button" class="btn btn-success">最近热门</button>
+                        <button type="button" class="btn btn-danger">渴望解决</button>
+                        <button type="button" class="btn btn-warning">尚未解决</button>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="输入信息..."/>
-                            <span class="input-group-btn">
+                </div>
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="输入信息..."/>
+                        <span class="input-group-btn">
                             <button class="btn btn-default" type="button">搜索</button>
                         </span>
-                        </div>
                     </div>
                 </div>
-                <hr/>
             </div>
-
-            <div th:each="question: ${questionlist}" class="col-md-8">
-                <div class="row">
-                    <div class="col-md-1">
-                        <div style="background-color:skyblue; width: 40px; height: 40px; float: left;"></div>
-                    </div>
-                    <div class="col-md-11">
-                        <a href="/reply/list"><span th:text="${question.title}" class="lead"></span></a>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-1">&nbsp;</div>
-                    <div class="col-md-11">
-                        <p th:text="${question.content}"></p>
-                    </div>
-                </div>
-
-
-                <div class="row">
-                    <div class="col-md-1">&nbsp;</div>
-                    <div class="col-md-11">
-                        <p class="text-left">
-                            <small>
-                                <a href="#">
-                                    <span class="glyphicon glyphicon-star text-muted" aria-hidden="true">52</span>
-                                </a>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="#">
-                                    <span class="glyphicon glyphicon-pencil text-muted" aria-hidden="true">38</span>
-                                </a>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <span class="glyphicon glyphicon-time text-muted" aria-hidden="true">最近更新&nbsp;2017年05月27日</span>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                            </small>
-                        </p>
-                    </div>
-                </div>
-                <hr/>
-            </div>
+            <hr/>
         </div>
 
-        <hr/>
+        <div th:each="question: ${questionlist}" class="col-md-8">
+            <div class="row">
+                <div class="col-md-1">
+                    <div style="background-color:skyblue; width: 40px; height: 40px; float: left;"></div>
+                </div>
+                <div class="col-md-11">
+                    <a href="/reply/list"><span th:text="${question.title}" class="lead"></span></a>
+                </div>
+            </div>
 
-        <footer>
-            <p>&copy; 2016 Company, Inc.</p>
-        </footer>
+            <div class="row">
+                <div class="col-md-1">&nbsp;</div>
+                <div class="col-md-11">
+                    <p th:text="${question.content}"></p>
+                </div>
+            </div>
 
-    </div><!--/.container-->
+
+            <div class="row">
+                <div class="col-md-1">&nbsp;</div>
+                <div class="col-md-11">
+                    <p class="text-left">
+                        <small>
+                            <a href="#">
+                                <span class="glyphicon glyphicon-star text-muted" aria-hidden="true">52</span>
+                            </a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="#">
+                                <span class="glyphicon glyphicon-pencil text-muted" aria-hidden="true">38</span>
+                            </a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-time text-muted"
+                                  aria-hidden="true">最近更新&nbsp;2017年05月27日</span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                        </small>
+                    </p>
+                </div>
+            </div>
+            <hr/>
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer :: footer">&copy; 2016 The Static Templates</div>
+
+</div><!--/.container-->
 </body>
 </html>
