@@ -67,7 +67,7 @@
                              th:class="${rowStat.index==0}?'tab-pane active':'tab-pane'"
                              th:id="@{'panel-'+${rowStat.index}}">
                             <div class="row">
-                                <a href="#" >
+                                <a href="/question/list" >
                                     <div class="container-fluid media col-md-6 col-lg-4" th:each="book,rowStat2: ${goodBook.books}">
 
                                         <img th:src="${book.book_url}" width="50%" height="60%" align="left"/>
@@ -93,14 +93,15 @@
                 <div class="panel-group" id="accordion">
                     <div class="panel panel-default" th:each="rankingBook,rankstat: ${rankingBook}">
                         <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion"
-                                   th:href="@{'#collapse-'+${rankstat.index}}" th:text="${rankingBook.name}"></a>
-                            </h4>
+                            <span class="badge btn-danger" data-toggle="tooltip" title="当前在读人数">285</span>&nbsp;
+                            <a data-toggle="collapse" data-parent="#accordion"
+                               th:href="@{'#collapse-'+${rankstat.index}}" th:text="${rankingBook.name}"></a>
                         </div>
                         <div th:id="@{'collapse-'+${rankstat.index}}"
                              th:class="${rankstat.index==0}?'panel-collapse collapse in':'panel-collapse collapse'">
-                            <div class="panel-body" th:text="${rankingBook.overview}"></div>
+                            <a href="question/list">
+                                <div class="panel-body" th:text="${rankingBook.overview}"></div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -109,5 +110,10 @@
     </div>
 </div>
 <div th:replace="fragments/footer :: footer">&copy; 2016 The Static Templates</div>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 </body>
 </html>

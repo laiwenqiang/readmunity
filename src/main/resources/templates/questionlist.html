@@ -129,15 +129,6 @@
         $('[data-toggle="tooltip"]').tooltip();
     });
 
-    function showAlert(message, alerttype) {
-        alert("hello");
-        $('#alert_placeholder').append('<div id="alertdiv" class="alert ' +  alerttype + '">' +
-            '<a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')
-        setTimeout(function() {
-            $("#alertdiv").remove();
-        }, 5000);
-    };
-
     $("#addSchedule").click(function () {
         var message = "(✿╹◡╹)......已经加入阅读计划!";
         var alertType = "alert-success";
