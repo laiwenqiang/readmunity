@@ -1,16 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>welcome to readmunity</title>
-    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet"/>
-    <link href="/bootstrap/css/offcanvas.css" rel="stylesheet"/>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/bootstrap/js/offcanvas.js"></script>
+<head th:include="fragments/common">
 </head>
 <body>
 <div  class="container-fluid" th:fragment="footer">
