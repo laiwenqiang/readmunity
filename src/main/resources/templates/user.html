@@ -76,7 +76,7 @@
                         <div th:each="question: ${user.questionList}">
                             <div class="col-md-12">
                                 <div class="col-md-1"><span class="badge">27</span></div>
-                                <div class="col-md-8"><a href="/reply/list"><span th:text="${question.title}"></span></a></div>
+                                <div class="col-md-8"><a href="/reply/list"><span th:text="${question.name}"></span></a></div>
                                 <hr/>
                             </div>
                         </div>
@@ -176,7 +176,6 @@
     <script type="text/javascript" src="/js/diff2html-ui.min.js"></script>
 
 
-    <script type="text/javascript" src="/js/diff.js"></script>
 
     <script type="text/html" id="reading-content">
         <p class="text-muted">
@@ -240,6 +239,7 @@
             diff2htmlUi.highlightCode('#diffConetnt');
         });
 
+        <!-- 用户活动图显示 -->
         var cal = new CalHeatMap();
         cal.init({
             domain: "year",
@@ -251,11 +251,6 @@
             rowLimit: 10,
             range: 1,
             legendHorizontalPosition: "right",
-//            label: {
-//                width: 46,
-//                position: "right",
-//                offset: {x: 0, y: 110}
-//            },
             domainLabelFormat: "%Y年",
             itemName: ["个贡献<br/>","个贡献<br/>"],
             subDomainTitleFormat: {

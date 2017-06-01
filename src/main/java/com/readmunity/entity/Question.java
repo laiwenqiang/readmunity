@@ -6,12 +6,12 @@ package com.readmunity.entity;
 public class Question {
 
     private String id;
-    private String title;
+    private String name;
     private String content;
 
-    public Question(String id, String title, String content) {
+    public Question(String id, String name, String content) {
         this.id = id;
-        this.title = title;
+        this.name = name;
         this.content = content;
     }
 
@@ -23,12 +23,12 @@ public class Question {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getContent() {

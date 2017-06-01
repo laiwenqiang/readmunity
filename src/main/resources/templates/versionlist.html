@@ -26,13 +26,27 @@
 
         <div class="row">
             <div class="col-md-8 well">
-                <input type="text" th:field="${question.title}" class="form-control"/>
+                <input type="text" th:field="${question.name}" class="form-control"/>
                 <div id="editor" class="col-md-8"/>
+            </div>
+            <div class="col-md-4">
+                我们建议您使用markdown语法进行创作：<hr/>
+                # 第一级标题<br/>
+                ## 第二级标题<br/>
+                ### 第三级标题<br/>
+                - 无序列表1<br/>
+                - 无序列表2<br/>
+                - 无序列表3<br/>
+                1. 有序列表1<br/>
+                2. 有序列表2<br/>
+                3. 有序列表3<br/>
+                >这个是引用<br/>
+
             </div>
         </div>
 
         <div class="col-md-8">
-            <h2 th:text="${question.title}"></h2>
+            <h2 th:text="${question.name}"></h2>
             <span th:text="${question.content}" id="question"></span>
         </div>
     </div>
@@ -42,57 +56,72 @@
 
 
 
-<script type="text/javascript">
-    $("#question").markdown({
-        onShow: function(e){
-            e.showPreview();
-            $(".btn-toolbar").remove();
-        }
-    });
-</script>
+    <script type="text/javascript" src="/js/diff.js"></script>
 
-<script type="text/javascript" th:inline="javascript">
-    var content = [[${question.content}]];
-    $('#editor').markdown({
-        language:'zh',
-        savable: true,
-        height: '400',
-        onShow: function (e) {
-            e.setContent(content);
-            e.showPreview();
-        }
-    });
+    <script type="text/javascript">
+        $("#question").markdown({
+            onShow: function(e){
+                e.showPreview();
+                $(".btn-toolbar").remove();
+            }
+        });
+    </script>
 
-    (function ($) {
-    $.fn.markdown.messages.zh = {
-        'Bold': "粗体",
-        'Italic': "斜体",
-        'Heading': "标题",
-        'URL/Link': "链接",
-        'Image': "图片",
-        'List': "列表",
-        'Unordered List': "无序列表",
-        'Ordered List': "有序列表",
-        'Code': "代码",
-        'Quote': "引用",
-        'Preview': "预览",
-        'strong text': "粗体",
-        'emphasized text': "强调",
-        'heading text': "标题",
-        'enter link description here': "输入链接说明",
-        'Insert Hyperlink': "URL地址",
-        'enter image description here': "输入图片说明",
-        'Insert Image Hyperlink': "图片URL地址",
-        'enter image title here': "在这里输入图片标题",
-        'list text here': "这里是列表文本",
-        'code text here': "这里输入代码",
-        'quote here': "这里输入引用文本",
-        'Save': '保存'
-    };
+    <script type="text/javascript" th:inline="javascript">
+        (function ($) {
+            $.fn.markdown.messages.zh = {
+                'Bold': "粗体",
+                'Italic': "斜体",
+                'Heading': "标题",
+                'URL/Link': "链接",
+                'Image': "图片",
+                'List': "列表",
+                'Unordered List': "无序列表",
+                'Ordered List': "有序列表",
+                'Code': "代码",
+                'Quote': "引用",
+                'Preview': "预览（编辑）",
+                'strong text': "粗体",
+                'emphasized text': "强调",
+                'heading text': "标题",
+                'enter link description here': "输入链接说明",
+                'Insert Hyperlink': "URL地址",
+                'enter image description here': "输入图片说明",
+                'Insert Image Hyperlink': "图片URL地址",
+                'enter image title here': "在这里输入图片标题",
+                'list text here': "这里是列表文本",
+                'code text here': "这里输入代码",
+                'quote here': "这里输入引用文本",
+                'Save': '保存'
+            };
 
-}(jQuery));
+        var content = [[${question.content}]];
+        var name = [[${question.name}]];
+        <!-- 文件的版本号 -->
+//        var version = [[${question.version}]];
+        $('#editor').markdown({
+            language:'zh',
+            savable: true,
+            height: '400',
+            language: 'zh',
+            onShow: function (e) {
+                e.setContent(content);
+                e.showPreview();
+            },
+            onSave: function (e) {
+                var newContent = e.getContent();
+                var patch = JsDiff.createPatch(name, content, newContent, '#0', '#1');
+                alert(patch);
 
-</script>
+            }
+        });
+
+
+
+
+    }(jQuery));
+
+    </script>
 
 
 </body>
