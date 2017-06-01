@@ -131,7 +131,9 @@
                 </div>
             </div>
 
-            <div class="col-md-7">&nbsp;</div>
+            <div class="col-md-7">
+               <div id="diffContent"></div>
+            </div>
             <div class="col-md-5">
                 <div class="col-md-12">
                     <p class="text-muted">当前阅读</p>
@@ -168,7 +170,13 @@
     </div><!--/.container-->
     <script type="text/javascript" src="/js/d3.v3.min.js"></script>
     <script type="text/javascript" src="/js/cal-heatmap.min.js"></script>
-    <!--用户日常活动图-->
+
+    <link rel="stylesheet" type="text/css" href="/css/diff2html.css"/>
+    <script type="text/javascript" src="/js/diff2html.min.js"></script>
+    <script type="text/javascript" src="/js/diff2html-ui.min.js"></script>
+
+
+    <script type="text/javascript" src="/js/diff.js"></script>
 
     <script type="text/html" id="reading-content">
         <p class="text-muted">
@@ -211,6 +219,25 @@
 
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        <!-- 对比内容显示 -->
+            var lineDiffExample =
+                +'Index: filename\n'
+                +'===================================================================\n'
+                +'--- filename	left\n'
+                +'+++ filename	right\n'
+                +'@@ -1,1 +1,1 @@\n'
+                +'-hi i\'am ok\n'
+                +'-hello world\n'
+                +'+hi i\' not ok\n'
+                +'+\n'
+                +'+hello';
+
+        $(document).ready(function() {
+            var diff2htmlUi = new Diff2HtmlUI({diff: lineDiffExample});
+            diff2htmlUi.draw('#diffContent', {inputFormat: 'diff', showFiles: true, matching: 'lines'});
+            diff2htmlUi.highlightCode('#diffConetnt');
         });
 
         var cal = new CalHeatMap();
