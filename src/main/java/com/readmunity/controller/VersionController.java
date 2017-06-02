@@ -1,10 +1,15 @@
 package com.readmunity.controller;
 
+import com.readmunity.entity.Message;
 import com.readmunity.service.impl.QuestionServiceImpl;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 
 /**
  * Created by laiwenqiang on 2017/6/1.
@@ -25,8 +30,12 @@ public class VersionController {
         return "versionlist";
     }
 
-//    public String saveQuestion() {
-//
-//    }
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public @ResponseBody
+    Message saveQuestion(@RequestParam("oldContentId") String oldContentId,
+                                         @RequestParam("newContent") String newContent, @RequestParam("patch") String patch) {
+        System.out.println(patch);
+        return new Message(HttpStatus.OK, "success");
+    }
 }
 

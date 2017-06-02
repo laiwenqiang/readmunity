@@ -110,8 +110,20 @@
             },
             onSave: function (e) {
                 var newContent = e.getContent();
-                var patch = JsDiff.createPatch(name, content, newContent, '#0', '#1');
-                alert(patch);
+                var patch = JsDiff.createPatch(name, content, newContent, '#0', '#newVersion');
+                $.ajax({
+                    type: 'POST',
+                    url: '/version/save',
+                    dataType: 'json',
+                    data: {oldContentId: '1', newContent: newContent, patch: patch},
+                    success: function() {
+                        alert('修改成功');
+                        window.location.href='/reply/list';
+                    },
+                    error: function () {
+                        alert("修改失败");
+                    }
+                })
 
             }
         });
