@@ -27,7 +27,7 @@ public class VersionController {
     @RequestMapping(value = "/question", method = RequestMethod.GET)
     public String getQuestionVersionByUserId(ModelMap map) {
         map.addAttribute("question", new QuestionServiceImpl().getQuestionById("01"));
-        return "versionlist";
+        return "versionedit";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
