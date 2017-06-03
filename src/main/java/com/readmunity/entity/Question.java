@@ -20,6 +20,8 @@ public class Question extends Base {
     private int star;
     private int vote;
 
+    public Question() {}
+
     public Question(String name, String orId, int version, String content, int star, int vote, String id, String createdId,
                     String createdName, String createdTime) {
         this.name = name;

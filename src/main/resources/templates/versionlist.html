@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/common">
+</head>
+<body>
+<div th:replace="fragments/header :: header">...</div>
+    <div class="container">
+
+        <div class="page-header">
+            这写点东西
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div th:each="shot: ${shotlist}">
+                    <div th:value="${shot.id}" class="alert alert-success shot" role="alert" isOpen = "false" isLoad = "false">
+                        <div class="col-md-2">
+                            <p th:text="${shot.version}"/>
+                        </div>
+                    <div th:text="${shot.name}"/>
+                    </div>
+
+                    <div th:id="'diffContent_'+${shot.id}"></div>
+                </div>
+            </div>
+        </div>
+
+        <div th:replace="fragments/footer :: footer">&copy; 2016 The Static Templates</div>
+
+    </div>
+
+    <link rel="stylesheet" type="text/css" href="/css/diff2html.css"/>
+    <script type="text/javascript" src="/js/diff2html.min.js"></script>
+    <script type="text/javascript" src="/js/diff2html-ui.min.js"></script>
+
+    <script th:inline="javascript">
+        <!-- 对比内容显示 -->
+        $('.shot').click(function () {
+            var question = $(this);
+            var questionId = question.attr('value');
+
+            if('true' == question.attr('isOpen')) {
+                $('#diffContent_' + questionId).hide();
+                question.attr('isOpen', 'false');
+            } else if('false' == question.attr('isLoad')) {
+                 $.ajax({
+                    type: 'GET',
+                    async: false,
+                    url: '/version/question/patch',
+                    dataType: 'json',
+                    data: {questionId: questionId},
+                    success: function(e) {
+                        var diff2htmlUi = new Diff2HtmlUI({diff: e.result});
+                        diff2htmlUi.draw('#diffContent_' + questionId, {inputFormat: 'diff', matching: 'line'});
+                        diff2htmlUi.highlightCode('#diffConetnt_' + questionId);
+                        question.attr('isOpen', 'true');
+                        question.attr('isLoad', 'true');
+                    },
+                    error: function () {
+                        alert("获取数据失败！请重试！");
+                    }
+                });
+            } else {
+                $('#diffContent_' + questionId).show();
+                question.attr('isOpen', true);
+            }
+        });
+
+        $('.shot')[0].click();
+
+    </script>
+
+</body>
+</html>

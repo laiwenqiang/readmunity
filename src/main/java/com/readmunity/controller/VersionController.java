@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import sun.misc.Request;
+
+import java.nio.channels.FileChannel;
 
 
 /**
@@ -25,9 +28,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class VersionController {
 
     @RequestMapping(value = "/question", method = RequestMethod.GET)
-    public String getQuestionVersionByUserId(ModelMap map) {
+    public String getQuestionByUserId(ModelMap map) {
         map.addAttribute("question", new QuestionServiceImpl().getQuestionById("01"));
         return "versionedit";
+    }
+
+    @RequestMapping(value = "/question/list", method = RequestMethod.GET)
+    public String getQuestionShotList(ModelMap map) {
+        map.addAttribute("shotlist", new QuestionServiceImpl().getVersionShotById("001"));
+        return "versionlist";
+    }
+
+    @RequestMapping(value = "/question/patch", method = RequestMethod.GET)
+    public @ResponseBody
+    Message getQuestionPatch(@RequestParam("questionId") String questionId) {
+        return new Message(HttpStatus.OK, new QuestionServiceImpl().getPatchById(questionId));
+    }
+
+    @RequestMapping(value = "/reply/list", method = RequestMethod.GET)
+    public String getReplyList(ModelMap map) {
+
+        return "versionlist";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)

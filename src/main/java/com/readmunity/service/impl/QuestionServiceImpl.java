@@ -58,4 +58,42 @@ public class QuestionServiceImpl implements QuestionService {
                 "赖文强", "2017年06月02日07:02:24"));
         return questionList;
     }
+
+    public List<Question> getVersionShotById(String Id) {
+        List<Question> list = new ArrayList<>();
+        Question question = new Question();
+        question.setId("001");
+        question.setName("问题标题001");
+        question.setVersion(0);
+
+        Question question2 = new Question();
+        question2.setId("002");
+        question2.setName("问题标题002");
+        question2.setVersion(1);
+
+        Question question3 = new Question();
+        question3.setId("003");
+        question3.setName("问题标题003");
+        question3.setVersion(2);
+
+        list.add(question);
+        list.add(question2);
+        list.add(question3);
+        return list;
+    }
+
+    public String getPatchById(String id){
+        String patch = "Index: filename\n"
+                + "===================================================================\n"
+                + "--- filename	left\n"
+                + "+++ filename	right\n"
+                + "@@ -1,1 +1,1 @@\n"
+                +"-" + id + "\n"
+                + "-hi i\'am ok\n"
+                + "-hello world\n"
+                + "+hi i\' not ok\n"
+                + "+\n"
+                + "+hello";
+        return patch;
+    }
 }
