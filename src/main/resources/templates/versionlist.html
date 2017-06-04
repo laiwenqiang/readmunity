@@ -21,7 +21,11 @@
                     <div th:text="${shot.name}"/>
                     </div>
 
-                    <div th:id="'diffContent_'+${shot.id}"></div>
+                    <div th:id="'diffDiv_'+${shot.id}" class="diffDiv">
+                        <button th:id="'diffLineBtn_' + ${shot.id}" th:value="${shot.id}" type="button" class="btn btn-default btn-sm btn-lineDiff">line by line</button>
+                        <button th:value="${shot.id}" type="button" class="btn btn-default btn-sm btn-sideDiff">side by side</button>
+                        <div th:id="'diffContent_'+${shot.id}"/>
+                    </div>
                 </div>
             </div>
         </div>
@@ -36,12 +40,14 @@
 
     <script th:inline="javascript">
         <!-- 对比内容显示 -->
+        var diffMap = new Object();
+
         $('.shot').click(function () {
             var question = $(this);
             var questionId = question.attr('value');
 
             if('true' == question.attr('isOpen')) {
-                $('#diffContent_' + questionId).hide();
+                $('#diffDiv_' + questionId).hide();
                 question.attr('isOpen', 'false');
             } else if('false' == question.attr('isLoad')) {
                  $.ajax({
@@ -54,6 +60,9 @@
                         var diff2htmlUi = new Diff2HtmlUI({diff: e.result});
                         diff2htmlUi.draw('#diffContent_' + questionId, {inputFormat: 'diff', matching: 'line'});
                         diff2htmlUi.highlightCode('#diffConetnt_' + questionId);
+
+                        $('#diffDiv_' + questionId).show();
+                        diffMap['diffContent_' + questionId] = diff2htmlUi;
                         question.attr('isOpen', 'true');
                         question.attr('isLoad', 'true');
                     },
@@ -62,11 +71,26 @@
                     }
                 });
             } else {
-                $('#diffContent_' + questionId).show();
+                $('#diffDiv_' + questionId).show();
                 question.attr('isOpen', true);
             }
         });
 
+        $('.btn-lineDiff').click(function () {
+            var questionId = $(this).attr('value');
+            var diff2htmlUi = diffMap['diffContent_' + questionId];
+            diff2htmlUi.draw('#diffContent_' + questionId, {inputFormat: 'diff', matching: 'line', outputFormat: 'line-by-line'});
+            diff2htmlUi.highlight('#diffContent_' + questionId);
+        });
+
+        $('.btn-sideDiff').click(function () {
+            var questionId = $(this).attr('value');
+            var diff2htmlUi = diffMap['diffContent_' + questionId];
+            diff2htmlUi.draw('#diffContent_' + questionId, {inputFormat: 'diff', matching: 'line', outputFormat: 'side-by-side'});
+            diff2htmlUi.highlight('#diffContent_' + questionId);
+        })
+
+        $('.diffDiv').hide();
         $('.shot')[0].click();
 
     </script>
