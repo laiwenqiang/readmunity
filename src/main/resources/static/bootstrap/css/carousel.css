@@ -1,18 +1,109 @@
 /* Carousel base class */
 .carousel {
-  height: 300px;
+    height: 300px;
 }
+
 /* Declare heights because of positioning of img element */
 .carousel .item {
-  height: 300px;
+    height: 300px;
 }
-.carousel-inner-img{
-  width: 300px;
-  height: 300px;
+
+.carousel-inner-img {
+    width: 300px;
+    height: 300px;
 }
-.carousel-indicators>li{
-  background-color: #5bc0de;
+
+.carousel-indicators > li {
+    background-color: #5bc0de;
 }
-.carousel-indicators .active{
-  background-color: #7f8c8d;
+
+.carousel-indicators .active {
+    background-color: #7f8c8d;
+}
+
+.auth-form {
+    margin: 0 auto;
+    width: 340px;
+}
+
+.auth-form-header {
+    background-color: transparent;
+    border: 0 none;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+    text-shadow: none;
+    border-radius: 3px 3px 0 0;
+    padding: 10px 20px;
+}
+
+.auth-form-body {
+    border-radius: 5px;
+    border-top: 1px solid #d8dee2;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #fff;
+    border-image: none;
+    border-right: 1px solid #d8dee2;
+    border-left: 1px solid #d8dee2;
+    border-bottom: 1px solid #d8dee2;
+    font-size: 14px;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.form-control {
+    background-color: #fff;
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+    border: 1px solid #d1d5da;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(27, 31, 35, 0.075) inset;
+    color: #24292e;
+    font-size: 14px;
+    line-height: 20px;
+    min-height: 34px;
+    outline: medium none;
+    padding: 6px 8px;
+    vertical-align: middle;
+}
+
+.input-block {
+    margin-bottom: 15px;
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+}
+
+.forget-label-link {
+    float: right;
+}
+
+.signSubmit {
+    margin-top: 20px;
+    display: block;
+    text-align: center;
+    width: 100%;
+    background-color: #28a745;
+    background-image: linear-gradient(-180deg, #34d058 0%, #28a745 90%);
+    color: #fff;
+    border: 1px solid rgba(27, 31, 35, 0.2);
+    font-weight: 600;
+    line-height: 20px;
+    padding: 6px 12px;
+    border-radius: 0.25em;
+}
+
+.create-account-callout {
+    margin-top: 20px;
+    border: 1px solid #d8dee2;
+    border-radius: 5px;
+    padding: 15px 20px;
+    text-align: center;
+}
+body{
+    background-color: #f9f9f9;
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/common">
+</head>
+<body>
+<div th:include="fragments/header :: header">...</div>
+
+<!-- Main component for a primary marketing message or call to action -->
+<div class="container-fluid">
+    <div class="auth-form" >
+
+
+        <p th:if="${param.error != null}">
+            Invalid username and password.
+        </p>
+        <p th:if="${param.logout != null}">
+            You have been logged out.
+        </p>
+
+        <p th:if="${loginError}" class="error">Wrong user or password</p>
+        <div class="auth-form-header">
+            <h1>Sign in to GitHub</h1>
+        </div>
+        <div class="auth-form-body">
+            <form th:action="@{/sign/signIn}" method="post">
+                <label class="input-block" for="username">
+                    Username or email address
+                </label>
+                <input class="form-control input-block" type="text" id="username" name="username" autofocus="autofocus" />
+
+                <label class="input-block" for="password">
+                    Password <a href="#" class="forget-label-link">Forgot password?</a>
+                </label>
+                <input class="form-control input-block" type="password" id="password" name="password" />
+
+                <input class="signSubmit" type="submit" value="Sign in"/>
+            </form>
+        </div>
+
+
+        <p class="create-account-callout mt-3">
+            New to GitHub?
+            <a th:href="@{/sign/signUp}" data-ga-click="Sign in, switch to sign up">Create an account</a>.
+        </p>
+
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer">&copy; 2016 The Static Templates</div>
+</body>
+</html>

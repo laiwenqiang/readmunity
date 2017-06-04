@@ -1,82 +1,68 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>首页</title>
-    <meta charset="utf-8"/>
-
-    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet"/>
-    <link href="/bootstrap/css/offcanvas.css" rel="stylesheet"/>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/bootstrap/js/offcanvas.js"></script>
-
+<head th:include="fragments/common">
 </head>
 <body>
-<div class="container">
+<div th:include="fragments/header :: header">...</div>
 
-    <div th:replace="fragments/header :: header">...</div>
-    <!-- Main component for a primary marketing message or call to action -->
-    <div class="container">
+<!-- Main component for a primary marketing message or call to action -->
+<div class="container-fluid">
 
-        <div class="row row-offcanvas row-offcanvas-right">
-            <div class="col-md-7 text-md-left">
-                <div class="jumbotron">
-                    <h1 class="alt-h0 text-white lh-condensed-ultra mb-3">Built for developers</h1>
-                    <p class="alt-lead mb-4">
-                        GitHub is a development platform inspired by the way you work. From
-                        <a class="text-white jumbotron-link" href="/open-source">open source</a>
-                        to <a class="text-white jumbotron-link" href="/business">business</a>,
-                        you can host and review code, manage projects, and build software alongside millions of other
-                        developers.
-                    </p>
-                </div>
+    <div class="row row-offcanvas row-offcanvas-right">
+        <div class="col-md-7 text-md-left">
+            <div class="jumbotron">
+                <h1 class="alt-h0 text-white lh-condensed-ultra mb-3">Built for developers</h1>
+                <p class="alt-lead mb-4">
+                    GitHub is a development platform inspired by the way you work. From
+                    <a class="text-white jumbotron-link" href="/open-source">open source</a>
+                    to <a class="text-white jumbotron-link" href="/business">business</a>,
+                    you can host and review code, manage projects, and build software alongside millions of other
+                    developers.
+                </p>
             </div>
-            <div class="mx-auto col-sm-8 col-md-5 hide-sm Box bg-gray-light pt-4 pb-5">
-                <!-- '"` --><!-- </textarea></xmp> -->
-                <form method="post" class="home-hero-signup js-signup-form" autocomplete="off"
-                      action="/join" accept-charset="UTF-8">
-                    <dl class="form">
-                        <dd>
-                            <label for="user[login]" class="form-label text-gray f5">Username</label>
-                            <input type="text" placeholder="Pick a username"
-                                   class="form-control form-control-lg input-block" id="user[login]"
-                                   name="user[login]"/>
-                        </dd>
-                    </dl>
-                    <dl class="form">
-                        <dd>
-                            <label for="user[email]" class="form-label text-gray f5">Email</label>
-                            <input type="text" placeholder="Your email address"
-                                   class="form-control form-control-lg input-block js-email-notice-trigger"
-                                   id="user[email]" name="user[email]"/>
-                        </dd>
-                    </dl>
-                    <dl class="form">
-                        <dd>
-                            <label for="user[password]" class="form-label text-gray f5">Password</label>
-                            <input type="password" placeholder="Create a password"
-                                   class="form-control form-control-lg input-block" id="user[password]"
-                                   name="user[password]"/>
-                        </dd>
-                        <p class="form-control-note">Use at least one letter, one numeral, and seven characters.</p>
-                    </dl>
-                    <button type="submit" class="btn btn-primary btn-large f4 btn-block">Sign up for GitHub</button>
-                    <p class="form-control-note text-center">
-                        By clicking "Sign up for GitHub", you agree to our
-                        <a target="_blank" href="https://help.github.com/terms" class="">terms of service</a> and
-                        <a target="_blank" href="https://help.github.com/privacy" class="">privacy policy</a>.
-                        <span class="js-email-notice">We’ll occasionally send you account related emails.</span>
-                    </p>
-                </form>
-            </div>
-
         </div>
-    </div>
+        <div class="mx-auto col-sm-8 col-md-5 hide-sm Box bg-gray-light pt-4 pb-5">
+            <!-- '"` --><!-- </textarea></xmp> -->
+            <form method="post" class="home-hero-signup js-signup-form" autocomplete="off"
+                  action="/join" accept-charset="UTF-8">
+                <dl class="form">
+                    <dd>
+                        <label for="user[login]" class="form-label text-gray f5">Username</label>
+                        <input type="text" placeholder="Pick a username"
+                               class="form-control form-control-lg input-block" id="user[login]"
+                               name="user[login]"/>
+                    </dd>
+                </dl>
+                <dl class="form">
+                    <dd>
+                        <label for="user[email]" class="form-label text-gray f5">Email</label>
+                        <input type="text" placeholder="Your email address"
+                               class="form-control form-control-lg input-block js-email-notice-trigger"
+                               id="user[email]" name="user[email]"/>
+                    </dd>
+                </dl>
+                <dl class="form">
+                    <dd>
+                        <label for="user[password]" class="form-label text-gray f5">Password</label>
+                        <input type="password" placeholder="Create a password"
+                               class="form-control form-control-lg input-block" id="user[password]"
+                               name="user[password]"/>
+                    </dd>
+                    <p class="form-control-note">Use at least one letter, one numeral, and seven characters.</p>
+                </dl>
+                <button type="submit" class="btn btn-primary btn-large f4 btn-block">Sign up for GitHub</button>
+                <p class="form-control-note text-center">
+                    By clicking "Sign up for GitHub", you agree to our
+                    <a target="_blank" href="https://help.github.com/terms" class="">terms of service</a> and
+                    <a target="_blank" href="https://help.github.com/privacy" class="">privacy policy</a>.
+                    <span class="js-email-notice">We’ll occasionally send you account related emails.</span>
+                </p>
+            </form>
+        </div>
 
+    </div>
 </div>
+
 <div th:replace="fragments/footer :: footer">&copy; 2016 The Static Templates</div>
 </body>
 </html>
