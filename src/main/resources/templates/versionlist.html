@@ -52,7 +52,7 @@
             } else if('false' == shot.attr('isLoad')) {
                 var url, data;
                 if('question' == [[${type}]]) {
-                    url = '/version/question/path';
+                    url = '/version/question/patch';
                     data = {questionId: shotId};
                 } else if('reply' == [[${type}]]) {
                     url = '/version/reply/patch';
@@ -63,7 +63,6 @@
                 }
                  $.ajax({
                     type: 'GET',
-                    async: false,
                     url: url,
                     dataType: 'json',
                     data: data,
