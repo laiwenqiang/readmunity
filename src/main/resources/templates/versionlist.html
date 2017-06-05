@@ -7,21 +7,33 @@
 <div th:replace="fragments/header :: header">...</div>
     <div class="container">
 
-        <div class="page-header">
-            这写点东西
-        </div>
-
         <div class="row">
-            <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <span class="lead"><a href="/reply/list">返回</a></span>
+                    <hr/>
+                </div>
+            </div>
+
+            <div class="col-md-10 col-md-offset-1">
                 <div th:each="shot: ${shotlist}">
-                    <div th:value="${shot.id}" class="alert alert-success shot" role="alert" isOpen = "false" isLoad = "false">
+                    <div th:value="${shot.id}" class="alert alert-success shot row" role="alert" isOpen = "false" isLoad = "false">
                         <div class="col-md-2">
-                            <p th:text="${shot.version}"/>
+                            <h2 th:text="${shot.version}"/>
                         </div>
-                    <div th:text="${shot.summary}"/>
+                        <div th:text="${shot.summary}" class="col-md-8"/>
+
+                        <div class="col-md-2 small">
+                            2017/05/29/04:24&nbsp;修改
+                            <br/>
+                            <div style="background-color:skyblue; width: 40px; height: 40px; float: left;"></div>
+                            &nbsp;<a href="/user">赖文强</a>
+                            <br/>
+                            &nbsp;团长
+                        </div>
                     </div>
 
-                    <div th:id="'diffDiv_'+${shot.id}" class="diffDiv">
+                    <div th:id="'diffDiv_'+${shot.id}" class="diffDiv row">
                         <button th:id="'diffLineBtn_' + ${shot.id}" th:value="${shot.id}" type="button" class="btn btn-default btn-sm btn-lineDiff">line by line</button>
                         <button th:value="${shot.id}" type="button" class="btn btn-default btn-sm btn-sideDiff">side by side</button>
                         <div th:id="'diffContent_'+${shot.id}"/>
