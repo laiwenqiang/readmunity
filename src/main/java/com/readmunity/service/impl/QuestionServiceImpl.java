@@ -64,16 +64,19 @@ public class QuestionServiceImpl implements QuestionService {
         Question question = new Question();
         question.setId("001");
         question.setName("问题标题001");
+        question.setSummary("创建问题");
         question.setVersion(0);
 
         Question question2 = new Question();
         question2.setId("002");
         question2.setName("问题标题002");
+        question2.setSummary("修改内容，不规范");
         question2.setVersion(1);
 
         Question question3 = new Question();
         question3.setId("003");
         question3.setName("问题标题003");
+        question3.setSummary("修改样式");
         question3.setVersion(2);
 
         list.add(question);

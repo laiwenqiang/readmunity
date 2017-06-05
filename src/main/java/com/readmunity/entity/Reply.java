@@ -3,8 +3,19 @@ package com.readmunity.entity;
 /**
  * Created by laiwenqiang on 2017/5/28.
  */
-public class Reply {
-    private String id;
+public class Reply extends Base{
+
+    /**
+     * 1. 如果问题没被修改过，值为0.
+     * 2. 如果问题被修改过，值为原始问题的id；
+     */
+    private String orId;
+    /**
+     * 原始问题的为0.
+     * 以此类推，0，1，2，3，4.。。
+     */
+    private int version;
+
     private String questionId;
     private String questionName;
     /**
@@ -21,6 +32,9 @@ public class Reply {
      * 回答被赞同的数量
      */
     private int agreementNum;
+    private String summary;
+
+    public Reply() {}
 
     public Reply(String id, String questionId, String questionName, String questionerId, String content, String responderId, String responderName, int agreementNum) {
         this.id = id;
@@ -33,12 +47,20 @@ public class Reply {
         this.agreementNum = agreementNum;
     }
 
-    public String getId() {
-        return id;
+    public String getOrId() {
+        return orId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setOrId(String orId) {
+        this.orId = orId;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     public String getQuestionId() {
@@ -95,5 +117,13 @@ public class Reply {
 
     public void setAgreementNum(int agreementNum) {
         this.agreementNum = agreementNum;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 }

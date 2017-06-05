@@ -18,7 +18,7 @@
                         <div class="col-md-2">
                             <p th:text="${shot.version}"/>
                         </div>
-                    <div th:text="${shot.name}"/>
+                    <div th:text="${shot.summary}"/>
                     </div>
 
                     <div th:id="'diffDiv_'+${shot.id}" class="diffDiv">
@@ -43,51 +43,62 @@
         var diffMap = new Object();
 
         $('.shot').click(function () {
-            var question = $(this);
-            var questionId = question.attr('value');
+            var shot = $(this);
+            var shotId = shot.attr('value');
 
-            if('true' == question.attr('isOpen')) {
-                $('#diffDiv_' + questionId).hide();
-                question.attr('isOpen', 'false');
-            } else if('false' == question.attr('isLoad')) {
+            if('true' == shot.attr('isOpen')) {
+                $('#diffDiv_' + shotId).hide();
+                shot.attr('isOpen', 'false');
+            } else if('false' == shot.attr('isLoad')) {
+                var url, data;
+                if('question' == [[${type}]]) {
+                    url = '/version/question/path';
+                    data = {questionId: shotId};
+                } else if('reply' == [[${type}]]) {
+                    url = '/version/reply/patch';
+                    data = {replyId: shotId};
+                } else {
+                    alert('参数异常！')
+                    return;
+                }
                  $.ajax({
                     type: 'GET',
                     async: false,
-                    url: '/version/question/patch',
+                    url: url,
                     dataType: 'json',
-                    data: {questionId: questionId},
+                    data: data,
                     success: function(e) {
                         var diff2htmlUi = new Diff2HtmlUI({diff: e.result});
-                        diff2htmlUi.draw('#diffContent_' + questionId, {inputFormat: 'diff', matching: 'line'});
-                        diff2htmlUi.highlightCode('#diffConetnt_' + questionId);
+                        diff2htmlUi.draw('#diffContent_' + shotId, {inputFormat: 'diff', matching: 'line'});
+                        diff2htmlUi.highlightCode('#diffConetnt_' + shotId);
 
-                        $('#diffDiv_' + questionId).show();
-                        diffMap['diffContent_' + questionId] = diff2htmlUi;
-                        question.attr('isOpen', 'true');
-                        question.attr('isLoad', 'true');
+                        $('#diffDiv_' + shotId).show();
+                        diffMap['diffContent_' + shotId] = diff2htmlUi;
+                        shot.attr('isOpen', 'true');
+                        shot.attr('isLoad', 'true');
                     },
                     error: function () {
                         alert("获取数据失败！请重试！");
                     }
                 });
             } else {
-                $('#diffDiv_' + questionId).show();
-                question.attr('isOpen', true);
+                $('#diffDiv_' + shotId).show();
+                shot.attr('isOpen', true);
             }
         });
 
         $('.btn-lineDiff').click(function () {
-            var questionId = $(this).attr('value');
-            var diff2htmlUi = diffMap['diffContent_' + questionId];
-            diff2htmlUi.draw('#diffContent_' + questionId, {inputFormat: 'diff', matching: 'line', outputFormat: 'line-by-line'});
-            diff2htmlUi.highlight('#diffContent_' + questionId);
+            var shotId = $(this).attr('value');
+            var diff2htmlUi = diffMap['diffContent_' + shotId];
+            diff2htmlUi.draw('#diffContent_' + shotId, {inputFormat: 'diff', matching: 'line', outputFormat: 'line-by-line'});
+            diff2htmlUi.highlight('#diffContent_' + shotId);
         });
 
         $('.btn-sideDiff').click(function () {
-            var questionId = $(this).attr('value');
-            var diff2htmlUi = diffMap['diffContent_' + questionId];
-            diff2htmlUi.draw('#diffContent_' + questionId, {inputFormat: 'diff', matching: 'line', outputFormat: 'side-by-side'});
-            diff2htmlUi.highlight('#diffContent_' + questionId);
+            var shotId= $(this).attr('value');
+            var diff2htmlUi = diffMap['diffContent_' + shotId];
+            diff2htmlUi.draw('#diffContent_' + shotId, {inputFormat: 'diff', matching: 'line', outputFormat: 'side-by-side'});
+            diff2htmlUi.highlight('#diffContent_' + shotId);
         })
 
         $('.diffDiv').hide();

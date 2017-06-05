@@ -19,6 +19,7 @@ public class Question extends Base {
     private String content;
     private int star;
     private int vote;
+    private String summary;
 
     public Question() {}
 
@@ -84,5 +85,13 @@ public class Question extends Base {
 
     public void setVote(int vote) {
         this.vote = vote;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 }

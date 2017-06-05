@@ -2,6 +2,7 @@ package com.readmunity.controller;
 
 import com.readmunity.entity.Message;
 import com.readmunity.service.impl.QuestionServiceImpl;
+import com.readmunity.service.impl.ReplyServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -9,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import sun.misc.Request;
-
-import java.nio.channels.FileChannel;
 
 
 /**
@@ -35,6 +33,7 @@ public class VersionController {
 
     @RequestMapping(value = "/question/list", method = RequestMethod.GET)
     public String getQuestionShotList(ModelMap map) {
+        map.addAttribute("type", "question");
         map.addAttribute("shotlist", new QuestionServiceImpl().getVersionShotById("001"));
         return "versionlist";
     }
@@ -47,8 +46,15 @@ public class VersionController {
 
     @RequestMapping(value = "/reply/list", method = RequestMethod.GET)
     public String getReplyList(ModelMap map) {
-
+        map.addAttribute("type", "reply");
+        map.addAttribute("shotlist", new ReplyServiceImpl().getVersionShotById("001"));
         return "versionlist";
+    }
+
+    @RequestMapping(value = "/reply/patch", method = RequestMethod.GET)
+    public @ResponseBody
+    Message getReplyPatch(@RequestParam("replyId") String replyId) {
+        return new Message(HttpStatus.OK, new ReplyServiceImpl().getPatchById(replyId));
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
