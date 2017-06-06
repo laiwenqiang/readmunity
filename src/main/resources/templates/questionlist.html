@@ -187,7 +187,7 @@
         text = text + '<li onclick="previous()"><a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a></li>';
 
         while ((chapterCurrent<=chapterNum) && (chapterCurrent<num*currentPage+1)) {
-            text = text + '<li><a href="/question/chapter/list?bookId='+ '001' + '&chapter=' + chapterCurrent +'">' + chapterCurrent + '</a>';
+            text = text + '<li><a href="/question/chapter/list?bookId='+ [[${bookId}]] + '&chapter=' + chapterCurrent +'">' + chapterCurrent + '</a>';
             chapterCurrent++;
         }
         text = text + '<li onclick="next()"><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a> </li>'

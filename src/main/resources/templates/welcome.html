@@ -56,7 +56,7 @@
                              th:class="${rowStat.index==0}?'tab-pane active':'tab-pane'"
                              th:id="@{'panel-'+${rowStat.index}}">
                             <div class="row">
-                                <a href="/question/list" >
+                                <a href="/question/list?bookId=001" >
                                     <div class="container-fluid media col-md-6 col-lg-4" th:each="book,rowStat2: ${goodBook.books}">
 
                                         <img th:src="${book.book_url}" width="50%" height="60%" align="left"/>
@@ -88,7 +88,7 @@
                         </div>
                         <div th:id="@{'collapse-'+${rankstat.index}}"
                              th:class="${rankstat.index==0}?'panel-collapse collapse in':'panel-collapse collapse'">
-                            <a href="question/list">
+                            <a href="question/list?bookId=001">
                                 <div class="panel-body" th:text="${rankingBook.overview}"></div>
                             </a>
                         </div>

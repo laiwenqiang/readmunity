@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class QuestionController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String getQuestionListByBookId(ModelMap map) {
+    public String getQuestionListByBookId(ModelMap map, @RequestParam String bookId) {
         map.addAttribute("questionlist", new QuestionServiceImpl().getQuestionListByBookId("01"));
+        map.addAttribute("bookId", bookId);
         return "questionlist";
     }
 
@@ -31,6 +32,7 @@ public class QuestionController {
     public String getQuestionListByBookIdAndChapter(ModelMap map, @RequestParam String bookId,
                                                     @RequestParam String chapter) {
         map.addAttribute("questionlist", new QuestionServiceImpl().getQuestionListByBookIdAndChapter(bookId, chapter));
+        map.addAttribute("bookId", bookId);
         return "questionlist";
     }
 }
