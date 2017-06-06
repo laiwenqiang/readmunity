@@ -12,20 +12,30 @@
 
     <div class="page-header">
         <div id="alert_content"/>
-        <h1>Java 编程思想
+        <div>
+            <h1>Java 编程思想</h1>
+        </div>
+
+        <div>
+            <span class="text-muted">[美] Bruce Eckel</span>&nbsp;&nbsp;&nbsp;|
             <span class="badge alert-danger" data-toggle="tooltip" title="提问数量">490</span>
+            <span class="small">问题</span>&nbsp;
             <span class="badge alert-success" data-toggle="tooltip" title="回答数量">1,980</span>
+            <span class="small">回答</span>&nbsp;
             <span class="badge alert-danger" data-toggle="tooltip" title="当前在读人数">285</span>
+            <span class="small">在读</span>&nbsp;
             <span class="badge alert-info" data-toggle="tooltip" title="已经读完人数">29,087</span>
+            <span class="small">已读</span>&nbsp;
             <button id="addSchedule" type="button" class="badge alert-warning">加入阅读</button>
-        </h1>
-        <h4>
-            <small>[美] Bruce Eckel</small>
-        </h4>
-        <p>
-            本书赢得了全球程序员的广泛赞誉，即使是最晦涩的概念，在Bruce Eckel的文字亲和力和小而直接的编程示例面前也会化解于无形。
-            从Java的基础语法到最高级特性（深入的面向对象概念、多线程、自动项目构建、单元测试和调试等），本书都能逐步指导你轻松掌握。
-        </p>
+        </div>
+        <div>
+            <br/>
+            <p>
+                本书赢得了全球程序员的广泛赞誉，即使是最晦涩的概念，在Bruce Eckel的文字亲和力和小而直接的编程示例面前也会化解于无形。
+                从Java的基础语法到最高级特性（深入的面向对象概念、多线程、自动项目构建、单元测试和调试等），本书都能逐步指导你轻松掌握。
+            </p>
+        </div>
+
         <p class="text-left">
             <small>
                 <a href="#">
@@ -59,13 +69,20 @@
                         <button type="button" class="btn btn-warning">尚未解决</button>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-md-6">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="输入信息..."/>
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button">搜索</button>
                         </span>
                     </div>
+                </div>
+                <div class="col-md-12">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination" style="margin-bottom: 0;">
+
+                        </ul>
+                    </nav>
                 </div>
             </div>
             <hr/>
@@ -121,15 +138,65 @@
         $('[data-toggle="tooltip"]').tooltip();
     });
 
-    $("#addSchedule").click(function () {
+    $('#addSchedule').click(function () {
         var message = "(✿╹◡╹)......已经加入阅读计划!";
         var alertType = "alert-success";
-        $('#alert_content').append('<div id="alertdiv" class="alert ' +  alertType + '">' +
+        $('#alert_content').append('<div id="alertDiv" class="alert ' +  alertType + '">' +
             '<a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')
         setTimeout(function() {
-            $("#alertdiv").remove();
+            $("#alertDiv").remove();
         }, 2500);
     });
+
+
 </script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var chapterNum, chapterCurrent=1, currentPage=1, num=12;
+    $.ajax({
+        type: 'GET',
+        url: '/book/chapterNum',
+        dataType: 'json',
+        data: {'bookId': '001'},
+        success: function(e) {
+            chapterNum = e.result;
+            draw();
+        },
+        error: function() {
+            alert('获取章节信息失败！');
+        }
+    });
+    var next = function() {
+        if(chapterCurrent<chapterNum) {
+            currentPage++;
+            draw();
+        }
+    }
+    var previous = function () {
+        var startNum = (currentPage-1)*num-num+1;
+        if(startNum > 0) {
+            chapterCurrent = startNum;
+            currentPage--;
+            draw();
+        }
+        
+    }
+    var draw = function () {
+        var text = '<li class="disabled"><a>章节定位</a></li>';
+        text = text + '<li onclick="previous()"><a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a></li>';
+
+        while ((chapterCurrent<=chapterNum) && (chapterCurrent<num*currentPage+1)) {
+            text = text + '<li><a href="/question/chapter/list?bookId='+ '001' + '&chapter=' + chapterCurrent +'">' + chapterCurrent + '</a>';
+            chapterCurrent++;
+        }
+        text = text + '<li onclick="next()"><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a> </li>'
+        $('.pagination').empty();
+        $('.pagination').prepend(text);
+    }
+    /*]]>*/
+
+</script>
+
 </body>
 </html>

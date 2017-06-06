@@ -99,4 +99,19 @@ public class QuestionServiceImpl implements QuestionService {
                 + "+hello";
         return patch;
     }
+
+    public Object getQuestionListByBookIdAndChapter(String bookId, String chapter) {
+        List<Question> questionList = new ArrayList<>();
+        questionList.add(new Question("问题标题01--第" + chapter + "章节", "001", 0, "问题内容01", 100, 20, "001", "001",
+                "赖文强", "2017年06月02日07:02:24"));
+        questionList.add(new Question("问题标题01--第" + chapter + "章节", "001", 0, "问题内容01", 100, 20, "001", "001",
+                "赖文强", "2017年06月02日07:02:24"));
+        questionList.add(new Question("问题标题01--第" + chapter + "章节", "001", 0, "问题内容01", 100, 20, "001", "001",
+                "赖文强", "2017年06月02日07:02:24"));
+        questionList.add(new Question("问题标题01--第" + chapter + "章节","001", 0, "问题内容01", 100, 20, "001", "001",
+                "赖文强", "2017年06月02日07:02:24"));
+        questionList.add(new Question("问题标题01--第" + chapter + "章节","001", 0, "问题内容01", 100, 20, "001", "001",
+                "赖文强", "2017年06月02日07:02:24"));
+        return questionList;
+    }
 }
