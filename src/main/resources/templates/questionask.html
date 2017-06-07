@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/common">
+    <title>问题列表</title>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header">...</div>
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-8 col-md-offset-2" id="nameDiv">
+            <input id="name" type="text" class="form-control" placeholder="请输入标题"/>
+        </div>
+        <br/><br/>
+
+        <div class="col-md-8 col-md-offset-2">
+            <input id="tags" type="text" class="form-control" placeholder="请输入标签" data-role="tagsinput"/>
+        </div>
+
+        <br/><br/>
+
+        <div class="col-md-8 col-md-offset-2 form-group" id="contentDiv">
+            <form>
+                <textarea rows="15" id="content" class="form-control" placeholder="请勿提交重复、无关、无价值问题"></textarea>
+                <br/>
+            </form>
+        </div>
+
+    </div>
+
+    <div th:replace="fragments/footer :: footer">&copy; 2016 The Static Templates</div>
+
+</div><!--/.container-->
+
+</body>
+
+<link rel="stylesheet" href="/markdown/css/bootstrap-markdown.min.css"/>
+<link rel="stylesheet" href="/css/font-awesome.css"/>
+
+<link rel="stylesheet" href="/tags/bootstrap-tagsinput.css"/>
+<link rel="stylesheet" href="/css/bootstrap-tagsinput-mine.css"/>
+
+<!--<link rel="stylesheet" href="/css/jquery-ui.min.css"/>-->
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css"/>
+<link rel="stylesheet" href="/tags/jquery.tagit.css"/>
+
+<script src="/markdown/js/bootstrap-markdown.js"></script>
+<script src="/markdown/js/to-markdown.js"></script>
+<script src="/markdown/js/markdown.js"></script>
+<script src="/markdown/js/marked.js"></script>
+
+
+<script src="/tags/bootstrap3-typeahead.min.js"></script>
+<script src="/tags/bootstrap-tagsinput.min.js"></script>
+<script src="/tags/bootstrap-tagsinput-angular.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/tags/tag-it.js"/>
+
+<script th:inline="javascript">
+
+    $('#tags').tagsinput({
+        maxTags: 5,
+        typeahead: {
+            source: function(query) {
+                return $.get('/tag/list', {query: query});
+            },
+            afterSelect: function() {
+                this.$element[0].value = '';
+            }
+        },
+        tagClass: 'label label-danger label-important'
+    });
+
+    (function ($) {
+        $.fn.markdown.messages.zh = {
+            'Bold': "粗体",
+            'Italic': "斜体",
+            'Heading': "标题",
+            'URL/Link': "链接",
+            'Image': "图片",
+            'List': "列表",
+            'Unordered List': "无序列表",
+            'Ordered List': "有序列表",
+            'Code': "代码",
+            'Quote': "引用",
+            'Preview': "预览",
+            'strong text': "粗体",
+            'emphasized text': "强调",
+            'heading text': "标题",
+            'enter link description here': "输入链接说明",
+            'Insert Hyperlink': "URL地址",
+            'enter image description here': "输入图片说明",
+            'Insert Image Hyperlink': "图片URL地址",
+            'enter image title here': "在这里输入图片标题",
+            'list text here': "这里是列表文本",
+            'code text here': "这里输入代码",
+            'quote here': "这里输入引用文本",
+            'Save': '保存'
+        };
+
+    }(jQuery));
+
+    /*<![CDATA[*/
+    $("#content").markdown({
+        language:'zh',
+        savable: true,
+        autofocus: true,
+        onSave: function(e) {
+            var bookId = [[${bookId}]];
+            var tags = $('#tags').tagsinput('items');
+            var name = $('#name').val();
+            var content = e.getContent();
+
+            if(!name || name=='') {
+                $('#nameDiv').addClass('has-error');
+                $('#name').focus();
+                return;
+            }
+            if(!content || content==''){
+                $('#contentDiv').addClass('has-error');
+                $('#content').focus();
+                return;
+            }
+            location.href = '/question/save?bookId=' + bookId + '&name=' + name + '&content=' + content
+                + '&tags=' + tags;
+        }
+    });
+
+    /*]]>*/
+</script>
+</html>

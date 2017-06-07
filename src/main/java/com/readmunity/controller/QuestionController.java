@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 /**
  * Created by laiwenqiang on 2017/5/27.
  */
@@ -35,4 +34,21 @@ public class QuestionController {
         map.addAttribute("bookId", bookId);
         return "questionlist";
     }
+
+    @RequestMapping(value = "/ask", method = RequestMethod.GET)
+    public String askQuestion(ModelMap map, @RequestParam String bookId) {
+        map.addAttribute("bookId", bookId);
+        return "questionask";
+    }
+
+    @RequestMapping(value = "/save", method = RequestMethod.GET)
+    public String saveQuestion(ModelMap map, @RequestParam String bookId, @RequestParam String name,
+                               @RequestParam String content, @RequestParam String[] tags) {
+        System.out.println("bookId: " + bookId);
+        System.out.println("name: " + name);
+        System.out.println("content: " + content);
+        System.out.println("tags: " + tags);
+        return "questionlist";
+    }
+
 }

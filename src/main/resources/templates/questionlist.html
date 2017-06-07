@@ -74,14 +74,14 @@
                         <input type="text" class="form-control" placeholder="输入信息..."/>
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button">搜索</button>
+                            <button type="button" class="btn btn-primary" onclick="relocate()">提问</button>
                         </span>
                     </div>
                 </div>
+
                 <div class="col-md-12">
                     <nav aria-label="Page navigation">
-                        <ul class="pagination" style="margin-bottom: 0;">
-
-                        </ul>
+                        <ul class="pagination" style="margin-bottom: 0;"/>
                     </nav>
                 </div>
             </div>
@@ -195,7 +195,12 @@
         $('.pagination').prepend(text);
     }
     /*]]>*/
+</script>
 
+<script th:inline="javascript">
+    var relocate = function () {
+        location.href = '/question/ask?bookId=' + [[${bookId}]];
+    }
 </script>
 
 </body>
