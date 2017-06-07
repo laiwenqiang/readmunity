@@ -48,6 +48,10 @@ public class QuestionController {
         System.out.println("name: " + name);
         System.out.println("content: " + content);
         System.out.println("tags: " + tags);
+
+        map.addAttribute("questionlist", new QuestionServiceImpl().getQuestionListByBookId(bookId));
+        map.addAttribute("bookId", bookId);
+
         return "questionlist";
     }
 
