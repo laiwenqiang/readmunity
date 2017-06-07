@@ -7,7 +7,7 @@ import java.util.List;
  * Created by laiwenqiang on 2017/5/29.
  */
 public class User {
-    private String id;
+    private Integer id;
     private String name;
     private String address;
     private String email;
@@ -26,7 +26,9 @@ public class User {
     private List<Question> questionList = new ArrayList<>();
     private List<Reply> replyList = new ArrayList<>();
 
-    public User(String id, String name, String address, String email, String qq, String weibo, String github, String twitter, int score, String reputation, List<Book> starBookList, List<Question> questionList, List<Reply> replyList) {
+    public User(){}
+
+    public User(Integer id, String name, String address, String email, String qq, String weibo, String github, String twitter, int score, String reputation, List<Book> starBookList, List<Question> questionList, List<Reply> replyList) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -42,11 +44,11 @@ public class User {
         this.replyList = replyList;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -144,5 +146,10 @@ public class User {
 
     public void setReplyList(List<Reply> replyList) {
         this.replyList = replyList;
+    }
+
+    @Override
+    public String toString() {
+        return "id: " + id +"\n" + "name: " + name;
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class BookServiceImpl implements BookService {
 
-    public List<Book> getStarBookListByUserId(String userId) {
+    public List<Book> getStarBookListByUserId(int userId) {
         List<Book> bookList = new ArrayList<>();
         bookList.add(new Book("java编程思想", "本书赢得了全球程序员的广泛赞誉，即使是最晦涩的概念，在Bruce Eckel的文字亲和力和小而直接的编程示例面前也会化解于无形。"));
         bookList.add(new Book("Head First 设计模式", "强大的写作阵容。本书作者Eric Freeman；ElElisabeth Freeman是作家、讲师和技术顾问。Eric拥有耶鲁大学的计算机科学博"));

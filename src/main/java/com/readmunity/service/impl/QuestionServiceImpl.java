@@ -44,7 +44,7 @@ public class QuestionServiceImpl implements QuestionService {
                 "赖文强", "2017年06月02日07:02:24");
     }
 
-    public List<Question> getQuestionListByUserId(String userId) {
+    public List<Question> getQuestionListByUserId(int userId) {
         List<Question> questionList = new ArrayList<>();
         questionList.add(new Question("问题标题01", "001", 0, "问题内容01", 100, 20, "001", "001",
                         "赖文强", "2017年06月02日07:02:24"));

@@ -1,3 +1,5 @@
 .bootstrap-tagsinput {
     width: 100%;
 }
+/*.bootstrap-tagsinput .tag [data-role="remove"] { display: none; }*/
+/*.bootstrap-tagsinput input { display: none; }*/
