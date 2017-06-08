@@ -1,12 +1,13 @@
 package com.readmunity.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by laiwenqiang on 2017/5/29.
  */
-public class User {
+public class User implements Serializable {
     private Integer id;
     private String name;
     private String address;
