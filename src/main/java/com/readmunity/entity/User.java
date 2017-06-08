@@ -10,6 +10,11 @@ import java.util.List;
 public class User implements Serializable {
     private Integer id;
     private String name;
+    private String password;
+    /**
+     * 头像url
+     */
+    private String avator;
     private String address;
     private String email;
     private String qq;
@@ -57,8 +62,25 @@ public class User implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getAvator() {
+        return avator;
+    }
+
+    public void setAvator(String avator) {
+        this.avator = avator;
     }
 
     public String getAddress() {
