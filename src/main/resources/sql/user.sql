@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS user (
 	id SMALLINT(6) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(50) NOT NULL,
 	password VARCHAR(50) NOT NULL,
-	avator VARCHAR(255) NOT NULL,
+	avator VARCHAR(255),
 	address VARCHAR(255),
 	email VARCHAR(50),
 	qq VARCHAR(50),
@@ -22,4 +22,5 @@ CREATE TABLE IF NOT EXISTS user (
 	PRIMARY KEY(id)
 )ENGINE = InnoDB DEFAULT CHAR SET = utf8;
 
-INSERT INTO user(name,password,address,email,qq,score,reputation) VALUES ('赖文强','123','China','1260091093@qq.com','1260091093',1000,'将军');
+INSERT INTO user(name,password,address,email,qq,score,reputation) VALUES ('赖文强','123','China','1260091093@qq.com','1260091093',1000,'将军');;
+INSERT INTO user(name,password) VALUES ('admin','admin');
