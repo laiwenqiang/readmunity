@@ -23,34 +23,54 @@
         </div>
         <div class="mx-auto col-sm-8 col-md-5 hide-sm Box bg-gray-light pt-4 pb-5">
             <!-- '"` --><!-- </textarea></xmp> -->
-            <form method="post" class="home-hero-signup js-signup-form" autocomplete="off"
-                  action="/join" accept-charset="UTF-8">
-                <dl class="form">
-                    <dd>
-                        <label for="user[login]" class="form-label text-gray f5">Username</label>
-                        <input type="text" placeholder="Pick a username"
-                               class="form-control form-control-lg input-block" id="user[login]"
-                               name="user[login]"/>
-                    </dd>
-                </dl>
-                <dl class="form">
-                    <dd>
-                        <label for="user[email]" class="form-label text-gray f5">Email</label>
-                        <input type="text" placeholder="Your email address"
-                               class="form-control form-control-lg input-block js-email-notice-trigger"
-                               id="user[email]" name="user[email]"/>
-                    </dd>
-                </dl>
-                <dl class="form">
-                    <dd>
-                        <label for="user[password]" class="form-label text-gray f5">Password</label>
-                        <input type="password" placeholder="Create a password"
-                               class="form-control form-control-lg input-block" id="user[password]"
-                               name="user[password]"/>
-                    </dd>
-                    <p class="form-control-note">Use at least one letter, one numeral, and seven characters.</p>
-                </dl>
-                <button type="submit" class="btn btn-primary btn-large f4 btn-block">Sign up for GitHub</button>
+            <form id="signUp" method="post" class="home-hero-signup js-signup-form" autocomplete="off"
+                  action="/sign/join" accept-charset="UTF-8">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+                <div id="nameDiv" class="from-group has-feedback">
+                    <label for="name" class="form-label text-gray f5">用户名</label><br/>
+                    <input type="text" placeholder="用户名" class="form-control form-control-lg input-block"
+                           id="name" name="name" validated="false"/>
+
+                    <span id="nameSuccessSpan" class="glyphicon glyphicon-ok form-control-feedback hidden" aria-hidden="true"/>
+                    <span id="nameInputSuccess2Status" class="sr-only hidden">(success)></span>
+                    <span id="nameErrorSpan" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true"/>
+                    <span id="nameInputError2Status" class="sr-only hidden">(error)</span>
+
+                    <small>
+                        <span id="nameNoticeSpan" class="help-block hidden">用户名已被注册</span>
+                    </small>
+                </div>
+
+                <div id="emailDiv" class="from-group has-feedback">
+                    <label for="email" class="form-label text-gray f5">Email</label>
+                    <input type="text" placeholder="常用邮箱"
+                           class="form-control form-control-lg input-block js-email-notice-trigger"
+                           id="email" name="email" validated="false"/>
+                    <span id="emailSuccessSpan" class="glyphicon glyphicon-ok form-control-feedback hidden" aria-hidden="true"/>
+                    <span id="emailInputSuccess2Status" class="sr-only hidden">(success)></span>
+                    <span id="emailErrorSpan" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true"/>
+                    <span id="emailInputError2Status" class="sr-only">(error)</span>
+
+                    <small>
+                        <span id="emailNoticeSpan" class="help-block hidden">Email格式错误/已被注册</span>
+                    </small>
+                </div>
+
+                <div id="passwordDiv" class="from-group has-feedback">
+                    <label for="password" class="form-label text-gray f5">密码</label>
+                    <input type="password" placeholder="至少六位"
+                           class="form-control form-control-lg input-block" id="password" name="password" validated="false"/>
+                    <span id="passwordSuccessSpan" class="glyphicon glyphicon-ok form-control-feedback hidden" aria-hidden="true"/>
+                    <span id="passwordInputSuccess2Status" class="sr-only hidden">(success)></span>
+                    <span id="passwordErrorSpan" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true"/>
+                    <span id="passwordInputError2Status" class="sr-only">(error)</span>
+
+                    <small>
+                        <span id="passwordNoticeSpan" class="help-block hidden">密码长度至少6位</span>
+                    </small>
+                </div>
+                <button type="submit" class="btn btn-primary btn-large f4 btn-block">注册</button>
                 <p class="form-control-note text-center">
                     By clicking "Sign up for GitHub", you agree to our
                     <a target="_blank" href="https://help.github.com/terms" class="">terms of service</a> and
@@ -64,5 +84,199 @@
 </div>
 
 <div th:replace="fragments/footer :: footer">&copy; 2016 The Static Templates</div>
+
+<script type="text/javascript">
+    $('#name').focus();
+    /*<![CDATA[*/
+    $('#signUp').submit(function(e) {
+        var nameValidated = $('#name').attr('validated') == 'true' ? true : false;
+        var emailValidated = $('#email').attr('validated') == 'true' ? true : false;
+        var passwordValidated = $('#password').attr('validated') == 'true' ? true : false;
+
+        if(!passwordValidated) {
+            $('#password').focus();
+            setPasswordError();
+            e.preventDefault();
+        }
+        if(!emailValidated) {
+            $('#email').focus();
+            setEmailError();
+            e.preventDefault();
+        }
+        if(!nameValidated) {
+            $('#name').focus();
+            setNameError();
+            e.preventDefault();
+        }
+
+        return;
+    })
+    /*]]>*/
+</script>
+
+<!-- name输入，监听键盘每个输入值 -->
+<script type="text/javascript">
+    $('#name').bind('input propertychange', function () {
+        var name = $('#name').val();
+
+        initName();
+        $('#name').attr('validated', false);
+
+        if('' == name) return;
+
+        $.ajax({
+            type: 'GET',
+            url: '/sign/validate/name',
+            dataType: 'json',
+            data: {name: name},
+            success: function (e) {
+                if('success' == e.result) {
+                    setNameSuccess();
+                    $('#name').attr('validated', true);
+                } else {
+                    setNameError();
+                    $('#name').attr('validated', false);
+                }
+            },
+            error: function(e) {
+                alert(e.result);
+            }
+        });
+    });
+
+    function initName() {
+        $('#nameDiv').removeClass('has-error');
+        $('#nameDiv').removeClass('has-success');
+        $('#nameSuccessSpan').addClass('hidden');
+        $('#nameErrorSpan').addClass('hidden');
+        $('#nameInputError2Status').addClass('hidden');
+        $('#nameInputSuccess2Status').addClass('hidden');
+        $('#nameNoticeSpan').addClass('hidden');
+    }
+
+    function setNameSuccess() {
+        $('#nameDiv').addClass('has-success');
+        $('#nameSuccessSpan').removeClass('hidden');
+        $('#nameInputSuccess2Status').removeClass('hidden');
+    }
+
+    function setNameError() {
+        $('#nameDiv').addClass('has-error');
+        $('#nameErrorSpan').removeClass('hidden');
+        $('#nameInputError2Status').removeClass('hidden');
+        $('#nameNoticeSpan').removeClass('hidden');
+    }
+</script>
+
+
+<!-- email输入，监听键盘每个输入值 -->
+<script type="text/javascript">
+    $('#email').bind('input propertychange', function() {
+        var email = $('#email').val();
+        if(!validateEmail(email)) {
+            $('#emailDiv').addClass('has-error');
+            $('#emailNoticeSpan').removeClass('hidden');
+            return;
+        }
+
+        initEmail();
+        $('#email').attr('validated', false);
+
+        $.ajax({
+            type: 'GET',
+            url: '/sign/validate/email',
+            dataType: 'json',
+            data: {email: email},
+            success: function(e) {
+                if('success' == e.result) {
+                    setEmailSuccess();
+                    $('#email').attr('validated', true);
+                } else {
+                    setEmailError();
+                    $('#email').attr('validated', false);
+                }
+            },
+            error: function(e) {
+                alert(e.result);
+            }
+        });
+    });
+
+    function initEmail() {
+        $('#emailDiv').removeClass('has-success');
+        $('#emailDiv').removeClass('has-error');
+        $('#emailSuccessSpan').addClass('hidden');
+        $('#emailErrorSpan').addClass('hidden');
+        $('#emailInputError2Status').addClass('hidden');
+        $('#emailInputSuccess2Status').addClass('hidden');
+        $('#emailNoticeSpan').addClass('hidden');
+    }
+
+    function setEmailSuccess() {
+        $('#emailDiv').addClass('has-success');
+        $('#emailSuccessSpan').removeClass('hidden');
+        $('#emailInputSuccess2Status').removeClass('hidden');
+    }
+
+    function setEmailError() {
+        $('#emailDiv').addClass('has-error');
+        $('#emailErrorSpan').removeClass('hidden');
+        $('#emailInputError2Status').removeClass('hidden');
+        $('#emailNoticeSpan').removeClass('hidden');
+    }
+
+    /*<![CDATA[*/
+    function validateEmail(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+    /*]]>*/
+</script>
+
+
+<!-- password输入，监听光标移出后 -->
+
+<script type="text/javascript">
+/*<![CDATA[*/
+    $('#password').blur(function () {
+        initPassword();
+        $('#password').attr('validated', false);
+
+        if($('#password').val().length < 6) {
+            setPasswordError();
+        } else {
+            setPasswordSuccess();
+            $('#password').attr('validated', true);
+        }
+    })
+/*]]>*/
+
+    function initPassword() {
+        $('#passwordDiv').removeClass('has-success');
+        $('#passwordDiv').removeClass('has-error');
+        $('#passwordSuccessSpan').addClass('hidden');
+        $('#passwordErrorSpan').addClass('hidden');
+        $('#passwordInputError2Status').addClass('hidden');
+        $('#passwordInputSuccess2Status').addClass('hidden');
+        $('#passwordNoticeSpan').addClass('hidden');
+    }
+
+    function setPasswordSuccess() {
+        $('#passwordDiv').addClass('has-success');
+        $('#passwordSuccessSpan').removeClass('hidden');
+        $('#passwordInputSuccess2Status').removeClass('hidden');
+        $('#passwordnoticespan').addClass('hidden');
+    }
+
+    function setPasswordError() {
+        $('#passwordDiv').addClass('has-error');
+        $('#passwordErrorSpan').removeClass('hidden');
+        $('#passwordInputError2Status').removeClass('hidden');
+        $('#passwordNoticeSpan').removeClass('hidden');
+    }
+</script>
+
+
+
 </body>
 </html>

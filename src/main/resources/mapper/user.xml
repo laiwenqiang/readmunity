@@ -5,13 +5,20 @@
 
 <mapper namespace="entity.User">
     <select id="selectUserById" parameterType="String" resultType="com.readmunity.entity.User">
-        select * from user where id = #{id}
+        SELECT * from user WHERE id = #{id}
     </select>
     
     <select id="selectUserByName" parameterType="String" resultType="com.readmunity.entity.User">
-        select name, password from user where name = #{name}
+        SELECT name, password FROM user WHERE name = #{name}
     </select>
 
+    <select id="selectUserByEmail" parameterType="String" resultType="com.readmunity.entity.User">
+        SELECT name, email FROM user WHERE email = #{email}
+    </select>
+    
+    <insert id="insertUser" parameterType="Map">
+        INSERT INTO user (name, email, password) VALUES (#{name}, #{email}, #{password})
+    </insert>
 
     <cache/>
 

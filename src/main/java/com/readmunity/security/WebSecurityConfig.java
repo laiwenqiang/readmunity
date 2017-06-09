@@ -20,10 +20,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/markdown/**").permitAll()
                 .antMatchers("/**/*.js").permitAll()
                 .antMatchers("/**/*.css").permitAll()
-                .antMatchers("/sign/signIn","/sign/signUp","/sign/signIn-error").permitAll()
+                .antMatchers("/sign/**").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/sign/signIn").failureUrl("/sign/signIn-error")
-                .defaultSuccessUrl("/user").permitAll()
+                .defaultSuccessUrl("/").permitAll()
                 .and().logout().logoutSuccessUrl("/").permitAll();
     }
 

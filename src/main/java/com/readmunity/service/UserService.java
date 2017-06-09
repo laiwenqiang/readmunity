@@ -9,4 +9,8 @@ public interface UserService {
     User getUserById(String id);
 
     User getUserByName(String name);
+
+    User getUserByEmail(String email);
+
+    void save(String name, String email, String password);
 }

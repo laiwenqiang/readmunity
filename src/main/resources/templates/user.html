@@ -18,7 +18,7 @@
                 <div class="col-md-5">
                     <div class="row">
                         <div class="col-md-12">
-                            <p class="lead"><strong>乔布斯</strong></p>
+                            <p th:text="${user.name}" class="lead"></p>
                         </div>
                         <div class="col-md-12">
                             <p class="text-muted">
@@ -40,17 +40,25 @@
                 </div>
                 <div class="col-md-5 text-muted">
                     <small>
-                        <span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;上海</span>
+                        <span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;
+                            <spane th:text="${user.address}"/>
+                        </span>
                         <br/>
-                        <span class="glyphicon glyphicon-envelope" aria-hidden="true">&nbsp;1260091093@qq.com</span>
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true">&nbsp;
+                            <span th:text="${user.email}"/>
+                        </span>
                         <br/>
-                        <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true">&nbsp;QQ:1260091093</span>
+                        <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true">&nbsp;
+                            <span th:text="${user.qq}"/>
+                        </span>
                         <br/>
-                        <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true">&nbsp;weibo....</span>
+                        <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true">&nbsp;
+                            <span th:text="${user.weibo}"/>
+                        </span>
                         <br/>
-                        <span class="glyphicon glyphicon-open" aria-hidden="true">&nbsp;github</span>
-                        <br/>
-                        <span class="glyphicon glyphicon-send" aria-hidden="true">&nbsp;1260091093</span>
+                        <span class="glyphicon glyphicon-open" aria-hidden="true">&nbsp;
+                            <span th:text="${user.github}"/>
+                        </span>
                         <br/>
                         <span class="glyphicon glyphicon-time" aria-hidden="true">&nbsp;最近登录 2017年05月29日22:18:13</span>
                     </small>
