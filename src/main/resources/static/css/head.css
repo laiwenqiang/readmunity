@@ -1,3 +1,13 @@
+.div-vertical-center {
+    display: inline-block;
+    vertical-align: middle;
+    float: left;
+    padding: 8px;
+}
+.search {
+    border-width: 0px !important;
+    background-color: #4B4F53 !important;
+}
 .avatar {
     border-radius: 3px;
 }

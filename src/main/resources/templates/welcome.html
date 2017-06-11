@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" >
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
 <head th:include="fragments/common">
 </head>
+
 <body>
-<div th:include="fragments/header :: header">...</div>
-<div class="container-fluid">
-    <!-- Main component for a primary marketing message or call to action -->
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container">
+     Main component for a primary marketing message or call to action
 
     <div class="container-fluid">
         <div class="carousel slide" id="carousel-154455">
@@ -93,6 +96,7 @@
                             </a>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

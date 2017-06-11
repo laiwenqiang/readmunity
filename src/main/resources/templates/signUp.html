@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
 <head th:include="fragments/common">
 </head>
+
 <body>
-<div th:include="fragments/header :: header">...</div>
-
-<!-- Main component for a primary marketing message or call to action -->
+<div th:replace="fragments/header :: header"></div>
 <div class="container-fluid">
-
     <div class="row row-offcanvas row-offcanvas-right">
         <div class="col-md-7 text-md-left">
             <div class="jumbotron">
