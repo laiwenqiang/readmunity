@@ -2,15 +2,24 @@ package com.readmunity.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by laiwenqiang on 2017/5/29.
+ * Update by Henry on 2017/6/11 增加邮件验证机制
  */
 public class User implements Serializable {
     private Integer id;
-    private String name;
+    private String username;
     private String password;
+    /**
+     * 增加邮件验证机制
+     */
+    private int status;//激活状态
+    private String validateCode;//激活码
+    private Date registerTime;//注册时间
+
     /**
      * 头像url
      */
@@ -34,22 +43,6 @@ public class User implements Serializable {
 
     public User(){}
 
-    public User(Integer id, String name, String address, String email, String qq, String weibo, String github, String twitter, int score, String reputation, List<Book> starBookList, List<Question> questionList, List<Reply> replyList) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.email = email;
-        this.qq = qq;
-        this.weibo = weibo;
-        this.github = github;
-        this.twitter = twitter;
-        this.score = score;
-        this.reputation = reputation;
-        this.starBookList = starBookList;
-        this.questionList = questionList;
-        this.replyList = replyList;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -58,13 +51,13 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name)
+    public void setUsername(String username)
     {
-        this.name = name;
+        this.username = username;
     }
 
     public String getPassword() {
@@ -171,8 +164,32 @@ public class User implements Serializable {
         this.replyList = replyList;
     }
 
+    public Date getRegisterTime() {
+        return registerTime;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public String getValidateCode() {
+        return validateCode;
+    }
+
+    public void setRegisterTime(Date registerTime) {
+        this.registerTime = registerTime;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public void setValidateCode(String validateCode) {
+        this.validateCode = validateCode;
+    }
+
     @Override
     public String toString() {
-        return "id: " + id +"\n" + "name: " + name;
+        return "id: " + id +"\n" + "username: " + username;
     }
 }

@@ -26,10 +26,10 @@
                   action="/sign/join" accept-charset="UTF-8">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
-                <div id="nameDiv" class="from-group has-feedback">
-                    <label for="name" class="form-label text-gray f5">用户名</label><br/>
+                <div id="usernameDiv" class="from-group has-feedback">
+                    <label for="username" class="form-label text-gray f5">用户名</label><br/>
                     <input type="text" placeholder="用户名" class="form-control form-control-lg input-block"
-                           id="name" name="name" validated="false"/>
+                           id="username" name="username" validated="false"/>
 
                     <span id="nameSuccessSpan" class="glyphicon glyphicon-ok form-control-feedback hidden" aria-hidden="true"/>
                     <span id="nameInputSuccess2Status" class="sr-only hidden">(success)></span>
@@ -72,8 +72,8 @@
                 <button type="submit" class="btn btn-primary btn-large f4 btn-block">注册</button>
                 <p class="form-control-note text-center">
                     By clicking "Sign up for GitHub", you agree to our
-                    <a target="_blank" href="https://help.github.com/terms" class="">terms of service</a> and
-                    <a target="_blank" href="https://help.github.com/privacy" class="">privacy policy</a>.
+                    <a target="_blank" href="#" class="">terms of service</a> and
+                    <a target="_blank" href="#" class="">privacy policy</a>.
                     <span class="js-email-notice">We’ll occasionally send you account related emails.</span>
                 </p>
             </form>
@@ -85,10 +85,10 @@
 <div th:replace="fragments/footer :: footer">&copy; 2016 The Static Templates</div>
 
 <script type="text/javascript">
-    $('#name').focus();
+    $('#username').focus();
     /*<![CDATA[*/
     $('#signUp').submit(function(e) {
-        var nameValidated = $('#name').attr('validated') == 'true' ? true : false;
+        var usernameValidated = $('#username').attr('validated') == 'true' ? true : false;
         var emailValidated = $('#email').attr('validated') == 'true' ? true : false;
         var passwordValidated = $('#password').attr('validated') == 'true' ? true : false;
 
@@ -102,9 +102,9 @@
             setEmailError();
             e.preventDefault();
         }
-        if(!nameValidated) {
-            $('#name').focus();
-            setNameError();
+        if(!usernameValidated) {
+            $('#username').focus();
+            setUsernameError();
             e.preventDefault();
         }
 
@@ -115,37 +115,39 @@
 
 <!-- name输入，监听键盘每个输入值 -->
 <script type="text/javascript">
-    $('#name').bind('input propertychange', function () {
-        var name = $('#name').val();
+    $('#username').bind('input propertychange', function () {
+        var username = $('#username').val();
 
         initName();
-        $('#name').attr('validated', false);
+        $('#username').attr('validated', false);
 
-        if('' == name) return;
+        if('' == username) return;
 
         $.ajax({
             type: 'GET',
-            url: '/sign/validate/name',
+            url: '/sign/validate/username',
             dataType: 'json',
-            data: {name: name},
+            data: {username: username},
             success: function (e) {
                 if('success' == e.result) {
                     setNameSuccess();
-                    $('#name').attr('validated', true);
+                    $('#username').attr('validated', true);
                 } else {
                     setNameError();
-                    $('#name').attr('validated', false);
+                    $('#username').attr('validated', false);
                 }
             },
             error: function(e) {
                 alert(e.result);
             }
         });
+        setNameSuccess();
+        $('#username').attr('validated', true);
     });
 
     function initName() {
-        $('#nameDiv').removeClass('has-error');
-        $('#nameDiv').removeClass('has-success');
+        $('#usernameDiv').removeClass('has-error');
+        $('#usernameDiv').removeClass('has-success');
         $('#nameSuccessSpan').addClass('hidden');
         $('#nameErrorSpan').addClass('hidden');
         $('#nameInputError2Status').addClass('hidden');
@@ -154,13 +156,13 @@
     }
 
     function setNameSuccess() {
-        $('#nameDiv').addClass('has-success');
+        $('#usernameDiv').addClass('has-success');
         $('#nameSuccessSpan').removeClass('hidden');
         $('#nameInputSuccess2Status').removeClass('hidden');
     }
 
     function setNameError() {
-        $('#nameDiv').addClass('has-error');
+        $('#usernameDiv').addClass('has-error');
         $('#nameErrorSpan').removeClass('hidden');
         $('#nameInputError2Status').removeClass('hidden');
         $('#nameNoticeSpan').removeClass('hidden');

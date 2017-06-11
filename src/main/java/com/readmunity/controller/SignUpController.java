@@ -2,7 +2,9 @@ package com.readmunity.controller;
 
 import com.readmunity.entity.Message;
 import com.readmunity.entity.User;
+import com.readmunity.service.UserService;
 import com.readmunity.service.impl.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/sign")
 public class SignUpController {
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "signUp", method = RequestMethod.GET)
     public String getSignUp(ModelMap map) {
@@ -35,15 +40,16 @@ public class SignUpController {
     }
 
     @RequestMapping(value = "/join", method = RequestMethod.POST)
-    public String join(Model model, @RequestParam String name, @RequestParam String email, @RequestParam String password) {
-        new UserServiceImpl().save(name, email, password);
-        return "signIn";
+    public String join(Model model, @RequestParam String username, @RequestParam String email, @RequestParam String password) {
+        userService.save(username, email, password);
+        return "signUpToEmail";
     }
 
-    @RequestMapping(value = "/validate/name", method = RequestMethod.GET)
+    @RequestMapping(value = "/validate/username", method = RequestMethod.GET)
     public @ResponseBody
-    Message validateName(@RequestParam("name") String name) {
-        User user = new UserServiceImpl().getUserByName(name);
+    Message validateName(@RequestParam("username") String username) {
+        System.out.print(username);
+        User user = userService.getUserByUsername(username);
         if (user == null) {
             return new Message(HttpStatus.OK, "success");
         } else {
@@ -54,7 +60,7 @@ public class SignUpController {
     @RequestMapping(value = "/validate/email", method = RequestMethod.GET)
     public @ResponseBody
     Message validateEmail(@RequestParam("email") String email) {
-        User user = new UserServiceImpl().getUserByEmail(email);
+        User user = userService.getUserByEmail(email);
         if (user == null) {
             return new Message(HttpStatus.OK, "success");
         } else {
@@ -62,5 +68,17 @@ public class SignUpController {
         }
     }
 
+    /**
+     * 用于邮件验证邮箱
+     * @param username
+     * @param email
+     * @param validateCode
+     * @return
+     */
+    @RequestMapping(value = "emailActivation", method = RequestMethod.GET)
+    public String emailActivation(@RequestParam String username,@RequestParam String email,@RequestParam String validateCode){
+        userService.passEmailActivation(username,email,validateCode);
+        return "signIn";
+    }
 
 }

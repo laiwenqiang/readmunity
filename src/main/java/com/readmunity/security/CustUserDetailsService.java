@@ -21,12 +21,12 @@ public class CustUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = userService.getUserByName(s);
+        User user = userService.getUserByUsername(s);
         if(user != null) {
             Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
             grantedAuthorities.add(new SimpleGrantedAuthority("ADMIN"));
             grantedAuthorities.add(new SimpleGrantedAuthority("USER"));
-            return new org.springframework.security.core.userdetails.User(user.getName(),
+            return new org.springframework.security.core.userdetails.User(user.getUsername(),
                     user.getPassword(), grantedAuthorities);
         } else {
             throw new UsernameNotFoundException("用户名不存在");

@@ -7,25 +7,12 @@
     <settings>
         <setting name="logImpl" value="STDOUT_LOGGING"/>
     </settings>
-
     <typeAliases>
-        <typeAlias alias="User" type="com.readmunity.entity.User"/>
+        <typeAlias alias="Integer" type="java.lang.Integer" />
+        <typeAlias alias="Long" type="java.lang.Long" />
+        <typeAlias alias="HashMap" type="java.util.HashMap" />
+        <typeAlias alias="LinkedHashMap" type="java.util.LinkedHashMap" />
+        <typeAlias alias="ArrayList" type="java.util.ArrayList" />
+        <typeAlias alias="LinkedList" type="java.util.LinkedList" />
     </typeAliases>
-
-    <environments default="development">
-        <environment id="development">
-            <transactionManager type="JDBC" />
-            <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.jdbc.Driver" />
-                <property name="url" value="jdbc:mysql://localhost:3306/readmunity?useUnicode=true&amp;characterEncoding=UTF-8"/>
-                <property name="username" value="root" />
-                <property name="password" value="root" />
-            </dataSource>
-        </environment>
-    </environments>
-
-
-    <mappers>
-        <mapper resource="mapper/user.xml" />
-    </mappers>
 </configuration>

@@ -8,9 +8,12 @@ import com.readmunity.entity.User;
 public interface UserService {
     User getUserById(String id);
 
-    User getUserByName(String name);
+    User getUserByUsername(String username);
 
     User getUserByEmail(String email);
 
-    void save(String name, String email, String password);
+    void save(String username, String email, String password);
+
+    void passEmailActivation(String username,String email,String validateCode);
+
 }

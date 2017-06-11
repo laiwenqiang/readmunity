@@ -4,6 +4,7 @@ import com.readmunity.entity.Book;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Henry on 17/5/29.
@@ -34,5 +35,16 @@ public class Config {
         list.add(new Book("编程珠玑", "Jon Bentley是位于新泽西州Murray Hill的朗讯贝尔实验室计算机科学研究中心的技术委员会委员，Jon自1998年就成为Dr. Dobb's Joumal杂志的特约编辑，", "img/book/领导力21法则.jpg"));
         return list;
     };
+    public static final String ABC123="abcdefghiklmnopqrstuvwxyz0123456789";
+    public static final int SIZE=15;
+
+    public static synchronized String getRandom(){
+        StringBuffer buffer=new StringBuffer();
+        Random random=new Random();
+        for(int i=0;i<SIZE;i++){
+            buffer.append(ABC123.charAt(random.nextInt(ABC123.length())));
+        }
+        return buffer.toString().toUpperCase();
+    }
 
 }

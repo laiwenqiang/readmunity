@@ -3,21 +3,25 @@
         "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="entity.User">
+<mapper namespace="com.readmunity.mapper.UserMapper">
     <select id="selectUserById" parameterType="String" resultType="com.readmunity.entity.User">
         SELECT * from user WHERE id = #{id}
     </select>
     
-    <select id="selectUserByName" parameterType="String" resultType="com.readmunity.entity.User">
-        SELECT name, password FROM user WHERE name = #{name}
+    <select id="getUserByUsername" parameterType="String" resultType="com.readmunity.entity.User">
+        SELECT username, password FROM user WHERE username = #{username}
     </select>
 
-    <select id="selectUserByEmail" parameterType="String" resultType="com.readmunity.entity.User">
-        SELECT name, email FROM user WHERE email = #{email}
+    <select id="getUserByEmail" parameterType="String" resultType="com.readmunity.entity.User">
+        SELECT username, email FROM user WHERE email = #{email}
     </select>
     
     <insert id="insertUser" parameterType="Map">
-        INSERT INTO user (name, email, password) VALUES (#{name}, #{email}, #{password})
+        INSERT INTO user (username, email, password) VALUES (#{username}, #{email}, #{password})
+    </insert>
+
+    <insert id="insert" parameterType="com.readmunity.entity.User" >
+        INSERT INTO user (username, email, password,validateCode) VALUES (#{username}, #{email}, #{password},#{validateCode})
     </insert>
 
     <cache/>

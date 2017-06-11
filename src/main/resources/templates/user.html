@@ -17,7 +17,7 @@
                 <div class="col-md-5">
                     <div class="row">
                         <div class="col-md-12">
-                            <p th:text="${user.name}" class="lead"></p>
+                            <p th:text="${user.username}" class="lead"></p>
                         </div>
                         <div class="col-md-12">
                             <p class="text-muted">
@@ -113,7 +113,7 @@
                         <div th:each="starBook: ${user.starBookList}">
                             <div class="col-md-12">
                                 <div class="col-md-1"><span class="badge">27</span></div>
-                                <div class="col-md-8"><a href="/reply/list"><span th:text="${starBook.name}"></span></a></div>
+                                <div class="col-md-8"><a href="/reply/list"><span th:text="${starBook.username}"></span></a></div>
                                 <hr/>
                             </div>
                         </div>
