@@ -3,7 +3,6 @@ package com.readmunity.controller;
 import com.readmunity.entity.Message;
 import com.readmunity.entity.User;
 import com.readmunity.service.UserService;
-import com.readmunity.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;

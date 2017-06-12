@@ -4,16 +4,14 @@ import com.readmunity.dao.UserDao;
 import com.readmunity.entity.User;
 import com.readmunity.service.UserService;
 import com.readmunity.util.Config;
-import com.readmunity.util.MyBatisUtil;
 import com.readmunity.util.SendEmail;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
  * Created by laiwenqiang on 2017/5/29.
  */
-@Service()
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -28,7 +26,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUsername(String username) {
-        System.out.println(username);
         return userDao.getUserByUsername(username);
     }
 

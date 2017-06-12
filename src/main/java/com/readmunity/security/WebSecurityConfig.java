@@ -6,10 +6,14 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.stereotype.Component;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private CustUserDetailsService custUserDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -21,6 +25,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**/*.js").permitAll()
                 .antMatchers("/**/*.css").permitAll()
                 .antMatchers("/sign/**").permitAll()
+                .antMatchers("/question/**").permitAll()
+                .antMatchers("/book/**").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/sign/signIn").failureUrl("/sign/signIn-error")
                 .defaultSuccessUrl("/").permitAll()
@@ -31,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.inMemoryAuthentication().withUser("user").password("123456").roles("USER").and()
 //                .withUser("admin").password("admin").roles("USER", "ADMIN");
-        auth.userDetailsService(new CustUserDetailsService());
+        auth.userDetailsService(custUserDetailsService);
     }
 
 }
