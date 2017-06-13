@@ -6,7 +6,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.stereotype.Component;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -27,10 +27,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/sign/**").permitAll()
                 .antMatchers("/question/**").permitAll()
                 .antMatchers("/book/**").permitAll()
+                .antMatchers("/user/crop/avatar").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/sign/signIn").failureUrl("/sign/signIn-error")
                 .defaultSuccessUrl("/").permitAll()
-                .and().logout().logoutSuccessUrl("/").permitAll();
+                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").permitAll();
     }
 
     @Autowired

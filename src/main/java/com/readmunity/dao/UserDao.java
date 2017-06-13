@@ -10,4 +10,6 @@ public interface UserDao {
     public User getUserById(String id);
     public User getUserByUsername(String username);
     public User getUserByEmail(String email);
+    User updateUserByName(String name, User user);
+
 }

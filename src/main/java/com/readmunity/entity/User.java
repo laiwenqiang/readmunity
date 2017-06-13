@@ -23,7 +23,11 @@ public class User implements Serializable {
     /**
      * 头像url
      */
-    private String avator;
+    private String avatar;
+    /**
+     * 个人简介
+     */
+    private String bio;
     private String address;
     private String email;
     private String qq;
@@ -68,12 +72,21 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getAvator() {
-        return avator;
+    public String getAvatar()
+    {
+        return avatar;
     }
 
-    public void setAvator(String avator) {
-        this.avator = avator;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 
     public String getAddress() {

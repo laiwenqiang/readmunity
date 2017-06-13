@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/common">
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">基本资料</a></li>
+                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">账号密码</a></li>
+                    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">消息邮件</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                        <div class="col-md-8 panel-body">
+                            <form method="post" autocomplete="off"
+                                  action="/user/save/profile" accept-charset="UTF-8">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+                                <div id="usernameDiv" class="form-group has-feedback">
+                                    <label for="username" class="form-label text-gray f5">用户名</label>
+                                    <input th:value="${user.username}" type="text" class="form-control form-control-lg input-block"
+                                           id="username" name="username" readonly="true"/>
+                                    <small>
+                                        <span class="help-block">用户名不可改</span>
+                                    </small>
+                                </div>
+
+                                <div id="emailDiv" class="form-group has-feedback">
+                                    <label for="email" class="form-label text-gray f5">Email</label>
+                                    <input th:value="${user.email}" type="text"
+                                           class="form-control form-control-lg input-block"
+                                           id="email" name="email"/>
+                                </div>
+
+                                <div clas="form-group has-feedback">
+                                    <label for="address" class="form-label text-gray">地址</label>
+                                    <input id="address" name="address" th:value="${user.address}" type="text"
+                                           class="form-control from-control-lg input-block"/>
+                                </div>
+
+                                <div id="boilDiv" class="from-group has-feedback">
+                                    <label for="bio" class="form-label text-gray f5">个人简介</label>
+                                    <textarea th:text="${user.bio}" type="textarea" placeholder="个人简介"
+                                           class="form-control form-control-lg input-block"
+                                           id="bio" name="bio"/>
+                                </div>
+
+                                <button class="btn btn-primary" type="submit">保存</button>
+                            </form>
+                        </div>
+
+                        <div class="col-md-4 panel-body">
+                            <a href="#" class="thumbnail">
+                                <img th:src="${user.avatar}"/>
+                            </a>
+                            <form id="avatarUpload" action="/user/upload/avatar" method="post" enctype='multipart/form-data'>
+                                <label class="btn btn-default btn-block btn-file">
+                                    更改头像
+                                    <input id="avatar" name="avatar" type="file" style="display:none;"/>
+                                </label>
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            </form>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="profile">...</div>
+                    <div role="tabpanel" class="tab-pane" id="messages">...</div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">编辑头像</h4>
+                        </div>
+                        <div class="modal-body" align="center">
+                            <img id="image" src=""/>
+                        </div>
+                        <div class="modal-footer">
+                            <form action="/user/crop/avatar" method="post">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                <input type="hidden" id="path" name="path"/>
+                                <input type="hidden" id="x" name="x" />
+                                <input type="hidden" id="y" name="y" />
+                                <input type="hidden" id="w" name="w" />
+                                <input type="hidden" id="h" name="h" />
+                                <button type="submit button" class="btn btn-primary">保存</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div th:replace="fragments/footer :: footer">&copy; 2016 The Static Templates</div>
+    </div><!--/.container-->
+
+<link href="/jcrop/jquery.Jcrop.min.css" rel="stylesheet"/>
+<link href="/css/user-setting.css" rel="stylesheet"/>
+
+<script src="/jcrop/jquery.Jcrop.min.js"/>
+
+<script type="text/javascript">
+    var jcrop;
+    function initCrop() {
+        $('#image').Jcrop({
+            boxWidth: 500,
+            bowHeight: 500,
+            aspectRatio: 1,
+            onSelect: updateCoords,
+            setSelect:   [500, 0, 500, 500],
+        }, function() {
+            jcrop = this;
+        });
+    };
+
+    function updateCoords(c) {
+        jQuery('#x').val(Math.round(c.x));
+        jQuery('#y').val(Math.round(c.y));
+        jQuery('#w').val(Math.round(c.w));
+        jQuery('#h').val(Math.round(c.h));
+
+    };
+</script>
+
+<script type="text/javascript">
+    $('input:file').change(function(){
+        $('#avatarUpload').submit();
+    });
+
+    $('#avatarUpload')
+        .submit(function(e) {
+            $.ajax({
+                url: '/user/upload/avatar',
+                type: 'POST',
+                data: new FormData(this),
+                processData: false,
+                contentType: false,
+                success: function(msg) {
+                    $('#path').val(msg.result);
+                    $('#myModal').modal('show');
+                    initCrop();
+                    jcrop.setImage(msg.result);
+                }
+            });
+            e.preventDefault();
+        } );
+</script>
+</body>
+</html>

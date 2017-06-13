@@ -9,7 +9,7 @@
     </select>
     
     <select id="getUserByUsername" parameterType="String" resultType="com.readmunity.entity.User">
-        SELECT username, password FROM user WHERE username = #{username}
+        SELECT * FROM user WHERE username = #{username}
     </select>
 
     <select id="getUserByEmail" parameterType="String" resultType="com.readmunity.entity.User">
@@ -23,6 +23,19 @@
     <insert id="insert" parameterType="com.readmunity.entity.User" >
         INSERT INTO user (username, email, password,validateCode) VALUES (#{username}, #{email}, #{password},#{validateCode})
     </insert>
+    
+    <update id="updateByName" parameterType="com.readmunity.entity.User">
+        UPDATE USER
+        <set>
+            username=#{username}
+            <if test="password != null">,password=#{password}</if>
+            <if test="avatar != null">,avatar=#{avatar}</if>
+            <if test="email != null">,email=#{email}</if>
+            <if test="address!= null">,address=#{address}</if>
+            <if test="bio != null">,bio=#{bio}</if>
+        </set>
+        WHERE username=#{username}
+    </update>
 
     <cache/>
 
