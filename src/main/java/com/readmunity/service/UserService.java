@@ -27,4 +27,6 @@ public interface UserService {
     Message uploadAvatar(MultipartFile file);
 
     User cropAvatar(String path, int x, int y, int w, int h);
+
+    Message getCurrentAvatar();
 }

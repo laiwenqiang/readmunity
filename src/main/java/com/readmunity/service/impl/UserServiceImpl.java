@@ -110,6 +110,12 @@ public class UserServiceImpl implements UserService {
         return userDao.getUserByUsername(name);
     }
 
+    @Override
+    public Message getCurrentAvatar() {
+        User user = userDao.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        return new Message(HttpStatus.OK, user.getAvatar());
+    }
+
     private BufferedImage cropImage(String oPath, String dPath, int x, int y, int w, int h){
         try {
             oPath = File.separator + "static" + oPath;

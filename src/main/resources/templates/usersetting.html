@@ -20,7 +20,7 @@
                     <div role="tabpanel" class="tab-pane active" id="home">
                         <div class="col-md-8 panel-body">
                             <form method="post" autocomplete="off"
-                                  action="/user/save/profile" accept-charset="UTF-8">
+                                  action="/user/profile/save" accept-charset="UTF-8">
                                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
                                 <div id="usernameDiv" class="form-group has-feedback">
@@ -87,7 +87,7 @@
                             <img id="image" src=""/>
                         </div>
                         <div class="modal-footer">
-                            <form action="/user/crop/avatar" method="post">
+                            <form action="/user/avatar/crop" method="post">
                                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                                 <input type="hidden" id="path" name="path"/>
                                 <input type="hidden" id="x" name="x" />
@@ -141,7 +141,7 @@
     $('#avatarUpload')
         .submit(function(e) {
             $.ajax({
-                url: '/user/upload/avatar',
+                url: '/user/avatar/upload',
                 type: 'POST',
                 data: new FormData(this),
                 processData: false,

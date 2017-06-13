@@ -3,6 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="fragments/common">
 </head>
+
 <body>
 <!--<div class="container-fluid" th:fragment="header">-->
     <nav class="navbar navbar-default navbar-static-top navbar-inverse" th:fragment="header">
@@ -30,7 +31,7 @@
                         <ul class="nav navbar-nav navbar-right" sec:authorize="isAuthenticated()">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img th:src="${user.avatar}" class="avatar"/>
+                                    <img id="avatar" src="/img/avatar/default.png" class="avatar"/>
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
@@ -55,7 +56,25 @@
 
 
         </div><!--/.container-fluid -->
+
+        <script type="text/javascript">
+            $(function(){
+                $.ajax({
+                    type: 'GET',
+                    url: '/user/avatar',
+                    dataType: 'json',
+                    success: function (e) {
+                        $('#avatar').attr('src', e.result);
+                    },
+                    error: function(e) {
+                        alert(e.result);
+                    }
+                })
+            });
+        </script>
     </nav>
 <!--</div>-->
+
+
 </body>
 </html>

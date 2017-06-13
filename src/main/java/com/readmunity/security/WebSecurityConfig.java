@@ -27,7 +27,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/sign/**").permitAll()
                 .antMatchers("/question/**").permitAll()
                 .antMatchers("/book/**").permitAll()
-                .antMatchers("/user/crop/avatar").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/sign/signIn").failureUrl("/sign/signIn-error")
                 .defaultSuccessUrl("/").permitAll()

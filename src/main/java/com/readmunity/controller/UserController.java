@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import sun.misc.Request;
 
 
 /**
@@ -54,19 +55,24 @@ public class UserController {
         return "usersetting";
     }
 
-    @RequestMapping(value = "/upload/avatar", method = RequestMethod.POST)
+    @RequestMapping(value = "/avatar/upload", method = RequestMethod.POST)
     public @ResponseBody
     Message uploadAvatar(@RequestParam MultipartFile avatar) {
         return userService.uploadAvatar(avatar);
     }
 
-
-    @RequestMapping(value = "/crop/avatar", method = RequestMethod.POST)
+    @RequestMapping(value = "/avatar/crop", method = RequestMethod.POST)
     public String cropAvatar(@RequestParam String path, @RequestParam String x, @RequestParam String y, @RequestParam String w,
                              @RequestParam String h, ModelMap map) {
         User user = userService.cropAvatar(path, Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(w), Integer.parseInt(h));
         map.addAttribute("user", user);
         return "usersetting";
+    }
+
+    @RequestMapping(value = "/avatar", method = RequestMethod.GET)
+    public @ResponseBody
+    Message getCurrentAvatar() {
+       return userService.getCurrentAvatar();
     }
 
 
