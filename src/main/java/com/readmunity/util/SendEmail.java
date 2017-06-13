@@ -27,7 +27,7 @@ public class SendEmail {
     @Value("${my.program.url}")
     private String urlInfo;
 
-    @Value("${my.mail.signUpSubject}")
+    @Value("[Read Munity] Email 验证")
     private String signUpSubject;
 
     @Value("${my.program.sign.emailActivation}")
@@ -46,7 +46,16 @@ public class SendEmail {
     public void signUpToEmail(String username, String email, String validateCode) {
         ///邮件的内容
         StringBuffer sb = new StringBuffer();
-        sb.append("点击下面链接激活账号，24小时生效，否则重新注册账号，链接只能使用一次，请尽快激活！</br>");
+        sb.append("<html lang=\"zh-CN\"><head><meta charset=\"UTF-8\"></head>");
+        sb.append("<body><h4>Email 地址验证</h4>"+username+",<br />");
+        sb.append("这封信是由 Read Munity 发送的。<br /> <br />");
+        sb.append("您收到这封邮件，是由于在 Read Munity 进行了新用户注册，或是用户修改 Email 使用了这个邮箱地址。<br />");
+        sb.append("如果您并没有访问过 Read Munity，或没有进行上述操作，请忽略这封邮件。<br />");
+        sb.append("您不需要退订或进行其他进一步的操作。<br /><br />-------------------------------------------------------------<br />");
+        sb.append("<b>账号激活说明</b><br />-------------------------------------------------------------<br /><br />");
+        sb.append("如果您是 Read Munity 的新用户，或在修改您的注册 Email 时使用了本地址，");
+        sb.append("我们需要对您的地址有效性进行验证以避免垃圾邮件或地址被滥用。<br /><br />");
+        sb.append("您只需点击下面的链接即可激活您的帐号：<br />");
         sb.append("<a href=\"");
         sb.append(urlInfo+emailActivation);
         sb.append("?username=");
@@ -55,7 +64,7 @@ public class SendEmail {
         sb.append(email);
         sb.append("&validateCode=");
         sb.append(validateCode);
-        sb.append("\"");
+        sb.append("\" >");
         sb.append(urlInfo+emailActivation);
         sb.append("?username=");
         sb.append(username);
@@ -63,7 +72,10 @@ public class SendEmail {
         sb.append(email);
         sb.append("&validateCode=");
         sb.append(validateCode);
-        sb.append("</a>");
+        sb.append("</a><br /><br />");
+        sb.append("(如果上面不是链接形式，请将该地址手工粘贴到浏览器地址栏再访问)<br /><br />");
+        sb.append("感谢您的访问，祝您使用愉快！<br /><br />");
+        sb.append("此致<br />Read Munity 管理团队.<br />http://www.ReadMunity.com/ <br />");
 
         sendHtmlMail(email,signUpSubject,sb.toString());
     }

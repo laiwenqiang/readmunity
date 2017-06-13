@@ -18,7 +18,7 @@ public interface UserService {
 
     void save(String username, String email, String password);
 
-    void passEmailActivation(String username,String email,String validateCode);
+    void passEmailActivation(String username,String email,String validateCode) throws Exception;
 
     User updateProfileByName(String name, User user);
 

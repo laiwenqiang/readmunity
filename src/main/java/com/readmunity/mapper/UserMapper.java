@@ -15,4 +15,5 @@ public interface UserMapper {
     public User getUserByUsername(String username);
     public User getUserByEmail(String email);
     void updateByName(User user);
+    public void updateUserByEmail(User user);
 }

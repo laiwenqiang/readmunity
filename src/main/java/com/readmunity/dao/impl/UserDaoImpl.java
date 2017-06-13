@@ -41,4 +41,9 @@ public class UserDaoImpl implements UserDao{
         userMapper.updateByName(user);
         return user;
     }
+
+    @Override
+    public void updateUserByEmail(User user) {
+        userMapper.updateUserByEmail(user);
+    }
 }

@@ -7,23 +7,23 @@
     <select id="selectUserById" parameterType="String" resultType="com.readmunity.entity.User">
         SELECT * from user WHERE id = #{id}
     </select>
-    
+
     <select id="getUserByUsername" parameterType="String" resultType="com.readmunity.entity.User">
         SELECT * FROM user WHERE username = #{username}
     </select>
 
     <select id="getUserByEmail" parameterType="String" resultType="com.readmunity.entity.User">
-        SELECT username, email FROM user WHERE email = #{email}
+        SELECT id,username, email,status,validateCode,registerTime FROM user WHERE email = #{email}
     </select>
-    
+
     <insert id="insertUser" parameterType="Map">
         INSERT INTO user (username, email, password) VALUES (#{username}, #{email}, #{password})
     </insert>
 
-    <insert id="insert" parameterType="com.readmunity.entity.User" >
-        INSERT INTO user (username, email, password,validateCode) VALUES (#{username}, #{email}, #{password},#{validateCode})
+    <insert id="insert" parameterType="com.readmunity.entity.User">
+        INSERT INTO user (username, email, password,validateCode,registerTime) VALUES (#{username}, #{email}, #{password},#{validateCode},#{registerTime})
     </insert>
-    
+
     <update id="updateByName" parameterType="com.readmunity.entity.User">
         UPDATE USER
         <set>
@@ -35,6 +35,19 @@
             <if test="bio != null">,bio=#{bio}</if>
         </set>
         WHERE username=#{username}
+    </update>
+
+    <update id="updateUserByEmail" parameterType="com.readmunity.entity.User">
+        UPDATE USER
+        <set>
+            email=#{email}
+            <if test="password != null">,password=#{password}</if>
+            <if test="avatar != null">,avatar=#{avatar}</if>
+            <if test="address!= null">,address=#{address}</if>
+            <if test="bio != null">,bio=#{bio}</if>
+            <if test="status != null">,status=#{status}</if>
+        </set>
+        WHERE email=#{email}
     </update>
 
     <cache/>

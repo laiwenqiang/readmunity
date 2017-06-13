@@ -36,7 +36,7 @@ public class Config {
         return list;
     };
     public static final String ABC123="abcdefghiklmnopqrstuvwxyz0123456789";
-    public static final int SIZE=15;
+    public static final int SIZE=35;
 
     public static synchronized String getRandom(){
         StringBuffer buffer=new StringBuffer();

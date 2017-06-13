@@ -1,7 +1,9 @@
 package com.readmunity.entity;
 
+import java.beans.Transient;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -204,5 +206,14 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "id: " + id +"\n" + "username: " + username;
+    }
+
+    @Transient
+    public Date getLastActivateTime() {
+        Calendar cl = Calendar.getInstance();
+        cl.setTime(registerTime);
+        cl.add(Calendar.DATE , 1);
+
+        return cl.getTime();
     }
 }

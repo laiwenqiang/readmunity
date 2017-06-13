@@ -47,7 +47,6 @@ public class SignUpController {
     @RequestMapping(value = "/validate/username", method = RequestMethod.GET)
     public @ResponseBody
     Message validateName(@RequestParam("username") String username) {
-        System.out.print(username);
         User user = userService.getUserByUsername(username);
         if (user == null) {
             return new Message(HttpStatus.OK, "success");
@@ -74,10 +73,15 @@ public class SignUpController {
      * @param validateCode
      * @return
      */
-    @RequestMapping(value = "emailActivation", method = RequestMethod.GET)
-    public String emailActivation(@RequestParam String username,@RequestParam String email,@RequestParam String validateCode){
-        userService.passEmailActivation(username,email,validateCode);
-        return "signIn";
+    @RequestMapping(value = "emailActivation", method={RequestMethod.GET,RequestMethod.POST})
+    public String emailActivation(Model model,@RequestParam String username,@RequestParam String email,@RequestParam String validateCode){
+        model.addAttribute("message",null);
+        try {
+            userService.passEmailActivation(username,email,validateCode);
+        } catch (Exception e) {
+            model.addAttribute("message",e.getMessage());
+        }
+        return "activate";
     }
 
 }

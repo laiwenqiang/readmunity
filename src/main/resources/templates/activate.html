@@ -6,7 +6,12 @@
 <body>
 <div th:replace="fragments/header :: header"></div>
 <div class="container-fluid">
-    <h1>恭喜您注册成功！请到注册的邮箱点击链接激活！ </h1>
+    <p th:if="${message != null}">
+        激活失败！错误信息：<span th:text="${message}" ></span>
+    </p>
+    <p th:if="${message == null}">
+        账号激活成功，点击<a th:href="@{/sign/signIn}">这里</a>去登录！
+    </p>
 </div>
 <div th:replace="fragments/footer :: footer">&copy; 2016 The Static Templates</div>
 </body>
