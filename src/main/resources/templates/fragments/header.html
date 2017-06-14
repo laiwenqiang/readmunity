@@ -57,7 +57,7 @@
 
         </div><!--/.container-fluid -->
 
-        <script type="text/javascript">
+        <script sec:authorize="isAuthenticated()" type="text/javascript">
             $(function(){
                 $.ajax({
                     type: 'GET',

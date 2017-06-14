@@ -48,7 +48,7 @@ public class UserController {
         return "usersetting";
     }
 
-    @RequestMapping(value = "/save/profile", method = RequestMethod.POST)
+    @RequestMapping(value = "/profile/save", method = RequestMethod.POST)
     public String saveProfile(@ModelAttribute User user, ModelMap map) {
         user = userService.updateProfileByCurrentName(user);
         map.addAttribute("user", user);
