@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sun.misc.Request;
 
+import java.util.List;
+
 
 /**
  * Created by laiwenqiang on 2017/5/29.
@@ -22,7 +24,7 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getUser(ModelMap map, @RequestParam String id) {
+    public String getUserById(ModelMap map, @RequestParam String id) {
         User user = userService.getUserById(id);
         if (user == null) {
             return "index";
@@ -39,6 +41,13 @@ public class UserController {
         }
         map.addAttribute("user", user);
         return "user";
+    }
+
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String getUserList(ModelMap map) {
+        List<User> users = userService.getUserList();
+        map.addAttribute("userList", users);
+        return "userlist";
     }
 
     @RequestMapping(value = "/setting/current", method = RequestMethod.GET)

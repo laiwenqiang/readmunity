@@ -2,15 +2,17 @@ package com.readmunity.dao;
 
 import com.readmunity.entity.User;
 
+import java.util.List;
+
 /**
  * Created by Henry on 17/6/11.
  */
 public interface UserDao {
-    public void insert(User user);
-    public User getUserById(String id);
-    public User getUserByUsername(String username);
-    public User getUserByEmail(String email);
+    void insert(User user);
+    User getUserById(String id);
+    User getUserByUsername(String username);
+    User getUserByEmail(String email);
+    List<User> getUserList();
     User updateUserByName(String name, User user);
-    public void updateUserByEmail(User user);
-
+    void updateUserByEmail(User user);
 }

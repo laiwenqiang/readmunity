@@ -16,6 +16,10 @@
         SELECT id,username, email,status,validateCode,registerTime FROM user WHERE email = #{email}
     </select>
 
+    <select id="getUserList" resultType="com.readmunity.entity.User">
+        SELECT * FROM user
+    </select>
+
     <insert id="insertUser" parameterType="Map">
         INSERT INTO user (username, email, password) VALUES (#{username}, #{email}, #{password})
     </insert>
@@ -50,6 +54,6 @@
         WHERE email=#{email}
     </update>
 
-    <cache/>
+    <!--<cache/>-->
 
 </mapper>

@@ -6,6 +6,8 @@ import com.readmunity.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by Henry on 17/6/12.
  */
@@ -33,6 +35,11 @@ public class UserDaoImpl implements UserDao{
     @Override
     public User getUserByEmail(String email) {
         return userMapper.getUserByEmail(email);
+    }
+
+    @Override
+    public List<User> getUserList() {
+        return userMapper.getUserList();
     }
 
     @Override

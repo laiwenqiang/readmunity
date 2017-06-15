@@ -1,0 +1,16 @@
+.info div {
+    margin-top: 6px;
+    border: 0px;
+    padding: 0px;
+}
+
+.user-list-item {
+    border-top: 1px solid #e1e4e8;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.thumbnail {
+    width: 70px; height: 70px;
+    margin-top: 6px;
+}

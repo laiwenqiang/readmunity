@@ -4,6 +4,8 @@ import com.readmunity.entity.Message;
 import com.readmunity.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * Created by laiwenqiang on 2017/5/29.
  */
@@ -29,4 +31,6 @@ public interface UserService {
     User cropAvatar(String path, int x, int y, int w, int h);
 
     Message getCurrentAvatar();
+
+    List<User> getUserList();
 }

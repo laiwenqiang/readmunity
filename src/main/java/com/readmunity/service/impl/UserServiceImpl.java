@@ -19,6 +19,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by laiwenqiang on 2017/5/29.
@@ -147,6 +148,11 @@ public class UserServiceImpl implements UserService {
     public Message getCurrentAvatar() {
         User user = userDao.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         return new Message(HttpStatus.OK, user.getAvatar());
+    }
+
+    @Override
+    public List<User> getUserList() {
+        return userDao.getUserList();
     }
 
     private BufferedImage cropImage(String oPath, String dPath, int x, int y, int w, int h) {
