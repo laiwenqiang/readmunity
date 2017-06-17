@@ -8,9 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import sun.misc.Request;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -45,9 +45,18 @@ public class UserController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String getUserList(ModelMap map) {
-        List<User> users = userService.getUserList();
+        List<User> users = userService.getUserList(null);
+        map.addAttribute("amount", users.size());
         map.addAttribute("userList", users);
         return "userlist";
+    }
+
+    @RequestMapping(value = "/list/filter", method = RequestMethod.GET)
+    public String getUserList(ModelMap map, @RequestParam Map<String, String> filter) {
+        List<User> users = userService.getUserList(filter);
+        map.addAttribute("amount", users.size());
+        map.addAttribute("userList", users);
+        return "fragments/userlist :: resultlist";
     }
 
     @RequestMapping(value = "/setting/current", method = RequestMethod.GET)

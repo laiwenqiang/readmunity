@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by laiwenqiang on 2017/5/29.
@@ -51,6 +52,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByEmail(String email) {
         return userDao.getUserByEmail(email);
+    }
+
+    @Override
+    public List<User> getUserList(Map<String, String> filter) {
+        StringBuffer query = new StringBuffer("WHERE 1 = 1 ");
+        if(filter != null) {
+            for(String key : filter.keySet()) {
+                query.append("AND " + key + " LIKE '%" + filter.get(key) + "%' ");
+            }
+        }
+        return userDao.getUserList(query.toString());
     }
 
     @Override
@@ -148,11 +160,6 @@ public class UserServiceImpl implements UserService {
     public Message getCurrentAvatar() {
         User user = userDao.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         return new Message(HttpStatus.OK, user.getAvatar());
-    }
-
-    @Override
-    public List<User> getUserList() {
-        return userDao.getUserList();
     }
 
     private BufferedImage cropImage(String oPath, String dPath, int x, int y, int w, int h) {

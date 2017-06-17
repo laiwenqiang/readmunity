@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Henry on 17/6/12.
@@ -16,7 +17,7 @@ public interface UserMapper {
     User getUserById(String id);
     User getUserByUsername(String username);
     User getUserByEmail(String email);
-    List<User> getUserList();
+    List<User> getUserList(String filter);
     void updateByName(User user);
     void updateUserByEmail(User user);
 }

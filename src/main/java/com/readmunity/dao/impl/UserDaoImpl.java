@@ -38,8 +38,8 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public List<User> getUserList() {
-        return userMapper.getUserList();
+    public List<User> getUserList(String filter) {
+        return userMapper.getUserList(filter);
     }
 
     @Override

@@ -13,11 +13,11 @@
     </select>
 
     <select id="getUserByEmail" parameterType="String" resultType="com.readmunity.entity.User">
-        SELECT id,username, email,status,validateCode,registerTime FROM user WHERE email = #{email}
+        SELECT id, username, email, status, validateCode, registerTime FROM user WHERE email = #{email}
     </select>
 
-    <select id="getUserList" resultType="com.readmunity.entity.User">
-        SELECT * FROM user
+    <select id="getUserList" parameterType="String" resultType="com.readmunity.entity.User">
+        SELECT * FROM user ${value}
     </select>
 
     <insert id="insertUser" parameterType="Map">

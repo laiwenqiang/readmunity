@@ -14,3 +14,7 @@
     width: 70px; height: 70px;
     margin-top: 6px;
 }
+
+.dropdown-toggle {
+    height: 35px !important;
+}

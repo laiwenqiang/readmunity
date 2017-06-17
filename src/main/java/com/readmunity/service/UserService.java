@@ -5,6 +5,7 @@ import com.readmunity.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by laiwenqiang on 2017/5/29.
@@ -32,5 +33,5 @@ public interface UserService {
 
     Message getCurrentAvatar();
 
-    List<User> getUserList();
+    List<User> getUserList(Map<String, String> filter);
 }
