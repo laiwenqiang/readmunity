@@ -9,7 +9,7 @@
     </select>
 
     <select id="getUserByUsername" parameterType="String" resultType="com.readmunity.entity.User">
-        SELECT * FROM user WHERE username = #{username}
+        SELECT * FROM user WHERE username = #{username} and status='1'
     </select>
 
     <select id="getUserByEmail" parameterType="String" resultType="com.readmunity.entity.User">
@@ -45,11 +45,14 @@
         UPDATE USER
         <set>
             email=#{email}
+            <if test="username != null">,username=#{username}</if>
             <if test="password != null">,password=#{password}</if>
             <if test="avatar != null">,avatar=#{avatar}</if>
             <if test="address!= null">,address=#{address}</if>
             <if test="bio != null">,bio=#{bio}</if>
             <if test="status != null">,status=#{status}</if>
+            <if test="validateCode != null">,validateCode=#{validateCode}</if>
+            <if test="registerTime != null">,registerTime=#{registerTime}</if>
         </set>
         WHERE email=#{email}
     </update>

@@ -34,4 +34,6 @@ public interface UserService {
     Message getCurrentAvatar();
 
     List<User> getUserList(Map<String, String> filter);
+
+    void passwordResetPassEmail(String toEmail) throws Exception;
 }

@@ -6,45 +6,48 @@
 
 <!-- Main component for a primary marketing message or call to action -->
 <div class="container-fluid">
-    <div class="auth-form" >
-
-
-        <p th:if="${param.error != null}">
-            Invalid username and password.
-        </p>
-        <p th:if="${param.logout != null}">
-            You have been logged out.
-        </p>
-
-        <p th:if="${loginError}" class="error">Wrong user or password</p>
+    <div class="auth-form">
         <div class="auth-form-header">
-            <h1>Sign in to GitHub</h1>
+            <h1>登录 Read Munity</h1>
         </div>
         <div class="auth-form-body">
             <form th:action="@{/sign/signIn}" method="post">
                 <label class="input-block" for="username">
-                    Username or email address
+                    用户名或电子邮件地址
                 </label>
-                <input class="form-control input-block" type="text" id="username" name="username" autofocus="autofocus" />
+                <input class="form-control input-block" type="text" id="username" name="username"
+                       autofocus="autofocus"/>
 
                 <label class="input-block" for="password">
-                    Password <a href="#" class="forget-label-link">Forgot password?</a>
+                    密码 <a th:href="@{/sign/password_reset}" class="forget-label-link">忘记密码?</a>
                 </label>
-                <input class="form-control input-block" type="password" id="password" name="password" />
+                <input class="form-control input-block" type="password" id="password" name="password"
+                       autofocus="autofocus"/>
 
-                <input class="signSubmit" type="submit" value="Sign in"/>
+                <input id="signSubmit" class="signSubmit" type="submit" value="登陆"/>
             </form>
         </div>
 
 
         <p class="create-account-callout mt-3">
-            New to GitHub?
-            <a th:href="@{/sign/signUp}" data-ga-click="Sign in, switch to sign up">Create an account</a>.
+            一个新的账户?
+            <a th:href="@{/sign/signUp}" data-ga-click="Sign in, switch to sign up">创建帐户</a>.
         </p>
 
     </div>
 </div>
 
 <div th:replace="fragments/footer :: footer">&copy; 2016 The Static Templates</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#username").blur(function () {
+            $("#password").focus();
+        });
+        $("#password").blur(function () {
+            $("#signSubmit").focus();
+        });
+    });
+</script>
+
 </body>
 </html>

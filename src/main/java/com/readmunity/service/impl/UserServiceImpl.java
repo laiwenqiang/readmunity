@@ -40,7 +40,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUsername(String username) {
-        return userDao.getUserByUsername(username);
+        User user = userDao.getUserByUsername(username);
+        if (user == null) return null;
+        if (judgeUserSuccess(user)) return null;
+        return user;
     }
 
     @Override
@@ -51,14 +54,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByEmail(String email) {
-        return userDao.getUserByEmail(email);
+        User user = userDao.getUserByEmail(email);
+        if (user == null) return null;
+        if (judgeUserSuccess(user)) return null;
+        return user;
     }
 
     @Override
     public List<User> getUserList(Map<String, String> filter) {
         StringBuffer query = new StringBuffer("WHERE 1 = 1 ");
-        if(filter != null) {
-            for(String key : filter.keySet()) {
+        if (filter != null) {
+            for (String key : filter.keySet()) {
                 query.append("AND " + key + " LIKE '%" + filter.get(key) + "%' ");
             }
         }
@@ -67,16 +73,47 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(String username, String email, String password) {
-        User user = new User();
-        user.setUsername(username);
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setValidateCode(Config.getRandom());
-        user.setRegisterTime(new Date());
-        userDao.insert(user);
+        User user = userDao.getUserByEmail(email);
+        if (user == null) {
+            user = new User();
+            user.setUsername(username);
+            user.setEmail(email);
+            user.setPassword(password);
+            user.setValidateCode(Config.getRandom());
+            user.setRegisterTime(new Date());
+            userDao.insert(user);
+        } else {
+            if (judgeUserSuccess(user)) {
+                user.setUsername(username);
+                user.setEmail(email);
+                user.setPassword(password);
+                user.setStatus(StatusInfo.DEFORT.getNumber());
+                user.setValidateCode(Config.getRandom());
+                user.setRegisterTime(new Date());
+                userDao.updateUserByEmail(user);
+            }
+        }
         sendEmail.signUpToEmail(username, email, user.getValidateCode());
     }
 
+    /**
+     * 判断已经存在的用户是否有效，如果此用户未激活，并且超过了激活时间。则需要此用户重新注册。
+     *
+     * @param user
+     * @return
+     */
+    private boolean judgeUserSuccess(User user) {
+        Date currentTime = new Date();//获取当前时间
+        return StatusInfo.SUCCESS.getNumber() != user.getStatus() && !(currentTime.after(user.getRegisterTime()) && currentTime.before(user.getLastActivateTime()));
+    }
+
+    /**
+     * 邮箱激活的几种可能。
+     * @param username
+     * @param email
+     * @param validateCode
+     * @throws Exception
+     */
     @Override
     public void passEmailActivation(String username, String email, String validateCode) throws Exception {
         User user = userDao.getUserByEmail(email);
@@ -102,9 +139,7 @@ public class UserServiceImpl implements UserService {
         //验证链接是否过期
         if (currentTime.after(user.getRegisterTime()) && currentTime.before(user.getLastActivateTime())) {
             //激活成功， //并更新用户的激活状态，为已激活
-            System.out.println("==sq===" + user.getStatus());
             user.setStatus(StatusInfo.SUCCESS.getNumber());//把状态改为激活
-            System.out.println("==sh===" + user.getStatus());
             userDao.updateUserByEmail(user);
         } else {
             throw new ServiceException("激活码已过期！");
@@ -178,5 +213,15 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public void passwordResetPassEmail(String toEmail)  throws Exception{
+        User user = userDao.getUserByEmail(toEmail);
+        if(user==null) throw new ServiceException("该邮箱未注册（邮箱地址不存在）！");
+        user.setRegisterTime(new Date());
+        user.setValidateCode(Config.getRandom());
+        userDao.updateUserByEmail(user);
+        sendEmail.passwordResetToEmail(user);
     }
 }

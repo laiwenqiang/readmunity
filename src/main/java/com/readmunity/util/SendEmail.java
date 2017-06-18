@@ -1,5 +1,6 @@
 package com.readmunity.util;
 
+import com.readmunity.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -11,6 +12,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 
@@ -30,8 +32,14 @@ public class SendEmail {
     @Value("[Read Munity] Email 验证")
     private String signUpSubject;
 
+    @Value("[Read Munity] 请重置你的密码")
+    private String passwordResetSubject;
+
     @Value("${my.program.sign.emailActivation}")
     private String emailActivation;
+
+    @Value("${my.program.sign.passwordResetUrl}")
+    private String passwordResetUrl;
 
     @Autowired
     private JavaMailSender mailSender;
@@ -46,8 +54,8 @@ public class SendEmail {
     public void signUpToEmail(String username, String email, String validateCode) {
         ///邮件的内容
         StringBuffer sb = new StringBuffer();
-        sb.append("<html lang=\"zh-CN\"><head><meta charset=\"UTF-8\"></head>");
-        sb.append("<body><h4>Email 地址验证</h4>"+username+",<br />");
+        sb.append(getHtmlHead());
+        sb.append("<body><h4>"+signUpSubject+"</h4>"+username+",<br />");
         sb.append("这封信是由 Read Munity 发送的。<br /> <br />");
         sb.append("您收到这封邮件，是由于在 Read Munity 进行了新用户注册，或是用户修改 Email 使用了这个邮箱地址。<br />");
         sb.append("如果您并没有访问过 Read Munity，或没有进行上述操作，请忽略这封邮件。<br />");
@@ -72,12 +80,46 @@ public class SendEmail {
         sb.append(email);
         sb.append("&validateCode=");
         sb.append(validateCode);
-        sb.append("</a><br /><br />");
-        sb.append("(如果上面不是链接形式，请将该地址手工粘贴到浏览器地址栏再访问)<br /><br />");
+        sb.append("</a>");
+        sb.append(getHtmlEnd());
+        sendHtmlMail(email,signUpSubject,sb.toString());
+    }
+
+    /**
+     *  用于密码重置的连接。
+     */
+    public void passwordResetToEmail(User user){
+        StringBuffer sb = new StringBuffer();
+        sb.append(getHtmlHead());
+        sb.append("<h4>"+passwordResetSubject+"</h4>"+user.getUsername()+",<br />");
+        sb.append("这封信是由 Read Munity 发送的。<br /> <br />");
+        sb.append("我们听说您失去了您的 Read Munity 密码。很抱歉!<br />");
+        sb.append("但别担心!您可以使用以下链接重置您的密码:<br />");
+        sb.append("<a href=\"");
+        sb.append(urlInfo+passwordResetUrl);
+        //这边要采用加密算法将邮件进行加密。和用户的时间进行加密。进行拼接。
+        //防止一个注册加密码进行多次密码重置。
+        sb.append(user.getEmail());
+        sb.append("\" >");
+        sb.append(urlInfo+passwordResetUrl);
+        sb.append(user.getEmail());
+        sb.append("</a>");
+        sb.append(getHtmlEnd());
+        sendHtmlMail(user.getEmail(),passwordResetSubject,sb.toString());
+    }
+    private String getHtmlHead(){
+        StringBuffer sb = new StringBuffer();
+        sb.append("<!DOCTYPE html>");
+        sb.append("<html lang=\"zh-CN\"><head><meta charset=\"UTF-8\"></head><body>");
+        return sb.toString();
+    }
+    private String getHtmlEnd(){
+        StringBuffer sb = new StringBuffer();
+        sb.append("<br /><br />(如果上面不是链接形式，请将该地址手工粘贴到浏览器地址栏再访问)<br /><br />");
         sb.append("感谢您的访问，祝您使用愉快！<br /><br />");
         sb.append("此致<br />Read Munity 管理团队.<br />http://www.ReadMunity.com/ <br />");
-
-        sendHtmlMail(email,signUpSubject,sb.toString());
+        sb.append("</body></html>");
+        return sb.toString();
     }
 
     /**
@@ -100,17 +142,17 @@ public class SendEmail {
     }
     /**
      * 发送html邮件
-     * @param to
+     * @param //to
      * @param subject
      * @param content
      */
-    public synchronized void sendHtmlMail(String to, String subject, String content) {
+    public synchronized void sendHtmlMail(String toEmail, String subject, String content) {
         MimeMessage message = mailSender.createMimeMessage();
         try {
-//true表示需要创建一个multipart message
+            //true表示需要创建一个multipart message
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            helper.setFrom(fromUsername);
-            helper.setTo(to);
+            helper.setFrom(new InternetAddress(fromUsername));
+            helper.setTo(toEmail);
             helper.setSubject(subject);
             helper.setText(content, true);
             mailSender.send(message);

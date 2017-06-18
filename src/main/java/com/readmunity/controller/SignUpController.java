@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by zhaolaing on 2017/5/27.
@@ -32,6 +29,7 @@ public class SignUpController {
     public String getSignIn(ModelMap map) {
         return "signIn";
     }
+
     @RequestMapping("/signIn-error")
     public String loginError(Model model) {
         model.addAttribute("loginError", true);
@@ -68,20 +66,51 @@ public class SignUpController {
 
     /**
      * 用于邮件验证邮箱
+     *
      * @param username
      * @param email
      * @param validateCode
      * @return
      */
-    @RequestMapping(value = "emailActivation", method={RequestMethod.GET,RequestMethod.POST})
-    public String emailActivation(Model model,@RequestParam String username,@RequestParam String email,@RequestParam String validateCode){
-        model.addAttribute("message",null);
+    @RequestMapping(value = "emailActivation", method = {RequestMethod.GET, RequestMethod.POST})
+    public String emailActivation(Model model, @RequestParam String username, @RequestParam String email, @RequestParam String validateCode) {
+        model.addAttribute("message", null);
         try {
-            userService.passEmailActivation(username,email,validateCode);
+            userService.passEmailActivation(username, email, validateCode);
         } catch (Exception e) {
-            model.addAttribute("message",e.getMessage());
+            model.addAttribute("message", e.getMessage());
         }
         return "activate";
+    }
+
+    /**
+     * 用于跳转输入邮件地址
+     *
+     * @return
+     */
+    @RequestMapping(value = "/password_reset", method = {RequestMethod.GET, RequestMethod.POST})
+    public String passwordReset(String toEmail, Model model) {
+        if (toEmail == null || "".equals(toEmail)) return "password_reset";
+        try {
+            userService.passwordResetPassEmail(toEmail);
+        } catch (Exception e) {
+            model.addAttribute("message", e.getMessage());
+        }
+        if (model.containsAttribute("message"))
+            return "password_reset";
+        return "password_reset_success";
+    }
+
+    /**
+     * 实现动态地址。需要解密用户名和用户修改时间，还有用户的验证码。
+     * @param info
+     * @return
+     */
+    @RequestMapping(value = "/password_reset/{info}", method = {RequestMethod.GET, RequestMethod.POST})
+    public String passwordResetInfo(@PathVariable String info) {
+        System.out.print(info);
+
+        return "password_reset_now";
     }
 
 }
