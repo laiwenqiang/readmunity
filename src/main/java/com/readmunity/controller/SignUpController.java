@@ -107,10 +107,35 @@ public class SignUpController {
      * @return
      */
     @RequestMapping(value = "/password_reset/{info}", method = {RequestMethod.GET, RequestMethod.POST})
-    public String passwordResetInfo(@PathVariable String info) {
-        System.out.print(info);
+    public String passwordResetInfo(@PathVariable String info,String password,String password_confirmation,Model model) {
+        model.addAttribute("resetPath",info);
+        User user=null;
+        try {
+            user=userService.parsingString(info);
+        } catch (Exception e) {
+            model.addAttribute("message", e.getMessage());
+        }
+        if (model.containsAttribute("message"))
+            return "password_reset";
 
-        return "password_reset_now";
+        model.addAttribute("username", user.getUsername());
+        model.addAttribute("email", user.getEmail());
+
+        if(password==null){
+            return "password_reset_now";
+        }
+        if(password!=null&&!password.equals(password_confirmation)){
+            model.addAttribute("message", "密码和确认密码不相等，请重新输入。");
+            return "password_reset_now";
+        }
+        try {
+            userService.updatePasswordtoUser(user,password);
+        } catch (Exception e) {
+            model.addAttribute("message", e.getMessage());
+        }
+        if (model.containsAttribute("message"))
+            return "password_reset_now";
+        return "password_reset_over";
     }
 
 }

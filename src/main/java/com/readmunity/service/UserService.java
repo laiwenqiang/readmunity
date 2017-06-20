@@ -11,7 +11,6 @@ import java.util.Map;
  * Created by laiwenqiang on 2017/5/29.
  */
 public interface UserService {
-    User getUserById(String id);
 
     User getUserByUsername(String username);
 
@@ -21,7 +20,7 @@ public interface UserService {
 
     void save(String username, String email, String password);
 
-    void passEmailActivation(String username,String email,String validateCode) throws Exception;
+    void passEmailActivation(String username, String email, String validateCode) throws Exception;
 
     User updateProfileByName(String name, User user);
 
@@ -36,4 +35,8 @@ public interface UserService {
     List<User> getUserList(Map<String, String> filter);
 
     void passwordResetPassEmail(String toEmail) throws Exception;
+
+    User parsingString(String info) throws Exception;
+
+    void updatePasswordtoUser(User user,String password) throws Exception;
 }

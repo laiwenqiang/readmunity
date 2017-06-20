@@ -25,7 +25,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String getUserById(ModelMap map, @RequestParam String id) {
-        User user = userService.getUserById(id);
+        User user = null;
         if (user == null) {
             return "index";
         }

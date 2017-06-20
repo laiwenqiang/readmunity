@@ -23,11 +23,6 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public User getUserById(String id) {
-        return userMapper.getUserById(id);
-    }
-
-    @Override
     public User getUserByUsername(String username) {
         return userMapper.getUserByUsername(username);
     }

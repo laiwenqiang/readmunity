@@ -5,9 +5,7 @@ import com.readmunity.entity.Enum.StatusInfo;
 import com.readmunity.entity.Message;
 import com.readmunity.entity.User;
 import com.readmunity.service.UserService;
-import com.readmunity.util.Config;
-import com.readmunity.util.SendEmail;
-import com.readmunity.util.ServiceException;
+import com.readmunity.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,10 +31,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private SendEmail sendEmail;
 
-    @Override
-    public User getUserById(String id) {
-        return userDao.getUserById(id);
-    }
 
     @Override
     public User getUserByUsername(String username) {
@@ -79,7 +73,7 @@ public class UserServiceImpl implements UserService {
             user.setUsername(username);
             user.setEmail(email);
             user.setPassword(password);
-            user.setValidateCode(Config.getRandom());
+            user.setValidateCode(RandomCode.getInstance().getRandom());
             user.setRegisterTime(new Date());
             userDao.insert(user);
         } else {
@@ -88,7 +82,7 @@ public class UserServiceImpl implements UserService {
                 user.setEmail(email);
                 user.setPassword(password);
                 user.setStatus(StatusInfo.DEFORT.getNumber());
-                user.setValidateCode(Config.getRandom());
+                user.setValidateCode(RandomCode.getInstance().getRandom());
                 user.setRegisterTime(new Date());
                 userDao.updateUserByEmail(user);
             }
@@ -215,13 +209,40 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * 重置密码时，验证邮箱是否正确
+     * @param toEmail
+     * @throws Exception
+     */
     @Override
     public void passwordResetPassEmail(String toEmail)  throws Exception{
         User user = userDao.getUserByEmail(toEmail);
         if(user==null) throw new ServiceException("该邮箱未注册（邮箱地址不存在）！");
-        user.setRegisterTime(new Date());
-        user.setValidateCode(Config.getRandom());
+        user.setResetPassTime(DateUtil.millisecondSetZero(new Date()));
+        user.setValidateCode(RandomCode.getInstance().getRandom());
         userDao.updateUserByEmail(user);
         sendEmail.passwordResetToEmail(user);
+    }
+
+    @Override
+    public User parsingString(String info) throws Exception {
+       String email=Asc2Change.getInstance().getEmailStringtoAsc2(info);
+       User user = userDao.getUserByEmail(email);
+       if(user==null) throw new ServiceException("它看起来像你点击了一个无效的密码重置链接。请重试。");
+       Date time=Asc2Change.getInstance().getTimeStringtoAsc2(info);
+       String validateCode=Asc2Change.getInstance().getCodeStringtoAsc2(info);
+       if(time.compareTo(user.getResetPassTime())!=0||!validateCode.equals(user.getValidateCode()))
+           throw new ServiceException("它看起来像你点击了一个无效的密码重置链接。请重试。");
+       return user;
+    }
+
+    /**
+     *  修改密码
+     * @param user
+     */
+    @Override
+    public void updatePasswordtoUser(User user,String password) throws Exception {
+        user.setPassword(password);
+        userDao.updateUserByEmail(user);
     }
 }

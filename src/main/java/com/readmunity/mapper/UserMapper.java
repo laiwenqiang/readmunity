@@ -14,7 +14,6 @@ import java.util.Map;
 public interface UserMapper {
     void insert(User user);
     User findUserByUserInfo(String username,String email,String validateCode);
-    User getUserById(String id);
     User getUserByUsername(String username);
     User getUserByEmail(String email);
     List<User> getUserList(String filter);

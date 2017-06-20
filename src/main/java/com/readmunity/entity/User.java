@@ -12,7 +12,6 @@ import java.util.List;
  * Update by Henry on 2017/6/11 增加邮件验证机制
  */
 public class User implements Serializable {
-    private Integer id;
     private String username;
     private String password;
     /**
@@ -21,6 +20,7 @@ public class User implements Serializable {
     private int status;//激活状态
     private String validateCode;//激活码
     private Date registerTime;//注册时间
+    private Date resetPassTime;//密码重置时间
 
     /**
      * 头像url
@@ -48,14 +48,6 @@ public class User implements Serializable {
     private List<Reply> replyList = new ArrayList<>();
 
     public User(){}
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;
@@ -203,9 +195,17 @@ public class User implements Serializable {
         this.validateCode = validateCode;
     }
 
+    public Date getResetPassTime() {
+        return resetPassTime;
+    }
+
+    public void setResetPassTime(Date resetPassTime) {
+        this.resetPassTime = resetPassTime;
+    }
+
     @Override
     public String toString() {
-        return "id: " + id +"\n" + "username: " + username;
+        return "email: " + email +"\n" + "username: " + username;
     }
 
     @Transient
@@ -213,7 +213,6 @@ public class User implements Serializable {
         Calendar cl = Calendar.getInstance();
         cl.setTime(registerTime);
         cl.add(Calendar.DATE , 1);
-
         return cl.getTime();
     }
 }

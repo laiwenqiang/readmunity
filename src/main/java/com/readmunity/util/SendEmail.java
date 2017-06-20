@@ -99,14 +99,17 @@ public class SendEmail {
         sb.append(urlInfo+passwordResetUrl);
         //这边要采用加密算法将邮件进行加密。和用户的时间进行加密。进行拼接。
         //防止一个注册加密码进行多次密码重置。
-        sb.append(user.getEmail());
+        sb.append(Asc2Change.getInstance().getAsc2toString(user));
         sb.append("\" >");
         sb.append(urlInfo+passwordResetUrl);
-        sb.append(user.getEmail());
+        sb.append(Asc2Change.getInstance().getAsc2toString(user));
         sb.append("</a>");
         sb.append(getHtmlEnd());
         sendHtmlMail(user.getEmail(),passwordResetSubject,sb.toString());
     }
+
+
+
     private String getHtmlHead(){
         StringBuffer sb = new StringBuffer();
         sb.append("<!DOCTYPE html>");
