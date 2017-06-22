@@ -1,15 +1,23 @@
 package com.readmunity.service.impl;
 
+import com.readmunity.dao.BookDao;
 import com.readmunity.entity.Book;
 import com.readmunity.service.BookService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by laiwenqiang on 2017/5/26.
  */
+@Service
 public class BookServiceImpl implements BookService {
+
+    @Autowired
+    private BookDao bookDao;
 
     public List<Book> getStarBookListByUserId(int userId) {
         List<Book> bookList = new ArrayList<>();
@@ -23,4 +31,8 @@ public class BookServiceImpl implements BookService {
         return bookList;
     }
 
+    @Override
+    public List<Book> getBookList(Map<String, String> filter) {
+        return bookDao.getBookList(filter);
+    }
 }

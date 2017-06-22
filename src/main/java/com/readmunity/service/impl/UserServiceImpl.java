@@ -33,6 +33,11 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    public User getUserById(String id) {
+        return userDao.getUserById(id);
+    }
+
+    @Override
     public User getUserByUsername(String username) {
         User user = userDao.getUserByUsername(username);
         if (user == null) return null;
@@ -56,13 +61,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUserList(Map<String, String> filter) {
-        StringBuffer query = new StringBuffer("WHERE 1 = 1 ");
-        if (filter != null) {
-            for (String key : filter.keySet()) {
-                query.append("AND " + key + " LIKE '%" + filter.get(key) + "%' ");
-            }
-        }
-        return userDao.getUserList(query.toString());
+        return userDao.getUserList(filter);
     }
 
     @Override

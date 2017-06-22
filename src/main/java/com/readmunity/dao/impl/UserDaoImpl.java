@@ -7,15 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Henry on 17/6/12.
  */
 @Repository
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Override
+    public User getUserById(String id) {
+        return userMapper.getUserById(id);
+    }
 
     @Override
     public void insert(User user) {
@@ -33,8 +39,8 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public List<User> getUserList(String filter) {
-        return userMapper.getUserList(filter);
+    public List<User> getUserList(Map<String, String> filter) {
+        return super.getList(filter, userMapper);
     }
 
     @Override

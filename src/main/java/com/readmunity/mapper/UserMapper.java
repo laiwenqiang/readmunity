@@ -11,12 +11,12 @@ import java.util.Map;
  * Created by Henry on 17/6/12.
  */
 @Component(value = "userMapper")
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
     void insert(User user);
     User findUserByUserInfo(String username,String email,String validateCode);
     User getUserByUsername(String username);
+    User getUserById(String id);
     User getUserByEmail(String email);
-    List<User> getUserList(String filter);
     void updateByName(User user);
     void updateUserByEmail(User user);
 }

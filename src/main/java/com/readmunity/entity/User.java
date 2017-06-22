@@ -12,6 +12,7 @@ import java.util.List;
  * Update by Henry on 2017/6/11 增加邮件验证机制
  */
 public class User implements Serializable {
+    private Integer id;
     private String username;
     private String password;
     /**
@@ -48,6 +49,14 @@ public class User implements Serializable {
     private List<Reply> replyList = new ArrayList<>();
 
     public User(){}
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;

@@ -5,6 +5,10 @@
 
 <mapper namespace="com.readmunity.mapper.UserMapper">
 
+    <select id="getUserById" parameterType="String" resultType="com.readmunity.entity.User">
+        SELECT * from user WHERE id = #{id}
+    </select>
+
     <select id="getUserByUsername" parameterType="String" resultType="com.readmunity.entity.User">
         SELECT * FROM user WHERE username = #{username}
     </select>
@@ -13,7 +17,7 @@
         SELECT username, email, status, validateCode, registerTime,resetPassTime FROM user WHERE email = #{email}
     </select>
 
-    <select id="getUserList" parameterType="String" resultType="com.readmunity.entity.User">
+    <select id="getList" parameterType="String" resultType="com.readmunity.entity.User">
         SELECT * FROM user ${value}
     </select>
 

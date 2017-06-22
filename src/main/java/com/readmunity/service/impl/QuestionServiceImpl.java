@@ -4,6 +4,7 @@ import com.readmunity.entity.Question;
 import com.readmunity.service.QuestionService;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,15 +15,15 @@ public class QuestionServiceImpl implements QuestionService {
     public List<Question> getQuestionListByBookId(String id) {
         List<Question> questionList = new ArrayList<>();
         questionList.add(new Question("问题标题01", "001", 0, "问题内容01", 100, 20, "001", "001",
-                        "赖文强", "2017年06月02日07:02:24"));
+                        "赖文强",  new Date()));
         questionList.add(new Question("问题标题01", "001", 0, "问题内容01", 100, 20, "001", "001",
-                "赖文强", "2017年06月02日07:02:24"));
+                "赖文强", new Date()));
         questionList.add(new Question("问题标题01", "001", 0, "问题内容01", 100, 20, "001", "001",
-                "赖文强", "2017年06月02日07:02:24"));
+                "赖文强", new Date()));
         questionList.add(new Question("问题标题01", "001", 0, "问题内容01", 100, 20, "001", "001",
-                "赖文强", "2017年06月02日07:02:24"));
+                "赖文强", new Date()));
         questionList.add(new Question("问题标题01", "001", 0, "问题内容01", 100, 20, "001", "001",
-                "赖文强", "2017年06月02日07:02:24"));
+                "赖文强", new Date()));
         return questionList;
     }
 
@@ -41,21 +42,21 @@ public class QuestionServiceImpl implements QuestionService {
                 "``` java\n" +
                 "hello world\n" +
                 "```", 100, 20, "001", "001",
-                "赖文强", "2017年06月02日07:02:24");
+                "赖文强", new Date());
     }
 
     public List<Question> getQuestionListByUserId(int userId) {
         List<Question> questionList = new ArrayList<>();
         questionList.add(new Question("问题标题01", "001", 0, "问题内容01", 100, 20, "001", "001",
-                        "赖文强", "2017年06月02日07:02:24"));
+                        "赖文强", new Date()));
         questionList.add(new Question("问题标题01", "001", 0, "问题内容01", 100, 20, "001", "001",
-                "赖文强", "2017年06月02日07:02:24"));
+                "赖文强", new Date()));
         questionList.add(new Question("问题标题01", "001", 0, "问题内容01", 100, 20, "001", "001",
-                "赖文强", "2017年06月02日07:02:24"));
+                "赖文强", new Date()));
         questionList.add(new Question("问题标题01", "001", 0, "问题内容01", 100, 20, "001", "001",
-                "赖文强", "2017年06月02日07:02:24"));
+                "赖文强", new Date()));
         questionList.add(new Question("问题标题01", "001", 0, "问题内容01", 100, 20, "001", "001",
-                "赖文强", "2017年06月02日07:02:24"));
+                "赖文强", new Date()));
         return questionList;
     }
 
@@ -103,15 +104,15 @@ public class QuestionServiceImpl implements QuestionService {
     public Object getQuestionListByBookIdAndChapter(String bookId, String chapter) {
         List<Question> questionList = new ArrayList<>();
         questionList.add(new Question("问题标题01--第" + chapter + "章节", "001", 0, "问题内容01", 100, 20, "001", "001",
-                "赖文强", "2017年06月02日07:02:24"));
+                "赖文强", new Date()));
         questionList.add(new Question("问题标题01--第" + chapter + "章节", "001", 0, "问题内容01", 100, 20, "001", "001",
-                "赖文强", "2017年06月02日07:02:24"));
+                "赖文强", new Date()));
         questionList.add(new Question("问题标题01--第" + chapter + "章节", "001", 0, "问题内容01", 100, 20, "001", "001",
-                "赖文强", "2017年06月02日07:02:24"));
+                "赖文强", new Date()));
         questionList.add(new Question("问题标题01--第" + chapter + "章节","001", 0, "问题内容01", 100, 20, "001", "001",
-                "赖文强", "2017年06月02日07:02:24"));
+                "赖文强", new Date()));
         questionList.add(new Question("问题标题01--第" + chapter + "章节","001", 0, "问题内容01", 100, 20, "001", "001",
-                "赖文强", "2017年06月02日07:02:24"));
+                "赖文强", new Date()));
         return questionList;
     }
 }

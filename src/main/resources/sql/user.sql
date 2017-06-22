@@ -1,18 +1,10 @@
-CREATE DATABASE `readmunity`  
-CHARACTER SET 'utf8'  
-COLLATE 'utf8_general_ci';
-
-USE readmunity;
-
-SET NAMES utf8;
-
 -- ----------------------------
 -- Table structure for `user`
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `username` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL,
+ `password` varchar(100) NOT NULL,
   `avator` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `email` varchar(100) NOT NULL,

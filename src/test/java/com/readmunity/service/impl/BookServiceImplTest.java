@@ -1,6 +1,7 @@
 package com.readmunity.service.impl;
 
-import com.readmunity.entity.User;
+import com.readmunity.entity.Book;
+import com.readmunity.service.BookService;
 import com.readmunity.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -20,22 +20,15 @@ import static org.junit.Assert.assertNotNull;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class UserServiceImplTest {
+public class BookServiceImplTest {
 
     @Autowired
-    private UserService userService;
-
+    private BookService bookService;
     @Test
-    public void testGetUserById() {
-        User user = userService.getUserById("1");
-        assertEquals(new Integer(1), user.getId());
-    }
-
-    @Test
-    public void testGetUserList() {
+    public void testGetBookList() {
         Map<String, String> filter = new HashMap<>();
         filter.put("id", "1");
-        List<User> users = userService.getUserList(filter);
-        assertNotNull(users);
+        List<Book> bookList = bookService.getBookList(filter);
+        assertNotNull(bookList);
     }
 }

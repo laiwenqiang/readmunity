@@ -12,6 +12,8 @@ import java.util.Map;
  */
 public interface UserService {
 
+    User getUserById(String id);
+
     User getUserByUsername(String username);
 
     User getUserByCurrentUserName();

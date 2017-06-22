@@ -1,5 +1,7 @@
 package com.readmunity.entity;
 
+import java.util.Date;
+
 /**
  * Created by laiwenqiang on 2017/5/27.
  */
@@ -24,7 +26,7 @@ public class Question extends Base {
     public Question() {}
 
     public Question(String name, String orId, int version, String content, int star, int vote, String id, String createdId,
-                    String createdName, String createdTime) {
+                    String createdName, Date createdTime) {
         this.name = name;
         this.orId = orId;
         this.version = version;

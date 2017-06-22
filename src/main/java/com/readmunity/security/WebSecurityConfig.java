@@ -28,6 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/question/**").permitAll()
                 .antMatchers("/book/**").permitAll()
                 .antMatchers("/user/list").permitAll()
+                .antMatchers("/user/list/query").permitAll()
+                .antMatchers("/user/name/").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/sign/signIn").failureUrl("/sign/signIn-error")
                 .defaultSuccessUrl("/").permitAll()
