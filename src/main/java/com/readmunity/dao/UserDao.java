@@ -8,12 +8,12 @@ import java.util.Map;
 /**
  * Created by Henry on 17/6/11.
  */
-public interface UserDao {
+public interface UserDao extends BaseDao<User> {
     User getUserById(String id);
-    void insert(User user);
-    User getUserByUsername(String username);
-    User getUserByEmail(String email);
+    User getOne(Map<String, String> filter);
     List<User> getUserList(Map<String, String> filter);
-    User updateUserByName(String name, User user);
-    void updateUserByEmail(User user);
+    List<User> getUserListLike(Map<String, String> filter);
+    void updateById(String id, Map<String, String> setParam);
+    void update(Map<String, String> setParam, Map<String, String> filterParam);
+    void insert(Map<String, String> param);
 }

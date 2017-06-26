@@ -4,6 +4,7 @@ import com.readmunity.dao.UserDao;
 import com.readmunity.entity.Enum.StatusInfo;
 import com.readmunity.entity.Message;
 import com.readmunity.entity.User;
+import com.readmunity.security.CustUser;
 import com.readmunity.service.UserService;
 import com.readmunity.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +33,14 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private SendEmail sendEmail;
 
+    /**
+     * 获取当前登录用户的id
+     * @return
+     */
+    private String getLoginId() {
+        int id = ((CustUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser().getId();
+        return String.valueOf(id);
+    }
 
     @Override
     public User getUserById(String id) {
@@ -39,21 +49,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUsername(String username) {
-        User user = userDao.getUserByUsername(username);
+        Map<String, String> filter = new HashMap<>();
+        filter.put("username", username);
+        User user = userDao.getOne(filter);
         if (user == null) return null;
         if (judgeUserSuccess(user)) return null;
         return user;
     }
 
     @Override
-    public User getUserByCurrentUserName() {
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        return getUserByUsername(name);
-    }
-
-    @Override
     public User getUserByEmail(String email) {
-        User user = userDao.getUserByEmail(email);
+        Map<String, String> filter = new HashMap<>();
+        filter.put("email", email);
+        User user = userDao.getOne(filter);
         if (user == null) return null;
         if (judgeUserSuccess(user)) return null;
         return user;
@@ -62,31 +70,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getUserList(Map<String, String> filter) {
         return userDao.getUserList(filter);
-    }
-
-    @Override
-    public void save(String username, String email, String password) {
-        User user = userDao.getUserByEmail(email);
-        if (user == null) {
-            user = new User();
-            user.setUsername(username);
-            user.setEmail(email);
-            user.setPassword(password);
-            user.setValidateCode(RandomCode.getInstance().getRandom());
-            user.setRegisterTime(new Date());
-            userDao.insert(user);
-        } else {
-            if (judgeUserSuccess(user)) {
-                user.setUsername(username);
-                user.setEmail(email);
-                user.setPassword(password);
-                user.setStatus(StatusInfo.DEFORT.getNumber());
-                user.setValidateCode(RandomCode.getInstance().getRandom());
-                user.setRegisterTime(new Date());
-                userDao.updateUserByEmail(user);
-            }
-        }
-        sendEmail.signUpToEmail(username, email, user.getValidateCode());
     }
 
     /**
@@ -109,7 +92,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void passEmailActivation(String username, String email, String validateCode) throws Exception {
-        User user = userDao.getUserByEmail(email);
+        Map<String, String> filter = new HashMap<>();
+        filter.put("email", email);
+        User user = userDao.getOne(filter);
         if (user == null) {
             throw new ServiceException("该邮箱未注册（邮箱地址不存在）！");
         }
@@ -132,8 +117,9 @@ public class UserServiceImpl implements UserService {
         //验证链接是否过期
         if (currentTime.after(user.getRegisterTime()) && currentTime.before(user.getLastActivateTime())) {
             //激活成功， //并更新用户的激活状态，为已激活
-            user.setStatus(StatusInfo.SUCCESS.getNumber());//把状态改为激活
-            userDao.updateUserByEmail(user);
+            Map<String, String> setParam = new HashMap<>();
+            setParam.put("status", String.valueOf(StatusInfo.SUCCESS.getNumber()));//把状态改为激活
+            userDao.update(setParam, filter);
         } else {
             throw new ServiceException("激活码已过期！");
         }
@@ -141,14 +127,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateProfileByName(String name, User user) {
-        userDao.updateUserByName(name, user);
-        return userDao.getUserByUsername(name);
+        return null;
     }
 
     @Override
     public User updateProfileByCurrentName(User user) {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         return updateProfileByName(name, user);
+    }
+
+    @Override
+    public User updateCurrent(Map<String, String> setParam) {
+        String id = getLoginId();
+        userDao.updateById(id, setParam);
+        return userDao.getUserById((id));
     }
 
     @Override
@@ -175,18 +167,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User cropAvatar(String path, int x, int y, int w, int h) {
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userDao.getUserByUsername(name);
-        String dPath = File.separator + "img" + File.separator + "avatar" + File.separator + name + ".png";
+        String id = getLoginId();
+        User user = userDao.getUserById(id);
+        String dPath = File.separator + "img" + File.separator + "avatar" + File.separator + id + ".png";
         cropImage(path, dPath, x, y, w, h);
         user.setAvatar(dPath);
-        userDao.updateUserByName(name, user);
-        return userDao.getUserByUsername(name);
+
+        Map<String, String> setParam = new HashMap<>();
+        setParam.put("avatar", dPath);
+        userDao.updateById(id, setParam);
+        return userDao.getUserById(id);
     }
 
     @Override
     public Message getCurrentAvatar() {
-        User user = userDao.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        User user = userDao.getUserById(getLoginId());
         return new Message(HttpStatus.OK, user.getAvatar());
     }
 
@@ -215,33 +210,71 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void passwordResetPassEmail(String toEmail)  throws Exception{
-        User user = userDao.getUserByEmail(toEmail);
+        Map<String, String> filter = new HashMap<>();
+        filter.put("email", toEmail);
+        User user = userDao.getOne(filter);
         if(user==null) throw new ServiceException("该邮箱未注册（邮箱地址不存在）！");
-        user.setResetPassTime(DateUtil.millisecondSetZero(new Date()));
-        user.setValidateCode(RandomCode.getInstance().getRandom());
-        userDao.updateUserByEmail(user);
+        Map<String, String> setParam = new HashMap<>();
+        setParam.put("resetPassTime", DateUtil.millisecondSetZero(new Date()).toString());
+        setParam.put("validateCode", RandomCode.getInstance().getRandom());
+        userDao.update(setParam, filter);
         sendEmail.passwordResetToEmail(user);
     }
 
     @Override
     public User parsingString(String info) throws Exception {
-       String email=Asc2Change.getInstance().getEmailStringtoAsc2(info);
-       User user = userDao.getUserByEmail(email);
-       if(user==null) throw new ServiceException("它看起来像你点击了一个无效的密码重置链接。请重试。");
-       Date time=Asc2Change.getInstance().getTimeStringtoAsc2(info);
-       String validateCode=Asc2Change.getInstance().getCodeStringtoAsc2(info);
-       if(time.compareTo(user.getResetPassTime())!=0||!validateCode.equals(user.getValidateCode()))
-           throw new ServiceException("它看起来像你点击了一个无效的密码重置链接。请重试。");
-       return user;
+        String email=Asc2Change.getInstance().getEmailStringtoAsc2(info);
+        Map<String, String> filter = new HashMap<>();
+        filter.put("email", email);
+        User user = userDao.getOne(filter);
+        if(user==null) throw new ServiceException("它看起来像你点击了一个无效的密码重置链接。请重试。");
+        Date time=Asc2Change.getInstance().getTimeStringtoAsc2(info);
+        String validateCode=Asc2Change.getInstance().getCodeStringtoAsc2(info);
+        if(time.compareTo(user.getResetPassTime())!=0||!validateCode.equals(user.getValidateCode()))
+            throw new ServiceException("它看起来像你点击了一个无效的密码重置链接。请重试。");
+        return user;
     }
 
     /**
-     *  修改密码
-     * @param user
+     * 修改密码
+     * @param id
+     * @param password
+     * @throws Exception
      */
     @Override
-    public void updatePasswordtoUser(User user,String password) throws Exception {
-        user.setPassword(password);
-        userDao.updateUserByEmail(user);
+    public void updatePasswordtoUser(String id, String password) throws Exception {
+        Map<String, String> setParam = new HashMap<>();
+        setParam.put("password", password);
+        userDao.updateById(id, setParam);
+    }
+
+    @Override
+    public void signUp(String username, String email, String password) {
+        Map<String, String> filter = new HashMap<>();
+        filter.put("email", email);
+        User user = userDao.getOne(filter);
+
+        Map<String, String> param = new HashMap<>();
+        param.put("username", username);
+        param.put("email", email);
+        param.put("password", password);
+        param.put("validateCode", RandomCode.getInstance().getRandom());
+        param.put("registerTime", (new Date()).toString());
+
+        if (user == null) {
+            userDao.insert(param);
+        } else {
+            if (judgeUserSuccess(user)) {
+                param.put("status", String.valueOf(StatusInfo.DEFORT.getNumber()));
+                userDao.update(param, filter);
+            }
+        }
+        sendEmail.signUpToEmail(username, email, user.getValidateCode());
+    }
+
+    @Override
+    public User getLogin() {
+        String id = getLoginId();
+        return userDao.getUserById(id);
     }
 }

@@ -20,22 +20,12 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 
     @Override
     public User getUserById(String id) {
-        return userMapper.getUserById(id);
+        return super.getById(id, userMapper);
     }
 
     @Override
-    public void insert(User user) {
-        userMapper.insert(user);
-    }
-
-    @Override
-    public User getUserByUsername(String username) {
-        return userMapper.getUserByUsername(username);
-    }
-
-    @Override
-    public User getUserByEmail(String email) {
-        return userMapper.getUserByEmail(email);
+    public User getOne(Map<String, String> filter) {
+        return super.getOne(filter, userMapper);
     }
 
     @Override
@@ -44,14 +34,24 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
     }
 
     @Override
-    public User updateUserByName(String name, User user) {
-        user.setUsername(name);
-        userMapper.updateByName(user);
-        return user;
+    public List<User> getUserListLike(Map<String, String> filter) {
+        return super.getListLike(filter, userMapper);
     }
 
     @Override
-    public void updateUserByEmail(User user) {
-        userMapper.updateUserByEmail(user);
+    public void updateById(String id, Map<String, String> setParam) {
+        super.updateById(id, setParam, userMapper);
     }
+
+    @Override
+    public void update(Map<String, String> setParam, Map<String, String> filterParam) {
+       super.update(setParam, filterParam, userMapper);
+    }
+
+    @Override
+    public void insert(Map<String, String> param) {
+        super.insert(param, userMapper);
+    }
+
+
 }

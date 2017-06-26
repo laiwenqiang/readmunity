@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/name", method = RequestMethod.GET)
-    public String getUserByName(ModelMap map, @RequestParam String name) {
+    public String getUserByName(ModelMap map, @RequestParam String name) throws Exception {
         User user = userService.getUserByUsername(name);
         if(user == null) {
             return "index";
@@ -59,16 +59,16 @@ public class UserController {
         return "fragments/userlist :: resultlist";
     }
 
-    @RequestMapping(value = "/setting/current", method = RequestMethod.GET)
-    public String setCurrent(ModelMap map) {
-        User user = userService.getUserByCurrentUserName();
+    @RequestMapping(value = "/setting/login", method = RequestMethod.GET)
+    public String getLogin(ModelMap map) throws Exception {
+        User user = userService.getLogin();
         map.addAttribute("user", user);
         return "usersetting";
     }
 
     @RequestMapping(value = "/profile/save", method = RequestMethod.POST)
-    public String saveProfile(@ModelAttribute User user, ModelMap map) {
-        user = userService.updateProfileByCurrentName(user);
+    public String saveProfile(@ModelAttribute Map<String, String> setParam, ModelMap map) {
+        User user = userService.updateCurrent(setParam);
         map.addAttribute("user", user);
         return "usersetting";
     }

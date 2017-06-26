@@ -19,7 +19,17 @@ public class BookDaoImpl extends BaseDaoImpl<Book> implements BookDao {
     private BookMapper bookMapper;
 
     @Override
+    public Book getBookById(String id) {
+        return super.getById(id, bookMapper);
+    }
+
+    @Override
     public List<Book> getBookList(Map<String, String> filter) {
         return super.getList(filter, bookMapper);
+    }
+
+    @Override
+    public List<Book> getBookListLike(Map<String, String> filter) {
+        return super.getListLike(filter, bookMapper);
     }
 }

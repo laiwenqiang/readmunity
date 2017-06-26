@@ -5,7 +5,7 @@
 
 <mapper namespace="com.readmunity.mapper.UserMapper">
 
-    <select id="getUserById" parameterType="String" resultType="com.readmunity.entity.User">
+    <select id="selectById" parameterType="String" resultType="com.readmunity.entity.User">
         SELECT * from user WHERE id = #{id}
     </select>
 
@@ -17,16 +17,16 @@
         SELECT username, email, status, validateCode, registerTime,resetPassTime FROM user WHERE email = #{email}
     </select>
 
-    <select id="getList" parameterType="String" resultType="com.readmunity.entity.User">
-        SELECT * FROM user ${value}
+    <select id="selectList" parameterType="String" resultType="com.readmunity.entity.User">
+        SELECT * FROM user WHERE ${value}
+    </select>
+
+    <select id="selectListLike" parameterType="String" resultType="com.readmunity.entity.User">
+        SELECT * FROM user WHERE ${value}
     </select>
 
     <insert id="insertUser" parameterType="Map">
         INSERT INTO user (username, email, password) VALUES (#{username}, #{email}, #{password})
-    </insert>
-
-    <insert id="insert" parameterType="com.readmunity.entity.User">
-        INSERT INTO user (username, email, password,validateCode,registerTime,resetPassTime) VALUES (#{username}, #{email}, #{password},#{validateCode},#{registerTime},#{resetPassTime})
     </insert>
 
     <update id="updateByName" parameterType="com.readmunity.entity.User">
@@ -58,6 +58,18 @@
         </set>
         WHERE email=#{email}
     </update>
+    
+    <update id="updateById" parameterType="Map">
+        UPDATE user ${setParam} WHERE id = #{id}
+    </update>
+
+    <update id="update" parameterType="Map">
+        UPDATE user ${setParam} WHERE ${filterParam}
+    </update>
+
+    <insert id="insert" parameterType="Map">
+        INSERT INTO user ${columnName} VALUES ${columnValue}
+    </insert>
 
     <!--<cache/>-->
 

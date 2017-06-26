@@ -16,17 +16,15 @@ public interface UserService {
 
     User getUserByUsername(String username);
 
-    User getUserByCurrentUserName();
-
     User getUserByEmail(String email);
-
-    void save(String username, String email, String password);
 
     void passEmailActivation(String username, String email, String validateCode) throws Exception;
 
     User updateProfileByName(String name, User user);
 
     User updateProfileByCurrentName(User user);
+
+    User updateCurrent(Map<String, String> setParam);
 
     Message uploadAvatar(MultipartFile file);
 
@@ -40,5 +38,9 @@ public interface UserService {
 
     User parsingString(String info) throws Exception;
 
-    void updatePasswordtoUser(User user,String password) throws Exception;
+    void updatePasswordtoUser(String id, String password) throws Exception;
+
+    void signUp(String username, String email, String password);
+
+    User getLogin();
 }

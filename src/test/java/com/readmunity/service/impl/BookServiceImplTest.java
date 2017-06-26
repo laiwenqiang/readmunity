@@ -24,11 +24,30 @@ public class BookServiceImplTest {
 
     @Autowired
     private BookService bookService;
+
+    @Test
+    public void testGetBookById() {
+        Book book = bookService.getBookById("1");
+        assertNotNull(book);
+    }
+
     @Test
     public void testGetBookList() {
         Map<String, String> filter = new HashMap<>();
         filter.put("id", "1");
+        filter.put("name", "hello");
         List<Book> bookList = bookService.getBookList(filter);
         assertNotNull(bookList);
     }
+
+    @Test
+    public void testGetBookListLike() {
+        Map<String, String> filter = new HashMap<>();
+        filter.put("id", "1");
+        filter.put("name", "hello");
+        List<Book> bookList = bookService.getBookListLike(filter);
+        assertNotNull(bookList);
+    }
+
+
 }
