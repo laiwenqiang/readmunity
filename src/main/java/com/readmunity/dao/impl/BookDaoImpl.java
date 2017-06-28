@@ -36,6 +36,6 @@ public class BookDaoImpl extends AbstractDao<Book> implements BookDao {
 
     @Override
     BaseMapper mapper() {
-        return null;
+        return bookMapper;
     }
 }
