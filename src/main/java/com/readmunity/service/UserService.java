@@ -42,5 +42,5 @@ public interface UserService {
 
     void signUp(String username, String email, String password);
 
-    User getLogin();
+    User setting();
 }

@@ -59,9 +59,9 @@ public class UserController {
         return "fragments/userlist :: resultlist";
     }
 
-    @RequestMapping(value = "/setting/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/setting/current", method = RequestMethod.GET)
     public String getLogin(ModelMap map) throws Exception {
-        User user = userService.getLogin();
+        User user = userService.setting();
         map.addAttribute("user", user);
         return "usersetting";
     }

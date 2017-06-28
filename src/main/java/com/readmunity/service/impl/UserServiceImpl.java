@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(String id) {
-        return userDao.getUserById(id);
+        return userDao.getById(id);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUserList(Map<String, String> filter) {
-        return userDao.getUserList(filter);
+        return userDao.getList(filter);
     }
 
     /**
@@ -140,7 +140,7 @@ public class UserServiceImpl implements UserService {
     public User updateCurrent(Map<String, String> setParam) {
         String id = getLoginId();
         userDao.updateById(id, setParam);
-        return userDao.getUserById((id));
+        return userDao.getById((id));
     }
 
     @Override
@@ -168,7 +168,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User cropAvatar(String path, int x, int y, int w, int h) {
         String id = getLoginId();
-        User user = userDao.getUserById(id);
+        User user = userDao.getById(id);
         String dPath = File.separator + "img" + File.separator + "avatar" + File.separator + id + ".png";
         cropImage(path, dPath, x, y, w, h);
         user.setAvatar(dPath);
@@ -176,12 +176,12 @@ public class UserServiceImpl implements UserService {
         Map<String, String> setParam = new HashMap<>();
         setParam.put("avatar", dPath);
         userDao.updateById(id, setParam);
-        return userDao.getUserById(id);
+        return userDao.getById(id);
     }
 
     @Override
     public Message getCurrentAvatar() {
-        User user = userDao.getUserById(getLoginId());
+        User user = userDao.getById(getLoginId());
         return new Message(HttpStatus.OK, user.getAvatar());
     }
 
@@ -273,8 +273,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getLogin() {
+    public User setting() {
         String id = getLoginId();
-        return userDao.getUserById(id);
+        return userDao.getById(id);
     }
 }

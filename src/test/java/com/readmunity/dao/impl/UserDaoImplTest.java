@@ -22,7 +22,7 @@ public class UserDaoImplTest {
 
     @Test
     public void getById() {
-        userDao.getUserById("1");
+        userDao.getById("1");
     }
 
     @Test
