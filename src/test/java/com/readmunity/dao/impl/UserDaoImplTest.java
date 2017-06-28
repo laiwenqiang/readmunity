@@ -21,6 +21,11 @@ public class UserDaoImplTest {
     private UserDao userDao;
 
     @Test
+    public void getById() {
+        userDao.getUserById("1");
+    }
+
+    @Test
     public void insertTest() {
         Map<String, String> param = new HashMap<>();
         param.put("username", "Tom");

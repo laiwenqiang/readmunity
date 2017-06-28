@@ -10,19 +10,21 @@ import java.util.Map;
 /**
  * Created by laiwenqiang on 2017/6/22.
  */
-public class BaseDaoImpl<T> implements BaseDao<T> {
+public abstract class AbstractDao<T> implements BaseDao<T> {
+
+    abstract BaseMapper mapper();
 
     @Override
-    public T getById(String id, BaseMapper mapper) {
-        return (T) mapper.selectById(id);
+    public T getById(String id) {
+        return (T) mapper().selectById(id);
     }
 
     @Override
-    public T getOne(Map<String, String> filter, BaseMapper mapper) {
+    public T getOne(Map<String, String> filter) {
         if (isParamEmpty(filter)) {
             return null;
         }
-        List<T> list = getList(filter, mapper);
+        List<T> list = getList(filter);
         if (list != null) {
             if(list.size() > 1) return null;
             else return list.get(0);
@@ -31,7 +33,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     @Override
-    public List<T> getListLike(Map<String, String> filter, BaseMapper mapper) {
+    public List<T> getListLike(Map<String, String> filter) {
         if (isParamEmpty(filter)) {
             return null;
         }
@@ -39,11 +41,11 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         for (String key : filter.keySet()) {
             query.append("AND " + key + " LIKE '%" + filter.get(key) + "%' ");
         }
-        return (List<T>)mapper.selectListLike(query.toString());
+        return (List<T>)mapper().selectListLike(query.toString());
     }
 
     @Override
-    public List<T> getList(Map<String, String> filter, BaseMapper mapper) {
+    public List<T> getList(Map<String, String> filter) {
         if (isParamEmpty(filter)) {
             return null;
         }
@@ -51,11 +53,11 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         for (String key : filter.keySet()) {
             query.append("AND " + key + " = '" + filter.get(key) + "'");
         }
-        return (List<T>) mapper.selectList(query.toString());
+        return (List<T>) mapper().selectList(query.toString());
     }
 
     @Override
-    public void updateById(String id, Map<String, String> setParam, BaseMapper mapper) {
+    public void updateById(String id, Map<String, String> setParam) {
         if(isParamEmpty(setParam)) return;
         StringBuffer buffer = new StringBuffer("SET ");
 
@@ -67,11 +69,11 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         Map<String, String> param = new HashMap<>();
         param.put("setParam", buffer.toString());
         param.put("id", id);
-        mapper.updateById(param);
+        mapper().updateById(param);
     }
 
     @Override
-    public void update(Map<String, String> setParam, Map<String, String> filterParam, BaseMapper mapper) {
+    public void update(Map<String, String> setParam, Map<String, String> filterParam) {
         if (isParamEmpty(setParam) || isParamEmpty(filterParam)) {
             return;
         }
@@ -90,11 +92,11 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         Map<String, String> param = new HashMap<>();
         param.put("setParam", setBuffer.toString());
         param.put("filterParam", filterBuffer.toString());
-        mapper.update(param);
+        mapper().update(param);
     }
 
     @Override
-    public void insert(Map<String, String> param, BaseMapper mapper) {
+    public void insert(Map<String, String> param) {
         if(isParamEmpty(param)) return;
         StringBuffer columnName = new StringBuffer("(");
         StringBuffer columnValue = new StringBuffer("(");
@@ -111,7 +113,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         Map<String, String> params = new HashMap<>();
         params.put("columnName", columnName.toString());
         params.put("columnValue", columnValue.toString());
-        mapper.insert(params);
+        mapper().insert(params);
     }
 
     private boolean isParamEmpty(Map<String, String> param) {

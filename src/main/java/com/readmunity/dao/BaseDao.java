@@ -10,24 +10,23 @@ import java.util.Map;
  */
 public interface BaseDao<T> {
 
-    T getById(String id, BaseMapper mapper);
+    T getById(String id);
 
-    T getOne(Map<String, String> filter, BaseMapper mapper);
+    T getOne(Map<String, String> filter);
 
     /**
      * 模糊（like）查询，filter为过滤条件
      * @param filter
-     * @param mapper
      * @return
      */
-    List<T> getListLike(Map<String, String> filter, BaseMapper mapper);
+    List<T> getListLike(Map<String, String> filter);
 
-    List<T> getList(Map<String, String> filter, BaseMapper mapper);
+    List<T> getList(Map<String, String> filter);
 
-    void updateById(String id, Map<String, String> param, BaseMapper mapper);
+    void updateById(String id, Map<String, String> param);
 
-    void update(Map<String, String> setParam, Map<String, String> filterParam, BaseMapper mapper);
+    void update(Map<String, String> setParam, Map<String, String> filterParam);
 
-    void insert(Map<String, String> param, BaseMapper mapper);
+    void insert(Map<String, String> param);
 
 }
