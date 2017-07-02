@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/name", method = RequestMethod.GET)
-    public String getUserByName(ModelMap map, @RequestParam String name) {
+    public String getUserByName(ModelMap map, @RequestParam String name) throws Exception {
         User user = userService.getUserByUsername(name);
         if(user == null) {
             return "index";
@@ -43,9 +43,9 @@ public class UserController {
         return "user";
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String getUserList(ModelMap map) {
-        List<User> users = userService.getUserList(null);
+    @RequestMapping(value = "/list/active", method = RequestMethod.GET)
+    public String getActiveUserList(ModelMap map) {
+        List<User> users = userService.getActiveUserList();
         map.addAttribute("amount", users.size());
         map.addAttribute("userList", users);
         return "userlist";
@@ -60,15 +60,16 @@ public class UserController {
     }
 
     @RequestMapping(value = "/setting/current", method = RequestMethod.GET)
-    public String setCurrent(ModelMap map) {
-        User user = userService.getUserByCurrentUserName();
+    public String getLogin(ModelMap map) throws Exception {
+        User user = userService.setting();
         map.addAttribute("user", user);
         return "usersetting";
     }
 
     @RequestMapping(value = "/profile/save", method = RequestMethod.POST)
-    public String saveProfile(@ModelAttribute User user, ModelMap map) {
-        user = userService.updateProfileByCurrentName(user);
+    public String saveProfile(@RequestParam Map<String, String> setParam, ModelMap map) {
+        formatParam(setParam);
+        User user = userService.updateCurrent(setParam);
         map.addAttribute("user", user);
         return "usersetting";
     }
@@ -91,6 +92,10 @@ public class UserController {
     public @ResponseBody
     Message getCurrentAvatar() {
        return userService.getCurrentAvatar();
+    }
+
+    public void formatParam(Map<String, String> param) {
+        param.remove("_csrf");
     }
 
 

@@ -38,7 +38,7 @@ public class SignUpController {
 
     @RequestMapping(value = "/join", method = RequestMethod.POST)
     public String join(Model model, @RequestParam String username, @RequestParam String email, @RequestParam String password) {
-        userService.save(username, email, password);
+        userService.signUp(username, email, password);
         return "signUpToEmail";
     }
 
@@ -129,7 +129,7 @@ public class SignUpController {
             return "password_reset_now";
         }
         try {
-            userService.updatePasswordtoUser(user,password);
+            userService.updatePasswordtoUser(String.valueOf(user.getId()), password);
         } catch (Exception e) {
             model.addAttribute("message", e.getMessage());
         }

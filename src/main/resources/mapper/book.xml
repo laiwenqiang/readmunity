@@ -5,7 +5,15 @@
 
 
 <mapper namespace="com.readmunity.mapper.BookMapper">
+    <select id="getById" parameterType="String" resultType="com.readmunity.entity.Book">
+        SELECT * FROM book WHERE id = #{id}
+    </select>
+
     <select id="getList" parameterType="String" resultType="com.readmunity.entity.Book">
+        SELECT * FROM book ${value}
+    </select>
+
+    <select id="getListLike" parameterType="String" resultType="com.readmunity.entity.Book">
         SELECT * FROM book ${value}
     </select>
 </mapper>

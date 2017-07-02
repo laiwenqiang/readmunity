@@ -32,7 +32,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Book getBookById(String id) {
+        return bookDao.getById(id);
+    }
+
+    @Override
     public List<Book> getBookList(Map<String, String> filter) {
-        return bookDao.getBookList(filter);
+        return bookDao.getList(filter);
+    }
+
+    @Override
+    public List<Book> getBookListLike(Map<String, String> filter) {
+        return bookDao.getListLike(filter);
     }
 }

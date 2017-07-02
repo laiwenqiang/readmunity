@@ -5,59 +5,37 @@
 
 <mapper namespace="com.readmunity.mapper.UserMapper">
 
-    <select id="getUserById" parameterType="String" resultType="com.readmunity.entity.User">
+    <select id="selectById" parameterType="String" resultType="com.readmunity.entity.User">
         SELECT * from user WHERE id = #{id}
     </select>
 
-    <select id="getUserByUsername" parameterType="String" resultType="com.readmunity.entity.User">
-        SELECT * FROM user WHERE username = #{username}
+    <select id="selectList" parameterType="String" resultType="com.readmunity.entity.User">
+        SELECT * FROM user WHERE ${value}
     </select>
 
-    <select id="getUserByEmail" parameterType="String" resultType="com.readmunity.entity.User">
-        SELECT username, email, status, validateCode, registerTime,resetPassTime FROM user WHERE email = #{email}
+    <select id="selectListLike" parameterType="String" resultType="com.readmunity.entity.User">
+        SELECT * FROM user WHERE ${value}
     </select>
-
-    <select id="getList" parameterType="String" resultType="com.readmunity.entity.User">
-        SELECT * FROM user ${value}
+    
+    <select id="selectActiveUser" resultType="com.readmunity.entity.User">
+        SELECT * FROM user WHERE score > 100;
     </select>
 
     <insert id="insertUser" parameterType="Map">
         INSERT INTO user (username, email, password) VALUES (#{username}, #{email}, #{password})
     </insert>
 
-    <insert id="insert" parameterType="com.readmunity.entity.User">
-        INSERT INTO user (username, email, password,validateCode,registerTime,resetPassTime) VALUES (#{username}, #{email}, #{password},#{validateCode},#{registerTime},#{resetPassTime})
+    <update id="updateById" parameterType="Map">
+        UPDATE user ${setParam} WHERE id = #{id}
+    </update>
+
+    <update id="update" parameterType="Map">
+        UPDATE user ${setParam} WHERE ${filterParam}
+    </update>
+
+    <insert id="insert" parameterType="Map">
+        INSERT INTO user ${columnName} VALUES ${columnValue}
     </insert>
-
-    <update id="updateByName" parameterType="com.readmunity.entity.User">
-        UPDATE USER
-        <set>
-            username=#{username}
-            <if test="password != null">,password=#{password}</if>
-            <if test="avatar != null">,avatar=#{avatar}</if>
-            <if test="email != null">,email=#{email}</if>
-            <if test="address!= null">,address=#{address}</if>
-            <if test="bio != null">,bio=#{bio}</if>
-        </set>
-        WHERE username=#{username}
-    </update>
-
-    <update id="updateUserByEmail" parameterType="com.readmunity.entity.User">
-        UPDATE USER
-        <set>
-            email=#{email}
-            <if test="username != null">,username=#{username}</if>
-            <if test="password != null">,password=#{password}</if>
-            <if test="avatar != null">,avatar=#{avatar}</if>
-            <if test="address!= null">,address=#{address}</if>
-            <if test="bio != null">,bio=#{bio}</if>
-            <if test="status != null">,status=#{status}</if>
-            <if test="validateCode != null">,validateCode=#{validateCode}</if>
-            <if test="registerTime != null">,registerTime=#{registerTime}</if>
-            <if test="resetPassTime != null">,resetPassTime=#{resetPassTime}</if>
-        </set>
-        WHERE email=#{email}
-    </update>
 
     <!--<cache/>-->
 

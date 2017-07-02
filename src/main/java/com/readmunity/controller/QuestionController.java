@@ -1,6 +1,8 @@
 package com.readmunity.controller;
 
+import com.readmunity.service.QuestionService;
 import com.readmunity.service.impl.QuestionServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/question")
 public class QuestionController {
 
+    @Autowired
+    private QuestionService questionService;
+
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String getQuestionListByBookId(ModelMap map, @RequestParam String bookId) {
-        map.addAttribute("questionlist", new QuestionServiceImpl().getQuestionListByBookId("01"));
+        map.addAttribute("questionlist", questionService.getQuestionListByBookId("1"));
         map.addAttribute("bookId", bookId);
         return "questionlist";
     }
