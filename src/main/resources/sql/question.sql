@@ -4,12 +4,12 @@ CREATE TABLE `question` (
 `id` SMALLINT(6) NOT NULL AUTO_INCREMENT,
 `name` VARCHAR(100) NOT NULL,
 `bookId` SMALLINT(6) NOT NULL,
-`originalId` SMALLINT(6) NOT NULL,
-`version` SMALLINT(6) NOT NULL,
+`originalId` SMALLINT(6) DEFAULT NULL,
+`version` SMALLINT(6) NOT NULL DEFAULT '0',
 `content` VARCHAR(255) NOT NULL,
 `tags` VARCHAR (100) DEFAULT NULL,
-`starQty` SMALLINT(6) NOT NULL,
-`voteQty` SMALLINT(6) NOT NULL,
+`starQty` SMALLINT(6) NOT NULL DEFAULT '0',
+`voteQty` SMALLINT(6) NOT NULL DEFAULT '0',
 `createdId` SMALLINT(6) NOT NULL,
 `createdName` VARCHAR (100) NOT NULL,
 `createdTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -17,4 +17,4 @@ CREATE TABLE `question` (
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO question(name, content, bookId) VALUES ('xxx', 'xxxxx', '1');
+INSERT INTO question(name, content, bookId, tags) VALUES ('xxx', 'xxxxx', '1', 'java,设计模式');

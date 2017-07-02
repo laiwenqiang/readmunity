@@ -101,10 +101,10 @@
             <div class="row">
                 <div class="col-md-1">&nbsp;</div>
                 <div class="col-md-11">
-                    <p th:text="${question.content}"></p>
+                    <span th:each="tag: ${question.tags}" th:text="${tag}" class="label label-default">
+                    </span>
                 </div>
             </div>
-
 
             <div class="row">
                 <div class="col-md-1">&nbsp;</div>
@@ -112,7 +112,8 @@
                     <p class="text-left">
                         <small>
                             <a href="#">
-                                <span class="glyphicon glyphicon-star text-muted" aria-hidden="true">52</span>
+                                <span class="glyphicon glyphicon-star text-muted" th:text="${question.startQty}"
+                                      aria-hidden="true"></span>
                             </a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <a href="#">
@@ -120,7 +121,7 @@
                             </a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <span class="glyphicon glyphicon-time text-muted"
-                                  aria-hidden="true">最近更新&nbsp;2017年05月27日</span>
+                                  aria-hidden="true" th:text="'提问时间 ' + ${question.createdTime}"></span>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                         </small>
                     </p>

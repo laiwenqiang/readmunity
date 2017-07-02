@@ -2,6 +2,7 @@ package com.readmunity.service.impl;
 
 import com.readmunity.entity.Reply;
 import com.readmunity.service.ReplyService;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +10,11 @@ import java.util.List;
 /**
  * Created by laiwenqiang on 2017/5/28.
  */
+@Service
 public class ReplyServiceImpl implements ReplyService {
 
-    public List<Reply> getReplyListByQuestionId(String id) {
+    @Override
+    public List<Reply> getListByQuestionId(String id) {
         List<Reply> replyList = new ArrayList<>();
         replyList.add(new Reply("回答ID——001", "问题ID-001", "问题标题-001","提问者ID-001", "# 回答内容-001 \n ``` java public \n ```", "回答者ID-001", "回答者姓名-001",
                 200));

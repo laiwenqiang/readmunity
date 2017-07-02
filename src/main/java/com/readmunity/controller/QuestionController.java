@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Stack;
+
 /**
  * Created by laiwenqiang on 2017/5/27.
  */
@@ -53,7 +55,6 @@ public class QuestionController {
     public @ResponseBody
     Message saveQuestion(@RequestParam String bookId, @RequestParam String name,
                          @RequestParam String content, @RequestParam String tags) {
-
         questionService.saveQuestion(bookId, name, content, tags);
 
         return new Message(HttpStatus.OK, "success");

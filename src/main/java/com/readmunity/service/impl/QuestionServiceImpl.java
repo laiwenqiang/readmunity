@@ -8,6 +8,7 @@ import com.readmunity.service.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,10 +24,28 @@ public class QuestionServiceImpl implements QuestionService {
     private QuestionDao questionDao;
 
     @Override
-    public List<Question> getQuestionListByBookId(String id) {
+    public List<Map<String, Object>> getQuestionListByBookId(String id) {
         Map<String, String> filter = new HashMap<>();
         filter.put("bookId", id);
-        return questionDao.getList(filter);
+
+        List<Question> questions = questionDao.getList(filter);
+
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        for (Question question : questions) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", question.getId());
+            map.put("name", question.getName());
+            if (question.getTags() != null) {
+                map.put("tags", question.getTags().split(","));
+            } else {
+                map.put("tags", "");
+            }
+            map.put("createdTime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(question.getCreatedTime()));
+            map.put("startQty", question.getStarQty());
+            result.add(map);
+        }
+        return result;
     }
 
     @Override
@@ -42,6 +61,7 @@ public class QuestionServiceImpl implements QuestionService {
         return null;
     }
 
+    @Override
     public Question getQuestionById(String id) {
         return questionDao.getById("1");
     }

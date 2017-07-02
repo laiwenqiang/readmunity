@@ -20,6 +20,7 @@ public class Question extends Base {
      */
     private int version;
     private String content;
+    private String tags;
     private int starQty;
     private int voteQty;
 
@@ -51,6 +52,14 @@ public class Question extends Base {
 
     public String getContent() {
         return content;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
     public int getStarQty() {

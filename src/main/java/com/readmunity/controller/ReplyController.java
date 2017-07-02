@@ -2,8 +2,9 @@ package com.readmunity.controller;
 
 import com.readmunity.entity.Question;
 import com.readmunity.entity.Reply;
-import com.readmunity.service.impl.QuestionServiceImpl;
-import com.readmunity.service.impl.ReplyServiceImpl;
+import com.readmunity.service.QuestionService;
+import com.readmunity.service.ReplyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,10 +19,16 @@ import java.util.List;
 @RequestMapping("/reply")
 public class ReplyController {
 
+    @Autowired
+    QuestionService questionService;
+
+    @Autowired
+    ReplyService replyService;
+
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String getReplyByQuestion(ModelMap map) {
-        Question question = new QuestionServiceImpl().getQuestionById("001");
-        List<Reply> replyList = new ReplyServiceImpl().getReplyListByQuestionId("001");
+        Question question = questionService.getQuestionById("1");
+        List<Reply> replyList = replyService.getListByQuestionId("1");
         map.addAttribute("question", question);
         map.addAttribute("replylist", replyList);
         return "replylist";
