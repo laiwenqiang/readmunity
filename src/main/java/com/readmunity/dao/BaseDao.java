@@ -1,7 +1,5 @@
 package com.readmunity.dao;
 
-import com.readmunity.mapper.BaseMapper;
-
 import java.util.List;
 import java.util.Map;
 

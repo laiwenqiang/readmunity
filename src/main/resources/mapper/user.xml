@@ -33,7 +33,7 @@
         UPDATE user ${setParam} WHERE ${filterParam}
     </update>
 
-    <insert id="insert" parameterType="Map">
+    <insert id="insert" keyProperty="id" parameterType="Map">
         INSERT INTO user ${columnName} VALUES ${columnValue}
     </insert>
 

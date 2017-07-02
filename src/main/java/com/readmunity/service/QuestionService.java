@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface QuestionService {
     List<Question> getQuestionListByBookId(String id);
+
+    String saveQuestion(String bookId, String name, String content, String tags);
 }

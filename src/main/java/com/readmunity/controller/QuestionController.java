@@ -1,13 +1,16 @@
 package com.readmunity.controller;
 
+import com.readmunity.entity.Message;
 import com.readmunity.service.QuestionService;
 import com.readmunity.service.impl.QuestionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created by laiwenqiang on 2017/5/27.
@@ -46,18 +49,14 @@ public class QuestionController {
         return "questionask";
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.GET)
-    public String saveQuestion(ModelMap map, @RequestParam String bookId, @RequestParam String name,
-                               @RequestParam String content, @RequestParam String[] tags) {
-        System.out.println("bookId: " + bookId);
-        System.out.println("name: " + name);
-        System.out.println("content: " + content);
-        System.out.println("tags: " + tags);
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public @ResponseBody
+    Message saveQuestion(@RequestParam String bookId, @RequestParam String name,
+                         @RequestParam String content, @RequestParam String tags) {
 
-        map.addAttribute("questionlist", new QuestionServiceImpl().getQuestionListByBookId(bookId));
-        map.addAttribute("bookId", bookId);
+        questionService.saveQuestion(bookId, name, content, tags);
 
-        return "questionlist";
+        return new Message(HttpStatus.OK, "success");
     }
 
 }

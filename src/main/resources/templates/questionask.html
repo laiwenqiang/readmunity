@@ -12,23 +12,23 @@
 
     <div class="row">
 
-        <div class="col-md-8 col-md-offset-2" id="nameDiv">
-            <input id="name" type="text" class="form-control" placeholder="请输入标题"/>
-        </div>
-        <br/><br/>
+        <form method="POST" action="/question/save">
+            <div class="col-md-8 col-md-offset-2" id="nameDiv">
+                <input id="name" type="text" class="form-control" placeholder="请输入标题"/>
+            </div>
+            <br/><br/>
 
-        <div class="col-md-8 col-md-offset-2">
-            <input id="tags" type="text" class="form-control" placeholder="请输入标签" data-role="tagsinput"/>
-        </div>
+            <div class="col-md-8 col-md-offset-2">
+                <input id="tags" type="text" class="form-control" placeholder="请输入标签" data-role="tagsinput"/>
+            </div>
 
-        <br/><br/>
+            <br/><br/>
 
-        <div class="col-md-8 col-md-offset-2 form-group" id="contentDiv">
-            <form>
+            <div class="col-md-8 col-md-offset-2 form-group" id="contentDiv">
                 <textarea rows="15" id="content" class="form-control" placeholder="请勿提交重复、无关、无价值问题"></textarea>
                 <br/>
-            </form>
-        </div>
+            </div>
+        </form>
 
     </div>
 
@@ -115,6 +115,7 @@
             var tags = $('#tags').tagsinput('items');
             var name = $('#name').val();
             var content = e.getContent();
+            var _csrf = [[${_csrf.token}]];
 
             if(!name || name=='') {
                 $('#nameDiv').addClass('has-error');
@@ -126,8 +127,21 @@
                 $('#content').focus();
                 return;
             }
-            location.href = '/question/save?bookId=' + bookId + '&name=' + name + '&content=' + content
-                + '&tags=' + tags;
+
+            $.ajax({
+                type: 'POST',
+                url: '/question/save',
+                dataType: 'json',
+                data: {bookId: bookId, name: name, tags: tags.join(","), content: content, _csrf: _csrf},
+                success: function() {
+                    alert('提交成功');
+                    window.location.href='/question/list?bookId=' + bookId;
+                },
+                error: function () {
+                    alert("提交失败");
+                }
+            });
+
         }
     });
 

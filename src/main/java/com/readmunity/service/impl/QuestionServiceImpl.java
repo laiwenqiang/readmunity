@@ -4,6 +4,7 @@ import com.readmunity.dao.QuestionDao;
 import com.readmunity.dao.UserDao;
 import com.readmunity.entity.Question;
 import com.readmunity.service.QuestionService;
+import com.readmunity.service.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,19 @@ public class QuestionServiceImpl implements QuestionService {
         Map<String, String> filter = new HashMap<>();
         filter.put("bookId", id);
         return questionDao.getList(filter);
+    }
+
+    @Override
+    public String saveQuestion(String bookId, String name, String content, String tags) {
+        Map<String, String> param = new HashMap<>();
+        param.put("bookId", bookId);
+        param.put("name", name);
+        param.put("content", content);
+        param.put("tags", tags);
+        param.put("createdId", Util.getCurrentId());
+        param.put("createdName", Util.getCurrentName());
+        questionDao.insert(param);
+        return null;
     }
 
     public Question getQuestionById(String id) {

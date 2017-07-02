@@ -16,4 +16,9 @@
     <select id="selectListLike" parameterType="String" resultType="com.readmunity.entity.Question">
         SELECT * FROM question WHERE ${value}
     </select>
+
+    <insert id="insert" parameterType="Map">
+        INSERT INTO question ${columnName} VALUES ${columnValue}
+    </insert>
+
 </mapper>
