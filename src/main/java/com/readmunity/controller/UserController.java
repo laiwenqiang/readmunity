@@ -43,9 +43,9 @@ public class UserController {
         return "user";
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String getUserList(ModelMap map) {
-        List<User> users = userService.getUserList(null);
+    @RequestMapping(value = "/list/active", method = RequestMethod.GET)
+    public String getActiveUserList(ModelMap map) {
+        List<User> users = userService.getActiveUserList();
         map.addAttribute("amount", users.size());
         map.addAttribute("userList", users);
         return "userlist";
@@ -67,7 +67,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/profile/save", method = RequestMethod.POST)
-    public String saveProfile(@ModelAttribute Map<String, String> setParam, ModelMap map) {
+    public String saveProfile(@RequestParam Map<String, String> setParam, ModelMap map) {
+        formatParam(setParam);
         User user = userService.updateCurrent(setParam);
         map.addAttribute("user", user);
         return "usersetting";
@@ -91,6 +92,10 @@ public class UserController {
     public @ResponseBody
     Message getCurrentAvatar() {
        return userService.getCurrentAvatar();
+    }
+
+    public void formatParam(Map<String, String> param) {
+        param.remove("_csrf");
     }
 
 

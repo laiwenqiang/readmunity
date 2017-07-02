@@ -7,6 +7,8 @@ import com.readmunity.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by Henry on 17/6/12.
  */
@@ -19,5 +21,10 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     BaseMapper mapper() {
         return userMapper;
+    }
+
+    @Override
+    public List<User> selectActiveUser() {
+        return userMapper.selectActiveUser();
     }
 }

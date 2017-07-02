@@ -1,59 +1,44 @@
 package com.readmunity.entity;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by laiwenqiang on 2017/5/27.
  */
 public class Question extends Base {
 
-    private String name;
+    private int bookId;
     /**
-     * 1. 如果问题没被修改过，值为0.
+     * 1. 如果问题没被修改过，值为空.
      * 2. 如果问题被修改过，值为原始问题的id；
      */
-    private String orId;
+    private String originalId;
     /**
      * 原始问题的为0.
      * 以此类推，0，1，2，3，4.。。
      */
     private int version;
     private String content;
-    private int star;
-    private int vote;
-    private String summary;
+    private int starQty;
+    private int voteQty;
 
-    public Question() {}
+    private List<Reply> replys = new ArrayList<Reply>();
 
-    public Question(String name, String orId, int version, String content, int star, int vote, String id, String createdId,
-                    String createdName, Date createdTime) {
-        this.name = name;
-        this.orId = orId;
-        this.version = version;
-        this.content = content;
-        this.star = star;
-        this.vote = vote;
-        this.id = id;
-        this.createdId = createdId;
-        this.createdName = createdName;
-        this.createdTime = createdTime;
-
+    public int getBookId() {
+        return bookId;
     }
 
-    public String getName() {
-        return name;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getOriginalId() {
+        return originalId;
     }
 
-    public String getOrId() {
-        return orId;
-    }
-
-    public void setOrId(String orId) {
-        this.orId = orId;
+    public void setOriginalId(String originalId) {
+        this.originalId = originalId;
     }
 
     public int getVersion() {
@@ -68,32 +53,31 @@ public class Question extends Base {
         return content;
     }
 
-    public void setContent(String content)
-    {
+    public int getStarQty() {
+        return starQty;
+    }
+
+    public void setStarQty(int starQty) {
+        this.starQty = starQty;
+    }
+
+    public int getVoteQty() {
+        return voteQty;
+    }
+
+    public void setVoteQty(int voteQty) {
+        this.voteQty = voteQty;
+    }
+
+    public void setContent(String content) {
         this.content = content;
     }
 
-    public int getStar() {
-        return star;
+    public List<Reply> getReplys() {
+        return replys;
     }
 
-    public void setStar(int star) {
-        this.star = star;
-    }
-
-    public int getVote() {
-        return vote;
-    }
-
-    public void setVote(int vote) {
-        this.vote = vote;
-    }
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setReplys(List<Reply> replys) {
+        this.replys = replys;
     }
 }

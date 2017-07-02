@@ -72,6 +72,10 @@ public class UserServiceImpl implements UserService {
         return userDao.getList(filter);
     }
 
+    public List<User> getActiveUserList() {
+        return userDao.selectActiveUser();
+    }
+
     /**
      * 判断已经存在的用户是否有效，如果此用户未激活，并且超过了激活时间。则需要此用户重新注册。
      *

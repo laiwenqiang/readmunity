@@ -21,7 +21,7 @@ public abstract class AbstractDao<T> implements BaseDao<T> {
 
     @Override
     public T getOne(Map<String, String> filter) {
-        if (isParamEmpty(filter)) {
+        if (isEmptyParam(filter)) {
             return null;
         }
         List<T> list = getList(filter);
@@ -34,7 +34,7 @@ public abstract class AbstractDao<T> implements BaseDao<T> {
 
     @Override
     public List<T> getListLike(Map<String, String> filter) {
-        if (isParamEmpty(filter)) {
+        if (isEmptyParam(filter)) {
             return null;
         }
         StringBuffer query = new StringBuffer(" 1 = 1 ");
@@ -46,7 +46,7 @@ public abstract class AbstractDao<T> implements BaseDao<T> {
 
     @Override
     public List<T> getList(Map<String, String> filter) {
-        if (isParamEmpty(filter)) {
+        if (isEmptyParam(filter)) {
             return null;
         }
         StringBuffer query = new StringBuffer(" 1 = 1 ");
@@ -58,11 +58,11 @@ public abstract class AbstractDao<T> implements BaseDao<T> {
 
     @Override
     public void updateById(String id, Map<String, String> setParam) {
-        if(isParamEmpty(setParam)) return;
+        if(isEmptyParam(setParam)) return;
         StringBuffer buffer = new StringBuffer("SET ");
 
         for (String key : setParam.keySet()) {
-            buffer.append(key + " = "  + setParam.get(key) + ",");
+            buffer.append(key + " = '"  + setParam.get(key) + "', ");
         }
         buffer.delete(buffer.lastIndexOf(","), buffer.length());
 
@@ -74,7 +74,7 @@ public abstract class AbstractDao<T> implements BaseDao<T> {
 
     @Override
     public void update(Map<String, String> setParam, Map<String, String> filterParam) {
-        if (isParamEmpty(setParam) || isParamEmpty(filterParam)) {
+        if (isEmptyParam(setParam) || isEmptyParam(filterParam)) {
             return;
         }
         StringBuffer setBuffer = new StringBuffer("SET ");
@@ -97,7 +97,7 @@ public abstract class AbstractDao<T> implements BaseDao<T> {
 
     @Override
     public void insert(Map<String, String> param) {
-        if(isParamEmpty(param)) return;
+        if(isEmptyParam(param)) return;
         StringBuffer columnName = new StringBuffer("(");
         StringBuffer columnValue = new StringBuffer("(");
 
@@ -116,7 +116,7 @@ public abstract class AbstractDao<T> implements BaseDao<T> {
         mapper().insert(params);
     }
 
-    private boolean isParamEmpty(Map<String, String> param) {
+    private boolean isEmptyParam(Map<String, String> param) {
         if (param == null || param.isEmpty()) {
             return true;
         }

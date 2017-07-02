@@ -2,7 +2,9 @@ package com.readmunity.controller;
 
 import com.readmunity.entity.Book;
 import com.readmunity.entity.Message;
+import com.readmunity.service.BookService;
 import com.readmunity.service.impl.BookServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,6 +22,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/book")
 public class BookController {
+
+    @Autowired
+    private BookService bookService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String getList(ModelMap map) {
@@ -46,6 +51,12 @@ public class BookController {
     @ResponseBody
     public Message getChapterNum(@RequestParam String bookId) {
         return new Message(HttpStatus.OK, 30);
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String getById(ModelMap map) {
+        bookService.getBookById("1");
+        return "book";
     }
 
 }

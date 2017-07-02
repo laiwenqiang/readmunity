@@ -34,6 +34,8 @@ public interface UserService {
 
     List<User> getUserList(Map<String, String> filter);
 
+    List<User> getActiveUserList();
+
     void passwordResetPassEmail(String toEmail) throws Exception;
 
     User parsingString(String info) throws Exception;
