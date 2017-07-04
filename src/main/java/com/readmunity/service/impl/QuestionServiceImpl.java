@@ -62,6 +62,14 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public String updateQuestion(String questionId, String content, String patch) {
+        Map<String, String> param = new HashMap<>();
+        param.put("content", content);
+        questionDao.updateById(questionId, param);
+        return null;
+    }
+
+    @Override
     public Question getQuestionById(String id) {
         return questionDao.getById("1");
     }

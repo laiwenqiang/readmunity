@@ -14,4 +14,6 @@ public interface QuestionService {
     Question getQuestionById(String id);
 
     String saveQuestion(String bookId, String name, String content, String tags);
+
+    String updateQuestion(String questionId, String content, String patch);
 }

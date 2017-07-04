@@ -1,8 +1,10 @@
 package com.readmunity.controller;
 
 import com.readmunity.entity.Message;
+import com.readmunity.service.QuestionService;
 import com.readmunity.service.impl.QuestionServiceImpl;
 import com.readmunity.service.impl.ReplyServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,9 +27,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/version")
 public class VersionController {
 
+    @Autowired
+    private QuestionService questionService;
+
     @RequestMapping(value = "/question", method = RequestMethod.GET)
     public String getQuestionByUserId(ModelMap map) {
-        map.addAttribute("question", new QuestionServiceImpl().getQuestionById("01"));
+        map.addAttribute("question", questionService.getQuestionById("01"));
         return "versionedit";
     }
 
@@ -62,6 +67,7 @@ public class VersionController {
     Message saveQuestion(@RequestParam("oldContentId") String oldContentId,
                                          @RequestParam("newContent") String newContent, @RequestParam("patch") String patch) {
         System.out.println(patch);
+        questionService.updateQuestion(oldContentId, newContent, patch);
         return new Message(HttpStatus.OK, "success");
     }
 }

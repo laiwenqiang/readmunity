@@ -21,4 +21,8 @@
         INSERT INTO question ${columnName} VALUES ${columnValue}
     </insert>
 
+    <update id="updateById" parameterType="Map">
+        UPDATE question ${setParam} WHERE id = #{id}
+    </update>
+
 </mapper>

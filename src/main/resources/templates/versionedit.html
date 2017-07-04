@@ -32,10 +32,7 @@
             </div>
         </div>
 
-        <div class="col-md-8">
-            <h2 th:text="${question.name}"></h2>
-            <span th:text="${question.content}" id="question"></span>
-        </div>
+
     </div>
 
     <div th:replace="fragments/footer :: footer">&copy; 2016 The Static Templates</div>
@@ -103,11 +100,12 @@
             onSave: function (e) {
                 var newContent = e.getContent();
                 var patch = JsDiff.createPatch(name, content, newContent, '#0', '#newVersion');
+                var _csrf = [[${_csrf.token}]];
                 $.ajax({
                     type: 'POST',
                     url: '/version/save',
                     dataType: 'json',
-                    data: {oldContentId: '1', newContent: newContent, patch: patch},
+                    data: {oldContentId: '1', newContent: newContent, patch: patch, _csrf: _csrf},
                     success: function() {
                         alert('修改成功');
                         window.location.href='/reply/list';
